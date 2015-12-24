@@ -4,15 +4,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.soho3q.cms</groupId>
+    <groupId>com.office.rebates</groupId>
     <artifactId>parent</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>cms-model</module>
-        <module>cms-dal</module>
-        <module>cms-service</module>
-        <module>cms-api</module>
+        <module>rebates-model</module>
+        <module>rebates-dal</module>
+        <module>rebates-service</module>
+        <module>rebates-api</module>
     </modules>
 
     <properties>
@@ -312,12 +312,6 @@
             <artifactId>guava-collections</artifactId>
             <version>r03</version>
         </dependency>
-
-        <dependency>
-            <groupId>com.soho3q.web</groupId>
-            <artifactId>mvc</artifactId>
-            <version>1.1</version>
-        </dependency>
         
         <!-- fileupload -->
         <dependency>
@@ -358,24 +352,6 @@
         
     </dependencies>
 
-    <repositories>
-        <repository>
-            <id>nexus</id>
-            <name>soho3q nexus repo</name>
-            <url>http://repo.sohochina.com/content/groups/public/</url>
-        </repository>
-    </repositories>
-
-    <distributionManagement>
-        <repository>
-            <id>nexus-releases</id>
-            <url>http://repo.sohochina.com/content/repositories/releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>nexus-snapshots</id>
-            <url>http://repo.sohochina.com/content/repositories/snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
 
     <build>
         <plugins>

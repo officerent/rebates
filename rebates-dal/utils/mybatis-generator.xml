@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <classPathEntry
+            location="utils/mysql-connector-java-5.1.26.jar"/>
+
+    <context id="MySQLTables" targetRuntime="MyBatis3">
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://192.168.220.186:3306/soho3q_cms?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true&amp;autoReconnectForPools=true&amp;zeroDateTimeBehavior=convertToNull"
+                        userId="root" password="passw0rd">
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <javaModelGenerator targetPackage="com.soho3q.cms.dal.dataobj"
+                            targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="com.soho3q.cms.dal.dao"
+                         targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="com.soho3q.cms.dal.dao"
+                             targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <table tableName="cms_channel" domainObjectName="CmsChannel">
+        	<generatedKey column="channel_id" sqlStatement="MySql" identity="true" />
+        </table>
+        
+
+        <table tableName="cms_tag" domainObjectName="CmsTag">
+            <generatedKey column="tag_id" sqlStatement="MySql" identity="true" />
+        </table>
+
+        <table tableName="cms_key" domainObjectName="CmsKey">
+        	<generatedKey column="key_id" sqlStatement="MySql" identity="true" />
+        </table>
+        
+        <table tableName="cms_value" domainObjectName="CmsValue">
+			<generatedKey column="value_id" sqlStatement="MySql" identity="true" />       
+        </table>
+        
+        <table tableName="cms_value_history" domainObjectName="CmsValueHistory">
+			<generatedKey column="value_history_id" sqlStatement="MySql" identity="true" />       
+        </table>
+        
+    </context>
+</generatorConfiguration>
