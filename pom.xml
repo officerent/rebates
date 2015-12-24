@@ -12,7 +12,7 @@
         <module>rebates-model</module>
         <module>rebates-dal</module>
         <module>rebates-service</module>
-        <module>rebates-api</module>
+        <module>rebates-web</module>
     </modules>
 
     <properties>
