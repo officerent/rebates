@@ -1,0 +1,135 @@
+body{
+	width: 100%;
+	margin: 0 auto;
+}
+.width80{
+	width: 80%;
+	margin: 0 auto;
+}
+#width100{
+	width: 100%;
+}
+header{
+	width: 100%;
+	height: 70px;
+	line-height: 70px;
+	padding:0 20px;
+	color: #fff;
+	font-size: 30px;
+	background-color: #21ba45;
+	background-size: 100% 100%;
+}
+.yzhleft{
+	float: left;
+	text-align:center;
+	line-height: 70px;
+}
+.yzhright{
+	float: right;
+	text-align:center; 
+	line-height: 70px;
+}
+.width{
+	width: 100%;
+	margin: 0 auto; 
+	text-align: center;
+	padding: 1.25rem 1.5rem;
+}
+.ui.form{
+	padding: 1.25rem 1.5rem;
+}
+#width80{
+	width: 80%;
+}
+.mt50{
+	margin-top: 50px;
+}
+.mt20{
+	margin-top: 20px;
+}
+.y-index-menu{
+	height: 100px;
+	line-height: 100px;
+	font-size: 2rem;
+}
+.ui.segment.y-index-menu-back{
+	background-color: #fbbd08;
+	color: #fff;
+}
+.ui.segment.y-index-menu-back1{
+	background-color: #40de5a;
+	color: #fff;
+}
+.ui.segment.y-index-menu-back2{
+	background-color: #f200c0;
+	color: #fff;
+}
+.ui.segment.y-index-menu-back3{
+	background-color: #3b2e7e;
+	color: #fff;
+}
+.ui.segment.y-index-menu-back4{
+	background-color: #4b5cc4;
+	color: #fff;
+}
+.ui.segment.y-index-menu-back5{
+	background-color: #ff4777;
+	color: #fff;
+}
+.ui.segment.y-index-menu-back6{
+	background-color: #a5673f;
+	color: #fff;
+}
+.ui.segment.y-index-menu-back7{
+	background-color: #e03997;
+	color: #fff;
+}
+.ui.segment.y-index-menu-back8{
+	background-color: #a333c8;
+	color: #fff;
+}
+.ui.segment.y-index-menu-back9{
+	background-color: #6435c9;
+	color: #fff;
+}
+.ui.segment.y-index-menu-back10{
+	background-color: #2185d0;
+	color: #fff;
+}
+.ui.segment.y-index-menu-back11{
+	background-color: #21ba45;
+	color: #fff;
+}
+.ui.segment.y-index-menu-back12{
+	background-color: #b5cc18;
+	color: #fff;
+}
+.ui.segment.y-index-menu-back13{
+	background-color: #fbbd08;
+	color: #fff;
+}
+.ui.segment.y-index-menu-back14{
+	background-color: #f2711c;
+	color: #fff;
+}
+.ui.segment.y-index-menu-back15{
+	background-color: #db2828;
+	color: #fff;
+}
+.ui.segment.y-index-menu-back16{
+	background-color: #ffa631;
+	color: #fff;
+}
+.ui.segment.y-index-menu-back17{
+	background-color: #057748;
+	color: #fff;
+}
+.y-label{
+	display: inline-block;
+	width: 60px;
+}
+.asdf{
+	margin: 0 0.857143em 0 0
+}
+
+

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+
+
+	<appender name="DRFOUT" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/home/work/logs/api-cms/soho3q_cms.log" />
+		<param name="Append" value="true" />
+		<param name="DatePattern" value="yyyy_MM_dd" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d - %c -%-4r [%t] %-5p %x - %m%n" />
+		</layout>
+	</appender>
+	<appender name="ASYNCOUT" class="org.apache.log4j.AsyncAppender">
+		<param name="BufferSize" value="512" />
+		<appender-ref ref="DRFOUT" />
+	</appender>
+
+
+	<root>
+		<level value="INFO" />
+		<appender-ref ref="ASYNCOUT" />
+	</root>
+</log4j:configuration>
