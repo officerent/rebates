@@ -9,50 +9,54 @@
 
     <context id="MySQLTables" targetRuntime="MyBatis3">
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://192.168.220.186:3306/soho3q_cms?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true&amp;autoReconnectForPools=true&amp;zeroDateTimeBehavior=convertToNull"
-                        userId="root" password="passw0rd">
+                        connectionURL="jdbc:mysql://192.168.200.22:3306/rebates?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true&amp;autoReconnectForPools=true&amp;zeroDateTimeBehavior=convertToNull"
+                        userId="root" password="password">
         </jdbcConnection>
 
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
 
-        <javaModelGenerator targetPackage="com.soho3q.cms.dal.dataobj"
+        <javaModelGenerator targetPackage="com.office.rebates.dal.dataobj"
                             targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
 
-        <sqlMapGenerator targetPackage="com.soho3q.cms.dal.dao"
+        <sqlMapGenerator targetPackage="com.office.rebates.dal.dao"
                          targetProject="src/main/resources">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
 
         <javaClientGenerator type="XMLMAPPER"
-                             targetPackage="com.soho3q.cms.dal.dao"
+                             targetPackage="com.office.rebates.dal.dao"
                              targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <table tableName="cms_channel" domainObjectName="CmsChannel">
-        	<generatedKey column="channel_id" sqlStatement="MySql" identity="true" />
+        <table tableName="rebates_user" domainObjectName="RebatesUser">
+        	<generatedKey column="user_id" sqlStatement="MySql" identity="true" />
         </table>
         
 
-        <table tableName="cms_tag" domainObjectName="CmsTag">
-            <generatedKey column="tag_id" sqlStatement="MySql" identity="true" />
+        <table tableName="question_answer" domainObjectName="QuestionAnswer">
+            <generatedKey column="qa_id" sqlStatement="MySql" identity="true" />
         </table>
 
-        <table tableName="cms_key" domainObjectName="CmsKey">
-        	<generatedKey column="key_id" sqlStatement="MySql" identity="true" />
+        <table tableName="sales_people" domainObjectName="SalesPeople">
+        	<generatedKey column="sales_id" sqlStatement="MySql" identity="true" />
         </table>
         
-        <table tableName="cms_value" domainObjectName="CmsValue">
-			<generatedKey column="value_id" sqlStatement="MySql" identity="true" />       
+        <table tableName="rebates_order" domainObjectName="RebatesOrder">
+			<generatedKey column="order_id" sqlStatement="MySql" identity="true" />       
         </table>
         
-        <table tableName="cms_value_history" domainObjectName="CmsValueHistory">
-			<generatedKey column="value_history_id" sqlStatement="MySql" identity="true" />       
+        <table tableName="rebates_order_item" domainObjectName="RebatesOrderItem">
+			<generatedKey column="order_item_id" sqlStatement="MySql" identity="true" />       
+        </table>
+        
+        <table tableName="rebates_bonus" domainObjectName="RebatesBonus">
+			<generatedKey column="bonus_id" sqlStatement="MySql" identity="true" />       
         </table>
         
     </context>

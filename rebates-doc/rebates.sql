@@ -15,7 +15,7 @@ CREATE TABLE `rebates_user` (
   `last_update_time` datetime comment '最后一次更新时间',
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `name` (`name`)
-) AUTO_INCREMENT = 10000 ENGINE=InnoDB DEFAULT CHARSET=utf8  COMMENT='用户表';
+) AUTO_INCREMENT = 20000 ENGINE=InnoDB DEFAULT CHARSET=utf8  COMMENT='用户表';
 
 CREATE TABLE `question_answer` (
   `qa_id` bigint NOT NULL AUTO_INCREMENT COMMENT 'QA ID',
@@ -28,17 +28,17 @@ CREATE TABLE `question_answer` (
   PRIMARY KEY (`qa_id`),
   KEY `root_qa_id` (`root_qa_id`),
   KEY `user_id` (`user_id`)
-) AUTO_INCREMENT = 10000 ENGINE=InnoDB DEFAULT CHARSET=utf8  COMMENT='用户问答表';
+) AUTO_INCREMENT = 20000 ENGINE=InnoDB DEFAULT CHARSET=utf8  COMMENT='用户问答表';
 
 #token可以不用存数据库，直接放缓存#
-CREATE TABLE `user_token` (
-  `token_id` bigint NOT NULL AUTO_INCREMENT COMMENT '用户tokenID',
-  `user_id` bigint NOT NULL COMMENT '用户ID',
-  `token` varchar(2048) COMMENT 'token value，md5(user_id + 当前时间)',
-  `create_time` datetime comment '创建时间',
-  PRIMARY KEY (`channel_id`),
-  UNIQUE KEY `token` (`token`)
-) AUTO_INCREMENT = 10000 ENGINE=InnoDB DEFAULT CHARSET=utf8  COMMENT='用户token表';
+#CREATE TABLE `user_token` (
+#  `token_id` bigint NOT NULL AUTO_INCREMENT COMMENT '用户tokenID',
+#  `user_id` bigint NOT NULL COMMENT '用户ID',
+#  `token` varchar(2048) COMMENT 'token value，md5(user_id + 当前时间)',
+#  `create_time` datetime comment '创建时间',
+#  PRIMARY KEY (`channel_id`),
+#  UNIQUE KEY `token` (`token`)
+#) AUTO_INCREMENT = 20000 ENGINE=InnoDB DEFAULT CHARSET=utf8  COMMENT='用户token表';
 
 CREATE TABLE `sales_people` (
   `sales_id` bigint NOT NULL AUTO_INCREMENT COMMENT 'sales ID',
@@ -49,7 +49,7 @@ CREATE TABLE `sales_people` (
   `last_update_time` datetime comment '最后一次更新时间',
   PRIMARY KEY (`sales_id`),
   UNIQUE KEY `token` (`sales_num`)
-) AUTO_INCREMENT = 10000 ENGINE=InnoDB DEFAULT CHARSET=utf8  COMMENT='soho3q销售表';
+) AUTO_INCREMENT = 20000 ENGINE=InnoDB DEFAULT CHARSET=utf8  COMMENT='soho3q销售表';
 
 CREATE TABLE `rebates_order` (
   `order_id` bigint NOT NULL AUTO_INCREMENT COMMENT '订单ID',
@@ -75,7 +75,7 @@ CREATE TABLE `rebates_order` (
   KEY `user_id` (`user_id`),
   UNIQUE KEY `soho3q_order_id` (`soho3q_order_id`),
   KEY `sales_id` (`sales_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单表';
+) AUTO_INCREMENT = 20000 ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单表';
 
 CREATE TABLE `rebates_order_item` (
   `order_item_id` bigint NOT NULL AUTO_INCREMENT COMMENT '订单明细ID',
@@ -90,11 +90,9 @@ CREATE TABLE `rebates_order_item` (
   `total_price` int(11) COMMENT '该品总价，单位分',
   `create_time` datetime comment '创建时间',
   `last_update_time` datetime comment '最后一次更新时间',
-  PRIMARY KEY (`order_id`),
-  KEY `user_id` (`user_id`),
-  UNIQUE KEY `soho3q_order_id` (`soho3q_order_id`),
-  KEY `sales_id` (`sales_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单明细表';
+  PRIMARY KEY (`order_item_id`),
+  KEY `order_id` (`order_id`)
+) AUTO_INCREMENT = 20000 ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单明细表';
 
 CREATE TABLE `rebates_bonus` (
   `bonus_id` bigint NOT NULL AUTO_INCREMENT COMMENT 'key ID',
@@ -113,7 +111,7 @@ CREATE TABLE `rebates_bonus` (
   `updater` varchar(50) COMMENT '修改人',
   PRIMARY KEY (`bonus_id`),
   KEY `order_id` (`order_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='佣金表';
+) AUTO_INCREMENT = 20000 ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='佣金表';
 
 
 
