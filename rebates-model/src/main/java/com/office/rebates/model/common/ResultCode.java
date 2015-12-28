@@ -1,47 +1,47 @@
-package com.soho3q.cms.model.common;
+package com.office.rebates.model.common;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
- *  ZLL on 2015-10-15.
+ * Created by gabriel on 14-12-12.
  */
-public class ResultCode {
-	
-    private String message;
-    private Integer status;
-    private Object data;
-    
+public class ResultCode<T> {
+    private String errMsg;
+    private Integer errCode;
+    private T data;
+
+
     public ResultCode() {
-        this.message = "success";
-        this.status = 0;
+        this.errMsg = "success";
+        this.errCode = 0;
         this.data = null;
     }
 
-    public String getMessage() {
-		return message;
-	}
+    public String getErrMsg() {
+        return errMsg;
+    }
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
+    public void setErrMsg(String errMsg) {
+        this.errMsg = errMsg;
+    }
 
-	public Integer getStatus() {
-		return status;
-	}
+    public Integer getErrCode() {
+        return errCode;
+    }
 
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
+    public void setErrCode(Integer errCode) {
+        this.errCode = errCode;
+    }
 
-	public Object getData() {
-		return data;
-	}
+    public T getData() {
+        return data;
+    }
 
-	public void setData(Object data) {
-		this.data = data;
-	}
+    public void setData(T data) {
+        this.data = data;
+    }
 
-	@Override
+    @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
     }

@@ -1,4 +1,4 @@
-package com.soho3q.cms.model.common;
+package com.office.rebates.service.util;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -26,7 +26,7 @@ public class PropertiesUtils {
 		Properties properties = new Properties();
 		HashMap<String, String> tmpProps = new HashMap<String, String>();
 		try {
-			properties.load(PropertiesUtils.class.getClassLoader().getResourceAsStream("config/cms.properties"));
+			properties.load(PropertiesUtils.class.getClassLoader().getResourceAsStream("config/config.properties"));
 			Set<Map.Entry<Object, Object>> entries = properties.entrySet();
 			Iterator<Map.Entry<Object, Object>> iter = entries.iterator();
 			while (iter.hasNext()) {
