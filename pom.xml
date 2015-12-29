@@ -10,6 +10,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>rebates-model</module>
+		<module>rebates-util</module>
         <module>rebates-dal</module>
         <module>rebates-service</module>
         <module>rebates-web</module>

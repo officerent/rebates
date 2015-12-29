@@ -69,5 +69,60 @@
     <mybatis:scan base-package="com.office.rebates.dal.dao" factory-ref="rebatesSqlSessionFactory"
 		template-ref="rebatesSqlSessionTemplate" />
 
+	<!--upload-->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		 <!-- 设置上传文件的最大尺寸为5MB (104857600) -->
+		<property name="maxUploadSize">
+			<value>104857600</value>
+		</property>
+	</bean>	
+	
+	
+	<!-- 设置调度 -->
+	<bean id="rebatesScheduler"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="soho3qOrderStatusCheckTrigger" />
+            </list>
+        </property>
+    </bean> 
+    
+    	<!-- 业务对象  机构返佣月结-->
+	 <bean id="soho3qOrderStatusCheckTask" class="com.office.rebates.service.quartz.Soho3qOrderStatusCheckTask">
+    </bean>
+    
+	<!-- 调度业务  -->
+	 <bean id="soho3qOrderStatusCheckJob"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="soho3qOrderStatusCheckTask" />
+        <property name="targetMethod" value="doWork" />
+        <property name="concurrent" value="false" />
+    </bean>
+
+	
+	 <!-- 每5分钟补偿一次订单的状态 -->
+	 <!--  <value>0 */3 * * * ?</value> <value>0 0 2 * * ?</value>-->
+	<bean id="soho3qOrderStatusCheckTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="soho3qOrderStatusCheckJob" />
+		<property name="cronExpression">			
+			<value>0 */5 * * * ?</value>
+		</property>
+	</bean>
+	
+	<!-- ======================================================================== -->
+	<!-- soho3q api access -->
+	<!-- ======================================================================== -->
+		<!-- get project list api -->
+	<bean id="soho3qCodeApi" class="com.office.rebates.dal.rest.Soho3qCodeApi">
+		<property name="url" value="#{apiConfig['SOHO3Q_CODE_URL']}" />
+		<property name="timeOut" value="#{apiConfig['COMMON_TIMEOUT']}" />
+	</bean>
+	
+	<bean id="soho3qTokenApi" class="com.office.rebates.dal.rest.Soho3qTokenApi">
+		<property name="url" value="#{apiConfig['SOHO3Q_Token_URL']}" />
+		<property name="timeOut" value="#{apiConfig['COMMON_TIMEOUT']}" />
+	</bean>
 
 </beans:beans>
