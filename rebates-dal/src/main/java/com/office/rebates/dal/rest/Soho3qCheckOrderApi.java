@@ -4,14 +4,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -20,11 +18,11 @@ import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
-import org.json.JSONObject;
-import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.office.rebates.dal.dataobj.SalesPeople;
 import com.office.rebates.model.Soho3qOrder;
 import com.office.rebates.model.common.Messages;
@@ -55,8 +53,15 @@ public class Soho3qCheckOrderApi {
 		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create(); 
 		HttpPost request = new HttpPost(url);
 		RequestConfig config = RequestConfig.custom().setSocketTimeout(timeOut).setConnectTimeout(timeOut).build();		
-		CloseableHttpClient closeableHttpClient = httpClientBuilder.build();  
+		//CloseableHttpClient closeableHttpClient = httpClientBuilder.build();  
 	 //HttpPost httpPost = new HttpPost(props.get("sms.url")); 
+		String token=soho3qTokenApi.getToken(people.getUserName(), people.getUserPassword());
+		BasicClientCookie cookie = new BasicClientCookie("token", token);
+		cookie.setDomain(".soho3q.com");
+		cookie.setPath("/");
+		CookieStore cookieStore = new BasicCookieStore();
+		cookieStore.addCookie(cookie);	
+		CloseableHttpClient closeableHttpClient = httpClientBuilder.setDefaultCookieStore(cookieStore).build();  
 		request.setConfig(config);	 
 		CloseableHttpResponse response=null;	
 		try {
@@ -64,20 +69,13 @@ public class Soho3qCheckOrderApi {
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();  
 			nameValuePairs.add(new BasicNameValuePair("pageSize", pageSize.toString()));
 			nameValuePairs.add(new BasicNameValuePair("pageNum", pageNum.toString()));
-			request.setEntity(new UrlEncodedFormEntity(nameValuePairs,"UTF-8")); 
-		 
-			CookieStore cookieStore = new BasicCookieStore();
-			String token=soho3qTokenApi.getToken(people.getUserName(), people.getUserPassword());
-			BasicClientCookie cookie = new BasicClientCookie("token", token);
-			cookie.setDomain(".soho3q.com");
-			cookie.setPath("/");
-			cookieStore.addCookie(cookie);		 			
+			request.setEntity(new UrlEncodedFormEntity(nameValuePairs,"UTF-8"));  			
 			response = closeableHttpClient.execute(request);
 			if (response.getStatusLine().getStatusCode() == 200) {
 				String httpResult = EntityUtils.toString(response.getEntity());
 				if (httpResult != null) {
-					JSONObject json = new JSONObject(httpResult);
-					logger.info("http request is"+json);
+					JSONObject json = JSON.parseObject(httpResult);
+					logger.info("http response for getting orders is "+json);
 					if(!"0".equals(json.getString("code"))){
 						logger.error("soho3q return bad response for get orders by sales people");					
 						throw new RebatesException(Messages.FAIL_TO_GET_SOHO3Q_ORDER_CODE,Messages.FAIL_TO_GET_SOHO3Q_ORDER_MSG);
@@ -85,7 +83,7 @@ public class Soho3qCheckOrderApi {
 						JSONObject resultJson=json.getJSONObject("result");
 						if(resultJson!=null){
 							JSONArray listData=resultJson.getJSONArray("listData");
-							for(int i=0;i<listData.length();i++){
+							for(int i=0;i<listData.size();i++){
 								Soho3qOrder soho3qOrder=JSON.parseObject(listData.getString(i),Soho3qOrder.class);
 								logger.info("got sales order :"+JSON.toJSONString(soho3qOrder));
 								soho3qOrders.add(soho3qOrder);

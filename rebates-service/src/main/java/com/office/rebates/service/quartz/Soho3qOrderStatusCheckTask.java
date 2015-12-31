@@ -56,7 +56,7 @@ public class Soho3qOrderStatusCheckTask {
 			Integer pageSize=1000;//最多只同步最近1000笔订单
 			try {
 					List<Soho3qOrder> soho3qOrders=soho3qCheckOrderApi.getSoho3qOrderBySales(people,pageNum,pageSize);
-					updateRebatesBonus(soho3qOrders,people);				
+					updateRebatesBonusList(soho3qOrders,people);				
 			} catch (RebatesException e) {
 				logger.error("fail to get orders by sales:"+people.getUserName());
 			}
@@ -65,7 +65,7 @@ public class Soho3qOrderStatusCheckTask {
 	}
 	
 	//更新rebatesBonus表
-	private void updateRebatesBonus(List<Soho3qOrder> soho3qOrders, SalesPeople people) {
+	private void updateRebatesBonusList(List<Soho3qOrder> soho3qOrders, SalesPeople people) {
 		for(Soho3qOrder soho3qOrder:soho3qOrders){
 			logger.info("processing Soho3qOrder :"+JSON.toJSONString(soho3qOrder));
 			if(isRebatesPaid(soho3qOrder.getSoho3qOrderId(),soho3qOrder.getOrderSubNum())){//如果已经支付返利，不再更新
@@ -73,10 +73,16 @@ public class Soho3qOrderStatusCheckTask {
 			}else{
 				RebatesBonusExample example=new RebatesBonusExample();
 				Byte rebatesBonusStatus=getRebatesBonusStatus(soho3qOrder.getStatus(),soho3qOrder.getBonusStatus());
-				example.createCriteria().andSoho3qOrderIdEqualTo(soho3qOrder.getSoho3qOrderId()).andSoho3qOrderNumEqualTo(soho3qOrder.getOrderSubNum());
+				if(soho3qOrder.getOrderSubNum()!=null){
+					example.createCriteria().andSoho3qOrderIdEqualTo(soho3qOrder.getSoho3qOrderId())
+					.andSoho3qOrderNumEqualTo(soho3qOrder.getOrderSubNum());
+				}else{
+					example.createCriteria().andSoho3qOrderIdEqualTo(soho3qOrder.getSoho3qOrderId())
+					.andSoho3qOrderNumIsNull();
+				}
 				List<RebatesBonus> rebatesBonusList=rebatersBonusMapper.selectByExample(example);
 				if(rebatesBonusList.isEmpty()){//需要插入
-					logger.info("need to inserting Soho3qOrder :"+JSON.toJSONString(soho3qOrder));
+					logger.info("need to insert Soho3qOrder :"+JSON.toJSONString(soho3qOrder));
 					insertRebatesBonus(soho3qOrder,rebatesBonusStatus);
 				}else{//更新
 					RebatesBonus rebateBonus=rebatesBonusList.get(0);
@@ -175,8 +181,15 @@ public class Soho3qOrderStatusCheckTask {
 	private boolean isRebatesPaid(Long soho3qOrderId, String orderSubNum) {
 		boolean isRebatesPaid=false;
 		RebatesBonusExample example=new RebatesBonusExample();
-		example.createCriteria().andSoho3qOrderIdEqualTo(soho3qOrderId).andSoho3qOrderNumEqualTo(orderSubNum)
-		.andStatusEqualTo(Constants.BONUS_STATUS_REBATES_PAID);
+		
+		if(orderSubNum!=null){
+			example.createCriteria().andSoho3qOrderIdEqualTo(soho3qOrderId).andSoho3qOrderNumEqualTo(orderSubNum)
+			.andStatusEqualTo(Constants.BONUS_STATUS_REBATES_PAID);
+		}else{
+			example.createCriteria().andSoho3qOrderIdEqualTo(soho3qOrderId).andSoho3qOrderNumIsNull()
+			.andStatusEqualTo(Constants.BONUS_STATUS_REBATES_PAID);
+		}
+
 		List<RebatesBonus> bonusList=rebatersBonusMapper.selectByExample(example);
 		if(bonusList!=null&&!bonusList.isEmpty()){//找到了一个已经支付返利的订单
 			isRebatesPaid=true;

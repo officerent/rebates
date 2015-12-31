@@ -11,7 +11,9 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
-import org.json.JSONObject;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 
 
 public class Soho3qCodeApi {
@@ -45,8 +47,8 @@ public class Soho3qCodeApi {
 			if (response.getStatusLine().getStatusCode() == 200) {
 				String httpResult = EntityUtils.toString(response.getEntity());
 				if (httpResult != null) {
-					JSONObject json = new JSONObject(httpResult);
-					logger.info("http request is"+json);
+					JSONObject json = JSON.parseObject(httpResult);
+					logger.info("http response for getting code is"+json);
 					if("N".equals(json.getString("status"))){
 						logger.error("soho3q return bad response");
 					}else{

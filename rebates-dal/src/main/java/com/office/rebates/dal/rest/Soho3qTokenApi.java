@@ -11,8 +11,10 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.office.rebates.model.common.Messages;
 import com.office.rebates.model.common.RebatesException;
 import com.office.rebates.util.Base64;
@@ -55,8 +57,8 @@ public class Soho3qTokenApi {
 			if (response.getStatusLine().getStatusCode() == 200) {
 				String httpResult = EntityUtils.toString(response.getEntity());
 				if (httpResult != null) {
-					JSONObject json = new JSONObject(httpResult);
-					logger.info("http request is"+json);
+					JSONObject json = JSON.parseObject(httpResult);
+					logger.info("http response for getting user token is"+json);
 					if("N".equals(json.getString("status"))){
 						logger.error("soho3q return bad response");
 						String errCode=json.getString("errorCode");						
@@ -88,6 +90,7 @@ public class Soho3qTokenApi {
 				logger.error("fail to close http client",e);
 			}
 		}
+		logger.info("got user token:"+token);
 		return token;
 	}
 	
