@@ -129,5 +129,16 @@
 		<property name="url" value="#{apiConfig['SOHO3Q_CHECK_ORDER_URL']}" />
 		<property name="timeOut" value="#{apiConfig['LONG_TIMEOUT']}" />
 	</bean>
+	
+	<!--cache client,expire after 20 hours-->
+	<bean id="simpleRedisClient" class="com.office.rebates.dal.cache.SimpleRedisCacheClient">
+		<constructor-arg>
+			<bean class="com.office.rebates.dal.cache.CacheConfig">
+				<property name="host" value="#{apiConfig['redis.host']}" />
+				<property name="prefix" value="UserToken" />
+				<property name="expireTime" value="72000" />
+			</bean>
+		</constructor-arg>
+	</bean>	
 
 </beans:beans>

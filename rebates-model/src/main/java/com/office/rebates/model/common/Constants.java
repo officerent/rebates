@@ -14,5 +14,7 @@ public class Constants {
 	public static Byte BONUS_STATUS_REBATES_PAID = 4; //客户已经收到返利
 	public static Byte BONUS_STATUS_ORDER_CANCELED = 5; //需求单已取消
 
+	//cookie
+	public static String COOKIE_USER_TOKEN = "user_token";
 		
 }
