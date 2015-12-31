@@ -1,4 +1,4 @@
-package com.office.rebates.service.util;
+package com.office.rebates.util;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 /**
  * 属性文件读取
  * 
- * @author liyongfeng
+ * @author xxm
  *
  */
 public class PropertiesUtils {

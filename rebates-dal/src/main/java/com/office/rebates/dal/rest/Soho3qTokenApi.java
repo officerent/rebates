@@ -74,12 +74,12 @@ public class Soho3qTokenApi {
 					logger.error("http response body is null!");
 				}
 			} else {
-				logger.error("fail to get soho3q code by http request:"+ response.getStatusLine().getStatusCode());
+				logger.error("fail to get soho3q token by http request:"+ response.getStatusLine().getStatusCode());
 			}
 		} catch (ClientProtocolException e) {
-			logger.error("fail to call soho3q to get code",e);
+			logger.error("fail to call soho3q to get token",e);
 		} catch (IOException e) {
-			logger.error("fail to call soho3q to get code",e);
+			logger.error("fail to call soho3q to get token",e);
 		}finally{
 			try {
 				if(response!=null) response.close();

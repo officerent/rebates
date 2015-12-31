@@ -96,20 +96,22 @@ CREATE TABLE `rebates_order_item` (
 
 CREATE TABLE `rebates_bonus` (
   `bonus_id` bigint NOT NULL AUTO_INCREMENT COMMENT 'key ID',
-  `order_id` bigint NOT NULL COMMENT '订单ID',
+  `order_id` bigint COMMENT '订单ID',
   `sales_id` bigint COMMENT '销售ID',
   `soho3q_order_id` bigint COMMENT 'soho3q需求单id',
-  `soho3q_order_num` bigint COMMENT 'soho3q订单编号',
+  `soho3q_order_num` varchar(50) COMMENT 'soho3q订单编号,实际支付的订单编号',
+  `soho3q_confirmed_order_num` varchar(50) COMMENT 'soho3q确认后的订单编号,如果不是分期，与付款实际支付的订单编号一致',
   `lease_amount` int(11) COMMENT '支付租金金额，单位分',
   `bonus_before_tax` int(11) COMMENT 'soho3q佣金税前金额，单位分',
   `bonus_tax` int(11) COMMENT 'soho3q佣金税金额，单位分',
   `bonus_after_tax` int(11) COMMENT 'soho3q佣金税后金额，单位分', 
   `rebates_amount` int(11) COMMENT '给客户的返利金额，单位分',
-  `status` tinyint COMMENT '0=需求单待确认，1=需求单已确认，2=客户已支付订单，3=销售已收到佣金，4=客户已经收到返利',
+  `status` tinyint COMMENT '0=需求单待确认，1=需求单已确认，2=客户已支付订单，3=销售已收到佣金，4=客户已经收到返利,5=订单已取消',
   `create_time` datetime comment '创建时间',
   `last_update_time` datetime comment '最后一次更新时间',
   `updater` varchar(50) COMMENT '修改人',
   PRIMARY KEY (`bonus_id`),
+  UNIQUE KEY `soho3q_order` (`soho3q_order_id`,`soho3q_order_num`),
   KEY `order_id` (`order_id`)
 ) AUTO_INCREMENT = 20000 ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='佣金表';
 

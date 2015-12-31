@@ -121,8 +121,13 @@
 	</bean>
 	
 	<bean id="soho3qTokenApi" class="com.office.rebates.dal.rest.Soho3qTokenApi">
-		<property name="url" value="#{apiConfig['SOHO3Q_Token_URL']}" />
+		<property name="url" value="#{apiConfig['SOHO3Q_TOKEN_URL']}" />
 		<property name="timeOut" value="#{apiConfig['COMMON_TIMEOUT']}" />
+	</bean>
+	
+	<bean id="soho3qCheckOrderApi" class="com.office.rebates.dal.rest.Soho3qCheckOrderApi">
+		<property name="url" value="#{apiConfig['SOHO3Q_CHECK_ORDER_URL']}" />
+		<property name="timeOut" value="#{apiConfig['LONG_TIMEOUT']}" />
 	</bean>
 
 </beans:beans>

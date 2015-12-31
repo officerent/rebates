@@ -13,5 +13,8 @@ public class Messages {
 	
 	public static int FAIL_TO_GET_TOKEN_CODE = 102;
 	public static String FAIL_TO_GET_TOKEN_MSG = "fail to get token";
+	
+	public static int FAIL_TO_GET_SOHO3Q_ORDER_CODE = 103;
+	public static String FAIL_TO_GET_SOHO3Q_ORDER_MSG = "fail to get order by sales people";
 
 }

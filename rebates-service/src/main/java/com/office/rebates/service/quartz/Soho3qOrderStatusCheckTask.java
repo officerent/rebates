@@ -1,8 +1,6 @@
 package com.office.rebates.service.quartz;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -11,17 +9,36 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import com.alibaba.fastjson.JSON;
+import com.office.rebates.dal.dao.RebatesBonusMapper;
+import com.office.rebates.dal.dao.RebatesOrderMapper;
 import com.office.rebates.dal.dao.SalesPeopleMapper;
+import com.office.rebates.dal.dataobj.RebatesBonus;
+import com.office.rebates.dal.dataobj.RebatesBonusExample;
+import com.office.rebates.dal.dataobj.RebatesOrder;
+import com.office.rebates.dal.dataobj.RebatesOrderExample;
 import com.office.rebates.dal.dataobj.SalesPeople;
 import com.office.rebates.dal.dataobj.SalesPeopleExample;
+import com.office.rebates.dal.rest.Soho3qCheckOrderApi;
+import com.office.rebates.model.Soho3qOrder;
+import com.office.rebates.model.common.Constants;
+import com.office.rebates.model.common.RebatesException;
+import com.office.rebates.util.PropertiesUtils;
 
 @Transactional(value = "rebatesTransactionManager", rollbackFor = Exception.class)
 public class Soho3qOrderStatusCheckTask {
 	
 	@Autowired
 	private SalesPeopleMapper salesPeopleMapper;
-		
 	
+	@Autowired
+	private RebatesBonusMapper rebatersBonusMapper;
+	
+	@Autowired
+	private RebatesOrderMapper rebatersOrderMapper;
+	
+	@Autowired
+	private Soho3qCheckOrderApi soho3qCheckOrderApi;
+		
 	
 	static Logger logger = LoggerFactory.getLogger(Soho3qOrderStatusCheckTask.class);
 	SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM"); 
@@ -35,77 +52,158 @@ public class Soho3qOrderStatusCheckTask {
 		
 		for(SalesPeople people:sales){
 			logger.info("checking soho3q order status for sales:"+people.getUserName());
-			List<Order> orders=getOrderBySales(people);
-		}
-		
-		Date lastMonth = new Date();
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(lastMonth);		
-		calendar.add(Calendar.MONTH, -1);
-		lastMonth = calendar.getTime();	
-		
-		String lastMonthStr=sdf.format(lastMonth);
-		logger.info("last month is:" +lastMonthStr+", start to calculate company bonus...");
-		try{	
-			generateCompanyBonus(lastMonthStr);
-			
-			//补9月数据，下次上线需要删掉
-			//logger.info("make up date for 2015-09");
-			//generateCompanyBonus("2015-09");
-		}catch(Exception e){
-			logger.error("fail to generate company bonus for month:"+lastMonthStr,e);
-		}
-	}
-	
-	public void generateCompanyBonus(String month) throws Exception {
-		SalesGlobalLock globalLock=newSalesGlobalLockMapper.lockResource(Constants.LOCK_COMPANY_BONUS);
-		if(globalLock!=null){
-			logger.info("got the global lock for generating company bonus.");
-		}else{//没有拿到lock,说明其他实例已经hold lock并且正在执行该方法，则不执行该方法
-			logger.info("other instance is holding the lock and generating the company bonus, quit the method.");
-			return;
-		}
-		Date start=sdf.parse(month);
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(start);	
-		calendar.add(Calendar.MONTH, 1);
-		Date end=calendar.getTime();
-		
-		//get all the company sales
-		SalesPeopleExample peopleExample=new SalesPeopleExample();
-		peopleExample.createCriteria().andSalesTypeEqualTo(Constants.SALES_TYPE_COMPANY);
-		List<SalesPeople> companies= salesPeopleMapper.selectByExample(peopleExample);
-		logger.info("all the company sales are:"+JSON.toJSONString(companies));
-		
-		//为每个机构计算该月的佣金
-		if(companies!=null&&!companies.isEmpty()){
-			for(SalesPeople company:companies){
-				logger.info("processing company bonus for :"+JSON.toJSONString(company));
-				//查看该机构的的该月佣金请求是否已经产生
-				SalesBonusRequestExample bonusRequestExample=new SalesBonusRequestExample();
-				bonusRequestExample.createCriteria().andSalesIdEqualTo(company.getSalesId()).andBillMonthEqualTo(month).andIsCompanyEqualTo(Constants.IS_COMPANY_BONUS);
-				List<SalesBonusRequest> bonusRequestList=salesBonusRequestMapper.selectByExample(bonusRequestExample);
-				if(bonusRequestList!=null&&!bonusRequestList.isEmpty()){//已经产生了,不再重复产生
-					logger.info("found existing bonus for company sales:"+company.getSalesId()+" for month:"+month+":"+JSON.toJSONString(bonusRequestList));
-				}else{//该机构没有产生该月佣金
-					//查找该机构所有该月的佣金
-					SalesBonusExample bonusExample=new SalesBonusExample();
-					List<Byte> statusCondition=Arrays.asList(Constants.BONUS_STATUS_AVAILABLE,Constants.BONUS_STATUS_REQUESTING);
-					bonusExample.createCriteria().andSalesIdEqualTo(company.getSalesId()).andCreateTimeBetween(start, end).andStatusIn(statusCondition);
-					List<SalesBonus> bonusList=salesBonusMapper.selectByExample(bonusExample);
-					logger.info("all the bonus for company sales:"+company.getSalesId()+" for month:"+month+" are:"+JSON.toJSONString(bonusList));
-					if(bonusList!=null&&!bonusList.isEmpty()){//该月有佣金
-						Long requestId=salesBonusService.createBonusRedeem(company, bonusList,month);
-						logger.info("bonus request for compay:"+company.getSalesId()+" for month:"+month+" has beed created with id:"+requestId);
-					}else{//该月无佣金
-						logger.info("no bonus found for company sales:"+company.getSalesId()+" for month:"+month);
-					}
-					
-				}
+			Integer pageNum=1;
+			Integer pageSize=1000;//最多只同步最近1000笔订单
+			try {
+					List<Soho3qOrder> soho3qOrders=soho3qCheckOrderApi.getSoho3qOrderBySales(people,pageNum,pageSize);
+					updateRebatesBonus(soho3qOrders,people);				
+			} catch (RebatesException e) {
+				logger.error("fail to get orders by sales:"+people.getUserName());
 			}
 		}
 		
 	}
+	
+	//更新rebatesBonus表
+	private void updateRebatesBonus(List<Soho3qOrder> soho3qOrders, SalesPeople people) {
+		for(Soho3qOrder soho3qOrder:soho3qOrders){
+			logger.info("processing Soho3qOrder :"+JSON.toJSONString(soho3qOrder));
+			if(isRebatesPaid(soho3qOrder.getSoho3qOrderId(),soho3qOrder.getOrderSubNum())){//如果已经支付返利，不再更新
+				logger.info("rebates were already paid for order:"+JSON.toJSONString(soho3qOrder));
+			}else{
+				RebatesBonusExample example=new RebatesBonusExample();
+				Byte rebatesBonusStatus=getRebatesBonusStatus(soho3qOrder.getStatus(),soho3qOrder.getBonusStatus());
+				example.createCriteria().andSoho3qOrderIdEqualTo(soho3qOrder.getSoho3qOrderId()).andSoho3qOrderNumEqualTo(soho3qOrder.getOrderSubNum());
+				List<RebatesBonus> rebatesBonusList=rebatersBonusMapper.selectByExample(example);
+				if(rebatesBonusList.isEmpty()){//需要插入
+					logger.info("need to inserting Soho3qOrder :"+JSON.toJSONString(soho3qOrder));
+					insertRebatesBonus(soho3qOrder,rebatesBonusStatus);
+				}else{//更新
+					RebatesBonus rebateBonus=rebatesBonusList.get(0);
+					logger.info("old rebate bonus :"+JSON.toJSONString(rebateBonus));
+					if(rebateBonus.getStatus()!=rebatesBonusStatus){//状态发生了变化需要更新
+						logger.info("need to update rebate bonus to:"+JSON.toJSONString(soho3qOrder));
+						updateRebatesBonus(rebateBonus,soho3qOrder,rebatesBonusStatus);
+					}else{
+						logger.info("status is the same so no need to update rebate bonus");
+					}					
+				}
+			}			
+		}
+		
+	}
+	
+	private void updateRebatesBonus(RebatesBonus oldRebateBonus,Soho3qOrder soho3qOrder, Byte rebatesBonusStatus) {
+		oldRebateBonus.setBonusAfterTax(convertYuanToCent(soho3qOrder.getBonusAfterTax()));
+		oldRebateBonus.setBonusBeforeTax(convertYuanToCent(soho3qOrder.getBonus()));
+		oldRebateBonus.setBonusTax(convertYuanToCent(soho3qOrder.getTax()));
+		Date now =new Date();
+		//oldRebateBonus.setCreateTime(now);
+		oldRebateBonus.setLastUpdateTime(now);
+		oldRebateBonus.setLeaseAmount(convertYuanToCent(soho3qOrder.getPaymentAmount()));				
+		if(soho3qOrder.getPaymentAmount()!=null){
+			Integer rebateRatio=Integer.parseInt(PropertiesUtils.prop.get("rebate_ratio"));
+			Integer rebatesAmount=convertYuanToCent(soho3qOrder.getPaymentAmount())*rebateRatio/100;
+			oldRebateBonus.setRebatesAmount(rebatesAmount);
+		}
+
+		RebatesOrderExample orderExample=new RebatesOrderExample();
+		orderExample.createCriteria().andSoho3qOrderIdEqualTo(soho3qOrder.getSoho3qOrderId());
+		List<RebatesOrder> rebatesOrders=rebatersOrderMapper.selectByExample(orderExample);
+		if(rebatesOrders.isEmpty()){//没有找到对应的订单
+			logger.info("can't find rebates order for this soho3q order");
+		}else{
+			RebatesOrder rebateOrder=rebatesOrders.get(0);
+			logger.info("found rebates order for this soho3q order:"+JSON.toJSONString(rebateOrder));
+			oldRebateBonus.setOrderId(rebateOrder.getOrderId());			
+			oldRebateBonus.setSalesId(rebateOrder.getSalesId());
+		}
+		oldRebateBonus.setSoho3qOrderId(soho3qOrder.getSoho3qOrderId());
+		oldRebateBonus.setSoho3qOrderNum(soho3qOrder.getOrderSubNum());
+		oldRebateBonus.setStatus(rebatesBonusStatus);
+		oldRebateBonus.setSoho3qConfirmedOrderNum(soho3qOrder.getOrderNum());
+		oldRebateBonus.setUpdater(Constants.SYSTEM);
+		rebatersBonusMapper.updateByPrimaryKeySelective(oldRebateBonus);
+		logger.info("updated rebates bonus:"+JSON.toJSONString(oldRebateBonus));
+		
+	}
+
+	private void insertRebatesBonus(Soho3qOrder soho3qOrder,Byte rebatesBonusStatus) {
+		RebatesBonus rebateBonus=new RebatesBonus();
+		rebateBonus.setBonusAfterTax(convertYuanToCent(soho3qOrder.getBonusAfterTax()));
+		rebateBonus.setBonusBeforeTax(convertYuanToCent(soho3qOrder.getBonus()));
+		rebateBonus.setBonusTax(convertYuanToCent(soho3qOrder.getTax()));
+		Date now =new Date();
+		rebateBonus.setCreateTime(now);
+		rebateBonus.setLastUpdateTime(now);
+		rebateBonus.setLeaseAmount(convertYuanToCent(soho3qOrder.getPaymentAmount()));				
+		if(soho3qOrder.getPaymentAmount()!=null){
+			Integer rebateRatio=Integer.parseInt(PropertiesUtils.prop.get("rebate_ratio"));
+			Integer rebatesAmount=convertYuanToCent(soho3qOrder.getPaymentAmount())*rebateRatio/100;
+			rebateBonus.setRebatesAmount(rebatesAmount);
+		}
+
+		RebatesOrderExample orderExample=new RebatesOrderExample();
+		orderExample.createCriteria().andSoho3qOrderIdEqualTo(soho3qOrder.getSoho3qOrderId());
+		List<RebatesOrder> rebatesOrders=rebatersOrderMapper.selectByExample(orderExample);
+		if(rebatesOrders.isEmpty()){//没有找到对应的订单
+			logger.info("can't find rebates order for this soho3q order");
+		}else{
+			RebatesOrder rebateOrder=rebatesOrders.get(0);
+			logger.info("found rebates order for this soho3q order:"+JSON.toJSONString(rebateOrder));
+			rebateBonus.setOrderId(rebateOrder.getOrderId());			
+			rebateBonus.setSalesId(rebateOrder.getSalesId());
+		}
+		rebateBonus.setSoho3qOrderId(soho3qOrder.getSoho3qOrderId());
+		rebateBonus.setSoho3qOrderNum(soho3qOrder.getOrderSubNum());
+		rebateBonus.setStatus(rebatesBonusStatus);
+		rebateBonus.setSoho3qConfirmedOrderNum(soho3qOrder.getOrderNum());
+		rebateBonus.setUpdater(Constants.SYSTEM);
+		rebatersBonusMapper.insert(rebateBonus);
+		logger.info("insert rebates bonus:"+JSON.toJSONString(rebateBonus));
+	}
+
+	private Integer convertYuanToCent(Double bonusAfterTax) {
+		Integer cent=null;
+		if(bonusAfterTax!=null){
+			Double cent2=bonusAfterTax*100;
+			cent=cent2.intValue();
+		}
+		return cent;
+	}
+
+	private boolean isRebatesPaid(Long soho3qOrderId, String orderSubNum) {
+		boolean isRebatesPaid=false;
+		RebatesBonusExample example=new RebatesBonusExample();
+		example.createCriteria().andSoho3qOrderIdEqualTo(soho3qOrderId).andSoho3qOrderNumEqualTo(orderSubNum)
+		.andStatusEqualTo(Constants.BONUS_STATUS_REBATES_PAID);
+		List<RebatesBonus> bonusList=rebatersBonusMapper.selectByExample(example);
+		if(bonusList!=null&&!bonusList.isEmpty()){//找到了一个已经支付返利的订单
+			isRebatesPaid=true;
+		}
+		return isRebatesPaid;
+	}
+
+	//获得状态
+	private Byte getRebatesBonusStatus(String orderStatus, String bonusStatus) {
+		Byte status=Constants.BONUS_STATUS_ORDER_PLACED;
+		if("待确认".equals(orderStatus)){
+			status=Constants.BONUS_STATUS_ORDER_PLACED;
+		}else if("已确认".equals(orderStatus)){
+			status=Constants.BONUS_STATUS_ORDER_CONFIRM;
+		}else if("已取消".equals(orderStatus)){
+			status=Constants.BONUS_STATUS_ORDER_CANCELED;
+		}else if("已支付".equals(orderStatus)){
+			status=Constants.BONUS_STATUS_ORDER_PAID;
+			if("已结算".equals(bonusStatus)){
+				status=Constants.BONUS_STATUS_BONUS_PAID;
+			}
+		}
+		
+		return status;
+	}
+
+
 	
 	
 }
