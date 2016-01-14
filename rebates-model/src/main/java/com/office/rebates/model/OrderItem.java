@@ -44,12 +44,12 @@ public class OrderItem {
 	public void setBookNum(Integer bookNum) {
 		this.bookNum = bookNum;
 	}
-	public Double getTotalPrice() {
-		return totalPrice;
-	}
-	public void setTotalPrice(Double totalPrice) {
-		this.totalPrice = totalPrice;
-	}
+//	public Double getTotalPrice() {
+//		return totalPrice;
+//	}
+//	public void setTotalPrice(Double totalPrice) {
+//		this.totalPrice = totalPrice;
+//	}
 	private String projectId;
 	private Double originalPrice;//原单价，单位元
 	private Double finalPrice;//最终单价，单位元
@@ -57,6 +57,6 @@ public class OrderItem {
 	private String productType; //产品大类
 	private String productSubType; //产品小类
 	private Integer bookNum; //预订数量
-	private Double totalPrice;//押金单价，单位元
+	//private Double totalPrice;//总价，单位元
 	
 }

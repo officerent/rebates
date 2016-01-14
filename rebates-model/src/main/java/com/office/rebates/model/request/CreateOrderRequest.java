@@ -65,18 +65,7 @@ public class CreateOrderRequest {
 	public void setPeriodWeek(Integer periodWeek) {
 		this.periodWeek = periodWeek;
 	}
-	public Integer getLeaseAmount() {
-		return leaseAmount;
-	}
-	public void setLeaseAmount(Integer leaseAmount) {
-		this.leaseAmount = leaseAmount;
-	}
-	public Integer getDepositAmount() {
-		return depositAmount;
-	}
-	public void setDepositAmount(Integer depositAmount) {
-		this.depositAmount = depositAmount;
-	}
+
 	public List<OrderItem> getOrderItems() {
 		return orderItems;
 	}
@@ -93,8 +82,20 @@ public class CreateOrderRequest {
 	private String checkOutDate;
 	private Integer periodMonth;
 	private Integer periodWeek;
-	private Integer leaseAmount;
-	private Integer depositAmount;
+	public Double getLeaseAmount() {
+		return leaseAmount;
+	}
+	public void setLeaseAmount(Double leaseAmount) {
+		this.leaseAmount = leaseAmount;
+	}
+	public Double getDepositAmount() {
+		return depositAmount;
+	}
+	public void setDepositAmount(Double depositAmount) {
+		this.depositAmount = depositAmount;
+	}
+	private Double leaseAmount;//单位圆
+	private Double depositAmount;
 	private List<OrderItem> orderItems;
 	
 }

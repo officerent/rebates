@@ -5,7 +5,7 @@ package com.office.rebates.controller;
  */
 public class RouteKey {
     public static final String REBATES_ORDER = "/rebates_order";
-    public static final String CREATE_ORDER = "/create_order";
+    public static final String CREATE_ORDER = "/create";
     
     
 }

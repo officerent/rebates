@@ -80,9 +80,11 @@ public class RebatesOrderServiceImpl implements RebatesOrderService{
 		rebatesOrder.setCustomerCompany(request.getCustomerCompany());
 		rebatesOrder.setCustomerMobile(request.getCustomerMobile());
 		rebatesOrder.setCustomerName(request.getCustomerName());
-		rebatesOrder.setDepositAmount(request.getDepositAmount());
+		Double depositAmountCent=request.getDepositAmount()*100;
+		rebatesOrder.setDepositAmount(depositAmountCent.intValue());
 		rebatesOrder.setLastUpdateTime(now);
-		rebatesOrder.setLeaseAmount(request.getLeaseAmount());
+		Double leaseAmountCent=request.getLeaseAmount()*100;
+		rebatesOrder.setLeaseAmount(leaseAmountCent.intValue());
 		rebatesOrder.setPeriodMonth(request.getPeriodMonth());
 		rebatesOrder.setPeriodWeek(request.getPeriodWeek());
 		rebatesOrder.setPorjectId(request.getProjectId());

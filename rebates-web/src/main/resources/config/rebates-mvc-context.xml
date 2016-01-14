@@ -42,7 +42,7 @@
 
 
 
-	<context:component-scan base-package="com.taobao.haitao">  
+	<context:component-scan base-package="com.office.rebates">  
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>   
 	</context:component-scan>  
 	

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.office.rebates.dal.cache.CacheClient;
@@ -38,7 +39,9 @@ public class RebatesOrderController {
     private RebatesOrderService rebatesOrderService;
     
     static Logger logger = LoggerFactory.getLogger(RebatesOrderController.class);
-	//创建一个新的订单
+	
+    //创建一个新的订单
+    @ResponseBody
 	@RequestMapping(value = RouteKey.CREATE_ORDER, method = RequestMethod.POST)
 	public ResultCode<Long> createRebatesOrder(@RequestBody CreateOrderRequest request,HttpServletRequest httpServletRequest) {
 		ResultCode<Long> result=new ResultCode<Long>();		
