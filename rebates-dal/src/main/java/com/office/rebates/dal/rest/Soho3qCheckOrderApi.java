@@ -49,13 +49,20 @@ public class Soho3qCheckOrderApi {
 	private int timeOut;
 	
 	public List<Soho3qOrder> getSoho3qOrderBySales(SalesPeople people,Integer pageNum,Integer pageSize) throws RebatesException {
+		//List<Soho3qOrder> soho3qOrders = new ArrayList<Soho3qOrder>();
+		String token=soho3qTokenApi.getToken(people.getUserName(), people.getUserPassword());
+		List<Soho3qOrder> soho3qOrders=getSoho3qOrderByToken(token,pageNum,pageSize);
+		return soho3qOrders;
+	}
+	
+	private List<Soho3qOrder> getSoho3qOrderByToken(String token,Integer pageNum,Integer pageSize) throws RebatesException {
 		List<Soho3qOrder> soho3qOrders = new ArrayList<Soho3qOrder>();
 		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create(); 
 		HttpPost request = new HttpPost(url);
 		RequestConfig config = RequestConfig.custom().setSocketTimeout(timeOut).setConnectTimeout(timeOut).build();		
 		//CloseableHttpClient closeableHttpClient = httpClientBuilder.build();  
 	 //HttpPost httpPost = new HttpPost(props.get("sms.url")); 
-		String token=soho3qTokenApi.getToken(people.getUserName(), people.getUserPassword());
+		//String token=soho3qTokenApi.getToken(people.getUserName(), people.getUserPassword());
 		BasicClientCookie cookie = new BasicClientCookie("token", token);
 		cookie.setDomain(".soho3q.com");
 		cookie.setPath("/");
@@ -110,5 +117,13 @@ public class Soho3qCheckOrderApi {
 			}
 		}
 		return soho3qOrders;
+	}
+	
+	//获取该用户最近n次订单
+	public List<Soho3qOrder> getMostRecentSoho3qOrders(String token, Integer n) throws RebatesException {
+		List<Soho3qOrder> soho3qOrders=getSoho3qOrderByToken(token,1,n);
+		logger.info("most recent "+n+" soho3q orders are:"+JSON.toJSONString(soho3qOrders));
+		return soho3qOrders;
+		
 	}
 }

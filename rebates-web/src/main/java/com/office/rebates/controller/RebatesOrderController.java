@@ -40,8 +40,8 @@ public class RebatesOrderController {
     static Logger logger = LoggerFactory.getLogger(RebatesOrderController.class);
 	//创建一个新的订单
 	@RequestMapping(value = RouteKey.CREATE_ORDER, method = RequestMethod.POST)
-	public ResultCode<Soho3qOrder> createRebatesOrder(@RequestBody CreateOrderRequest request,HttpServletRequest httpServletRequest) {
-		ResultCode<Soho3qOrder> result=new ResultCode<Soho3qOrder>();		
+	public ResultCode<Long> createRebatesOrder(@RequestBody CreateOrderRequest request,HttpServletRequest httpServletRequest) {
+		ResultCode<Long> result=new ResultCode<Long>();		
 		//check params
 		if(request==null){
 			result.setErrCode(Messages.USER_NOT_LOGON_CODE);
@@ -82,7 +82,8 @@ public class RebatesOrderController {
 		
 		//create the order
 		try {
-			Soho3qOrder soho3qOrder=rebatesOrderService.createRebatesOrder(request,userInfo);
+			Long orderId=rebatesOrderService.createRebatesOrder(request,userInfo);
+			result.setData(orderId);
 		} catch (RebatesException e) {
 			result.setErrCode(e.getErrCode());
 			result.setErrMsg(e.getErrMsg());

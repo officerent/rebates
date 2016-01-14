@@ -114,7 +114,6 @@
 	<!-- ======================================================================== -->
 	<!-- soho3q api access -->
 	<!-- ======================================================================== -->
-		<!-- get project list api -->
 	<bean id="soho3qCodeApi" class="com.office.rebates.dal.rest.Soho3qCodeApi">
 		<property name="url" value="#{apiConfig['SOHO3Q_CODE_URL']}" />
 		<property name="timeOut" value="#{apiConfig['COMMON_TIMEOUT']}" />
@@ -127,6 +126,11 @@
 	
 	<bean id="soho3qCheckOrderApi" class="com.office.rebates.dal.rest.Soho3qCheckOrderApi">
 		<property name="url" value="#{apiConfig['SOHO3Q_CHECK_ORDER_URL']}" />
+		<property name="timeOut" value="#{apiConfig['LONG_TIMEOUT']}" />
+	</bean>
+	
+	<bean id="soho3qCreateOrderApi" class="com.office.rebates.dal.rest.Soho3qCreateOrderApi">
+		<property name="url" value="#{apiConfig['SOHO3Q_CREATE_ORDER_URL']}" />
 		<property name="timeOut" value="#{apiConfig['LONG_TIMEOUT']}" />
 	</bean>
 	
