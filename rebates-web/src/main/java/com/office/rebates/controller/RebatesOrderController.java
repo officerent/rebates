@@ -1,24 +1,19 @@
 package com.office.rebates.controller;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import javax.servlet.http.Cookie;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
-import com.office.rebates.dal.cache.CacheClient;
-import com.office.rebates.model.Soho3qOrder;
 import com.office.rebates.model.UserInfo;
 import com.office.rebates.model.common.Messages;
 import com.office.rebates.model.common.RebatesException;
@@ -26,7 +21,6 @@ import com.office.rebates.model.common.ResultCode;
 import com.office.rebates.model.request.CreateOrderRequest;
 import com.office.rebates.service.RebatesOrderService;
 import com.office.rebates.service.UserService;
-import com.office.rebates.service.impl.UserServiceImpl;
 
 
 @Controller
