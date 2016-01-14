@@ -24,7 +24,7 @@ import com.office.rebates.service.UserService;
 
 
 @Controller
-@RequestMapping(RouteKey.REBATES_ORDER)
+@RequestMapping(RouteKey.PREFIX_AJAX+"/"+RouteKey.REBATES_ORDER)
 public class RebatesOrderController {
     @Autowired
     private UserService userService;
