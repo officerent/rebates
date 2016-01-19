@@ -40,5 +40,11 @@ public class Messages {
 	
 	public static int NOT_FOUND_MATCHING_SOHO3Q_ORDER_CODE = 111;
 	public static String NOT_FOUND_MATCHING_SOHO3Q_ORDER_MSG = "not found matching soho3q order";
+	
+	public static int USER_ALREADY_EXIST_CODE = 112;
+	public static String USER_ALREADY_EXIST_MSG = "user already exists";
+	
+	public static int UPEXPECTED_ERROR_CODE = 500;
+	public static String UPEXPECTED_ERROR_MSG = "unexpected error code";
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.Cookie;
 
 import com.office.rebates.model.UserInfo;
+import com.office.rebates.model.common.RebatesException;
 
 public interface UserService {
 	
@@ -12,4 +13,6 @@ public interface UserService {
 	UserInfo  getUserInfo(String token);
 
 	UserInfo getUserInfo(Cookie[] cookies);
+
+	Long registerUser(String userName, String password) throws RebatesException,Exception;
 }

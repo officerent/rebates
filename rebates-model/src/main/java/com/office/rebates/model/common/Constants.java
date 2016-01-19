@@ -16,5 +16,13 @@ public class Constants {
 
 	//cookie
 	public static String COOKIE_USER_TOKEN = "user_token";
-		
+	
+	//user admin
+	public static Byte USER_NOT_ADMIN = 0;//不是管理员
+	public static Byte USER_ADMIN = 1; //是管理员
+	
+	//user status
+	public static Byte USER_STATUS_NORMAL = 0;//正常
+	public static Byte USER_STATUS_FROZEN = 1; //冻结
+	public static Byte USER_STATUS_DELETED = 2; //删除
 }
