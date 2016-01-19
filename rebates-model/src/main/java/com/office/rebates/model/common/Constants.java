@@ -25,6 +25,7 @@ public class Constants {
 
 	//cookie
 	public static String COOKIE_USER_TOKEN = "user_token";
+	public static String COOKIE_USER_NAME = "user_name";
 	
 	//user admin
 	public static Byte USER_NOT_ADMIN = 0;//不是管理员
