@@ -42,8 +42,9 @@
 	<resources mapping="/wrap/**" location="/wrap/" />
 
 
-	<context:component-scan base-package="com.office.rebates.controller">
-		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>   
+
+	<context:component-scan base-package="com.office.rebates">  
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>  
 	
     <context:annotation-config></context:annotation-config>

@@ -23,5 +23,7 @@ public class Constants {
 	public static Byte STATUS_FROZEN = 1;
 	public static Byte STATUS_DELETE = 2;
 
-		
+	//cookie
+	public static String COOKIE_USER_TOKEN = "user_token";
+
 }

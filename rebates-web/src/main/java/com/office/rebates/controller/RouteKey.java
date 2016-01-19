@@ -16,9 +16,16 @@ public class RouteKey {
     public static final String MODIFY_USER = "/modify_user.html";
 
     public static final String UPDATE_USER = "/update_user.html";
-    
+
     public static final String UPDATE_STATUS = "/update_status.html";
 
     public static final String USER_LIST = "/user_list.html";
+
+    public static final String PREFIX_AJAX = "/ajax";
+    
+    public static final String REBATES_ORDER = "/rebates_order";
+    public static final String CREATE_ORDER = "/create";
+
+
 
 }
