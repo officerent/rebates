@@ -25,16 +25,11 @@ public class RouteKey {
     
     public static final String REBATES_ORDER = "/order";
     public static final String CREATE_ORDER = "/create";
-<<<<<<< HEAD
     
     public static final String REBATES_USER = "/user";
     public static final String REGISTER_USER = "/register";   
     public static final String LOGIN = "/login";
     
     
-=======
 
-
-
->>>>>>> branch 'master' of git@github.com:officerent/rebates.git
 }
