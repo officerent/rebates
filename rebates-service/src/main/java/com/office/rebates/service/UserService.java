@@ -15,4 +15,6 @@ public interface UserService {
 	UserInfo getUserInfo(Cookie[] cookies);
 
 	Long registerUser(String userName, String password) throws RebatesException,Exception;
+	
+	String login(String userName, String password) throws RebatesException,Exception;
 }

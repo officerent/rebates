@@ -77,6 +77,32 @@ public class UserServiceImpl implements UserService{
 		logger.info("new user was inserted:"+JSON.toJSONString(rebatesUser));
 		return rebatesUser.getUserId();
 	}
+
+	@Override
+	public String login(String userName, String password) throws RebatesException, Exception {
+		//定位用户
+		RebatesUserExample userExample=new RebatesUserExample();
+		userExample.createCriteria().andNameEqualTo(userName);
+		List<RebatesUser> users=rebatesUserMapper.selectByExample(userExample);
+		if(users==null||userName.isEmpty()){//name not exist
+			logger.error("user name "+userName+" not exists");
+			throw new RebatesException(Messages.USER_NOT_EXIST_CODE,Messages.USER_NOT_EXIST_MSG);
+		}
+		RebatesUser user=users.get(0);
+		
+		//验证密码
+		if(!password.equals(user.getPassword())){
+			logger.error("password not match");
+			throw new RebatesException(Messages.PASSWORD_NOT_MATCH_CODE,Messages.PASSWORD_NOT_MATCH_MSG);
+		}
+		
+		//生成token
+		UserInfo userInfo=new UserInfo();
+		userInfo.setName(userName);
+		userInfo.setUserId(user.getUserId());
+		String token = tokenService.createToken(userInfo);
+		return token;
+	}
 	
 	
 }

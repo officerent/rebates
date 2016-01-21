@@ -46,5 +46,11 @@ public class Messages {
 	
 	public static int UPEXPECTED_ERROR_CODE = 500;
 	public static String UPEXPECTED_ERROR_MSG = "unexpected error code";
+	
+	public static int USER_NOT_EXIST_CODE = 113;
+	public static String USER_NOT_EXIST_MSG = "user not exists";
+	
+	public static int PASSWORD_NOT_MATCH_CODE = 114;
+	public static String PASSWORD_NOT_MATCH_MSG = "password not match";
 
 }
