@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.Cookie;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +60,7 @@ public class UserServiceImpl implements UserService{
 		RebatesUserExample userExample=new RebatesUserExample();
 		userExample.createCriteria().andNameEqualTo(userName);
 		List<RebatesUser> users=rebatesUserMapper.selectByExample(userExample);
-		if(users!=null&&!userName.isEmpty()){//name already exist
+		if(users.size()>0 && StringUtils.isNoneBlank(userName)){//name already exist
 			logger.info("user name "+userName+" already exists");
 			throw new RebatesException(Messages.USER_ALREADY_EXIST_CODE,Messages.USER_ALREADY_EXIST_MSG);
 		}

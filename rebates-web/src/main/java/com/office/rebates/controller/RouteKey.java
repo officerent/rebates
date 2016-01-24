@@ -29,7 +29,11 @@ public class RouteKey {
     public static final String REBATES_USER = "/user";
     public static final String REGISTER_USER = "/register";   
     public static final String LOGIN = "/login";
-    
+
+    //登录
+    public static final String DO_LOGIN = "/login.html";
+
+
     
 
 }

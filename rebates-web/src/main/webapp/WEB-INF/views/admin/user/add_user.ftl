@@ -1,4 +1,4 @@
-<#include "../common/base.ftl">
+<#include "../../common/base.ftl">
 <!DOCTYPE html>
 <html class="no-js">
 <head>
@@ -33,10 +33,10 @@
     <main class="wrapkit-wrapper" id="wrapper">
 
 	<!-- 头部  -->
- 	<#include "../common/header.ftl">
+ 	<#include "../../common/header.ftl">
 
 	<!-- 左边菜单栏 -->
-	<#include "../common/menu.ftl">
+	<#include "../../common/menu.ftl">
 	
     <!-- ============================================
     MAIN CONTENT SECTION
