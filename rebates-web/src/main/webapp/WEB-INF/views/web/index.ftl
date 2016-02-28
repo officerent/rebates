@@ -1,8 +1,3 @@
-
-
-
-
-
 <#include "../common/base.ftl">
 <!DOCTYPE html>
 <html class="no-js">
@@ -58,24 +53,24 @@
                     <div class="animated-hue pull-right">
                         <a id="doSubmit"  type="submit" class="btn btn-primary">登录</a>
                     </div>
-                <#--<div class="nice-checkbox nice-checkbox-inline">-->
-                <#--<input type="checkbox" name="keepSignin" id="keepSignin" checked="checked">-->
-                <#--<label for="keepSignin">Keep me sign in</label>-->
-                <#--</div>-->
+                    <#--<div class="nice-checkbox nice-checkbox-inline">-->
+                        <#--<input type="checkbox" name="keepSignin" id="keepSignin" checked="checked">-->
+                        <#--<label for="keepSignin">Keep me sign in</label>-->
+                    <#--</div>-->
                 </div><!-- /.form-group -->
 
-            <#--<hr>-->
+                <#--<hr>-->
 
-            <#--<p><a href="#recoverAccount" data-toggle="modal">Can't Access your Account?</a></p>-->
-            <#--<p class="lead">Signin with another account?</p>-->
-            <#--<div class="signin-alt">-->
-            <#--<a href="#" class="btn btn-sm btn-success"><i class="fa fa-facebook"></i></a>-->
-            <#--<a href="#" class="btn btn-sm btn-info"><i class="fa fa-twitter"></i></a>-->
-            <#--<a href="#" class="btn btn-sm btn-danger"><i class="fa fa-google-plus"></i></a>-->
-            <#--<a href="#" class="btn btn-sm btn-default"><i class="fa fa-github"></i></a>-->
-            <#--</div>-->
+                <#--<p><a href="#recoverAccount" data-toggle="modal">Can't Access your Account?</a></p>-->
+                <#--<p class="lead">Signin with another account?</p>-->
+                <#--<div class="signin-alt">-->
+                    <#--<a href="#" class="btn btn-sm btn-success"><i class="fa fa-facebook"></i></a>-->
+                    <#--<a href="#" class="btn btn-sm btn-info"><i class="fa fa-twitter"></i></a>-->
+                    <#--<a href="#" class="btn btn-sm btn-danger"><i class="fa fa-google-plus"></i></a>-->
+                    <#--<a href="#" class="btn btn-sm btn-default"><i class="fa fa-github"></i></a>-->
+                <#--</div>-->
 
-            <#--<hr>-->
+                <#--<hr>-->
 
                 <p>还没账户? <a href="#signup" data-toggle="tab">注册一个</a></p>
             </form><!-- /#signinForm -->
