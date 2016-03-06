@@ -33,7 +33,8 @@ public class RouteKey {
     //登录
     public static final String DO_LOGIN = "/login.html";
 
-
+    public static final String SOHO3Q = "/soho3q";
+    public static final String PROJECT_LIST = "/project_list";
     
 
 }

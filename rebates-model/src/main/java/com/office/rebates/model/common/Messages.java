@@ -52,5 +52,8 @@ public class Messages {
 	
 	public static int PASSWORD_NOT_MATCH_CODE = 114;
 	public static String PASSWORD_NOT_MATCH_MSG = "password not match";
+	
+	public static int FAIL_TO_GET_SOHO3Q_PROJECT_LIST_CODE = 115;
+	public static String FAIL_TO_GET_SOHO3Q_PROJECT_LIST_MSG = "fail to get project list";
 
 }
