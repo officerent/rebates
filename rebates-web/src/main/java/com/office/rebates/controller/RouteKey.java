@@ -35,6 +35,7 @@ public class RouteKey {
 
     public static final String SOHO3Q = "/soho3q";
     public static final String PROJECT_LIST = "/project_list";
+    public static final String PRODUCT_LIST = "/product_list";
     
 
 }

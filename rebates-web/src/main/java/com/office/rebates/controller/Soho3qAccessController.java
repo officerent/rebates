@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.office.rebates.model.Soho3qProductModel;
 import com.office.rebates.model.Soho3qProjectModel;
 import com.office.rebates.model.UserInfo;
 import com.office.rebates.model.common.Messages;
@@ -44,6 +45,22 @@ public class Soho3qAccessController {
 		try {
 			List<Soho3qProjectModel> projectList=soho3qAccessService.getProjectList();
 			result.setData(projectList);
+		} catch (RebatesException e) {
+			result.setErrCode(e.getErrCode());
+			result.setErrMsg(e.getErrMsg());
+		}
+		return result;
+
+	}
+    
+    //获取产品列表
+    @ResponseBody
+	@RequestMapping(value = RouteKey.PRODUCT_LIST, method = RequestMethod.GET)
+	public ResultCode<List<Soho3qProductModel>> getProductList(String projectId,String checkInDate,String checkOutDate) {
+		ResultCode<List<Soho3qProductModel>> result=new ResultCode<List<Soho3qProductModel>>();		
+		try {
+			List<Soho3qProductModel> productList=soho3qAccessService.getProductList(projectId,checkInDate,checkOutDate);
+			result.setData(productList);
 		} catch (RebatesException e) {
 			result.setErrCode(e.getErrCode());
 			result.setErrMsg(e.getErrMsg());
