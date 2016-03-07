@@ -9,5 +9,5 @@
     </parent>
 	<groupId>com.office.rebates</groupId>
   	<artifactId>rebates-util</artifactId>
-  	<modelVersion>4.0.0</modelVersion>
+  	 <modelVersion>4.0.0</modelVersion>
 </project>
