@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * Created by liyongfeng on 2016/1/24.
  */
 @Controller
-@RequestMapping(RouteKey.LOGIN)
+@RequestMapping(RouteKey.REBATES_USER)
 public class LoginController {
 
     /**
