@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.office.rebates.dal.dao.RebatesOrderMapper">
+<mapper namespace="com.office.rebates.dal.dao.NewRebatesOrderMapper">
   <resultMap id="BaseResultMap" type="com.office.rebates.model.admin.RebatesOrderModel">
     <!--
       WARNING - @mbggenerated
@@ -30,7 +30,27 @@
   </resultMap>
 
   <select id="countOrderList" parameterType="java.util.Map" resultMap="java.lang.Integer">
-    SELECT count(*) FROM rebates.rebates_order;
+    SELECT count(*) FROM rebates.rebates_order ro
+    on ro.user_id = ru.user_id
+    join rebates.sales_people sp
+    on ro.sales_id = sp.sales_id
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="rebatesName != null and rebatesName != ''">
+        ru.name = #{rebatesName}
+      </if>
+      <if test="salesName != null and salesName != ''">
+        and sp.user_name = #{salesName}
+      </if>
+      <if test="customerName != null and customerName != ''">
+        and ro.customer_name = #{customerName}
+      </if>
+      <if test="customerMobile != null and customerMobile != ''">
+        and ro.customer_mobile = #{customerMobile}
+      </if>
+      <if test="soho3qOrderId != null and soho3qOrderId != ''">
+        and ro.soho3q_order_id = #{soho3qOrderId}
+      </if>
+    </trim>
   </select>
 
   <select id="selectOrderList" parameterType="java.util.Map" resultMap="BaseResultMap">
@@ -42,6 +62,35 @@
     on ro.user_id = ru.user_id
     join rebates.sales_people sp
     on ro.sales_id = sp.sales_id
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="rebatesName != null and rebatesName != ''">
+        ru.name = #{rebatesName}
+      </if>
+      <if test="salesName != null and salesName != ''">
+        and sp.user_name = #{salesName}
+      </if>
+      <if test="customerName != null and customerName != ''">
+        and ro.customer_name = #{customerName}
+      </if>
+      <if test="customerMobile != null and customerMobile != ''">
+        and ro.customer_mobile = #{customerMobile}
+      </if>
+      <if test="soho3qOrderId != null and soho3qOrderId != ''">
+        and ro.soho3q_order_id = #{soho3qOrderId}
+      </if>
+    </trim>
     limit #{start},#{size}
+  </select>
+
+  <select id="selectOrderOne" parameterType="java.util.Map" resultMap="BaseResultMap">
+    SELECT ro.order_id,ro.user_id,ro.sales_id,ro.soho3q_order_id,ro.customer_mobile,ro.customer_name,ro.customer_company,
+    ro.customer_alipay,ro.porject_name,ro.checkin_date,ro.checkout_date,ro.period_month,ro.period_week,ro.lease_amount,
+    ro.deposit_amount,ro.create_time,ro.last_update_time,ru.name,sp.user_name
+    FROM rebates.rebates_order ro
+    join rebates.rebates_user ru
+    on ro.user_id = ru.user_id
+    join rebates.sales_people sp
+    on ro.sales_id = sp.sales_id
+    where or.order_id = #{orderId}
   </select>
 </mapper>

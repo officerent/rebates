@@ -26,4 +26,11 @@ public interface NewRebatesOrderMapper {
      * @return
      */
     public List<RebatesOrderModel> selectOrderModel(Map<String,Object> map);
+
+    /**
+     * 查询一笔订单
+     * @param map 条件
+     * @return
+     */
+    public RebatesOrderModel selectOrderOne(Map<String,Object> map);
 }

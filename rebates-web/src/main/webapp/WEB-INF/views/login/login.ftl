@@ -172,14 +172,21 @@
         r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
     ga('create','UA-48454066-1');ga('send','pageview');
 </script>
-
+<script src="${path}/wrap/base64/base64.js"></script>
+<script src="${path}/wrap/sha1/sha1.js"></script>
 <script>
+    function encodePass(value){
+        var basePassword = Base64.encode(value);
+        var encodeSha1 = sha1(basePassword);
+        return encodeSha1;
+    }
     $("#doSubmit").on("click",function(){
         var userName = $("#username").val();
-        var password = $("#password").val();
+        var password = $("#passwd").val();
+        var encodePassword = encodePass(password);
         var formData = {
             userName:userName,
-            password:password
+            password:encodePassword
         }
         $.ajax({
             url:"${path}/ajax/user/login",
@@ -199,9 +206,10 @@
         var npassword = $("#npassword").val();
         var cpassword = $("#cpassword").val();
         if(npassword === cpassword){
+            var encodePassword = encodePass(npassword);
             var formData = {
                 userName:userName,
-                password:npassword
+                password:encodePassword
             }
             $.ajax({
                 url:"${path}/ajax/user/register",
