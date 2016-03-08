@@ -139,6 +139,11 @@
 		<property name="timeOut" value="#{apiConfig['COMMON_TIMEOUT']}" />
 	</bean>
 	
+	<bean id="soho3qGetProductListApi" class="com.office.rebates.dal.rest.Soho3qGetProductListApi">
+		<property name="url" value="#{apiConfig['SOHO3Q_GET_PRODUCT_LIST_URL']}" />
+		<property name="timeOut" value="#{apiConfig['COMMON_TIMEOUT']}" />
+	</bean>
+	
 	<!--cache client,expire after 20 hours-->
 	<bean id="simpleRedisClient" class="com.office.rebates.dal.cache.SimpleRedisCacheClient">
 		<constructor-arg>

@@ -55,5 +55,8 @@ public class Messages {
 	
 	public static int FAIL_TO_GET_SOHO3Q_PROJECT_LIST_CODE = 115;
 	public static String FAIL_TO_GET_SOHO3Q_PROJECT_LIST_MSG = "fail to get project list";
+	
+	public static int FAIL_TO_GET_SOHO3Q_PRODUCT_LIST_CODE = 116;
+	public static String FAIL_TO_GET_SOHO3Q_PRODUCT_LIST_MSG = "fail to get product list";
 
 }
