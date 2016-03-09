@@ -112,7 +112,7 @@
                         <a id="doRegister" class="btn btn-primary">创建账户</a>
                     </div>
                     <div class="pull-left">
-                        <a href="#signin" class="btn btn-default" data-toggle="tab">登录</a>
+                        <a id="signinButton" href="#signin" class="btn btn-default" data-toggle="tab">登录</a>
                     </div>
                 </div><!-- /.form-group -->
             </form><!-- /#signupForm -->
@@ -217,7 +217,9 @@
                 dataType:'json',
                 data:formData,
                 success:function(data){
-
+                    if(data.errCode==0){
+                        $("#signinButton").click();
+                    }
                 },
                 error:function (xhr, type, exception) {
                     alert(type, "Failed");
