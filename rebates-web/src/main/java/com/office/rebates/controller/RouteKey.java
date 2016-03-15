@@ -21,6 +21,23 @@ public class RouteKey {
 
     public static final String USER_LIST = "/user_list.html";
 
+    public static final String ORDER = "/admin/order";
+
+    public static final String ORDER_LIST = "/order_list.html";
+
+    public static final String SEE_ONE_ORDER = "/see_one_order.html";
+
+    public static final String QUESTION = "/admin/question";
+
+    public static final String QUESTION_LIST = "/question_list.html";
+
+    public static final String ANSWER_QUESTION = "/answer_question.html";
+
+
+    public static final String WEB = "/web";
+
+    public static final String WEB_INDEX = "/index.html";
+
     public static final String PREFIX_AJAX = "/ajax";
     
     public static final String REBATES_ORDER = "/order";
