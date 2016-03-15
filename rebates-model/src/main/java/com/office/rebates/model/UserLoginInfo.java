@@ -1,6 +1,6 @@
 package com.office.rebates.model;
 
-public class UserInfo {
+public class UserLoginInfo {
 	public Long getUserId() {
 		return userId;
 	}
@@ -15,5 +15,12 @@ public class UserInfo {
 	}
 	private Long userId;
 	private String name;
+	private String token;
+	public String getToken() {
+		return token;
+	}
+	public void setToken(String token) {
+		this.token = token;
+	}
 	
 }
