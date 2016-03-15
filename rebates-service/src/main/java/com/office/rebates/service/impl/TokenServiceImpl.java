@@ -12,7 +12,6 @@ import com.alibaba.fastjson.JSON;
 import com.office.rebates.dal.cache.CacheClient;
 import com.office.rebates.model.UserInfo;
 import com.office.rebates.service.TokenService;
-import com.office.rebates.service.quartz.Soho3qOrderStatusCheckTask;
 import com.office.rebates.util.Md5Encrypt;
 @Service
 public class TokenServiceImpl implements TokenService{

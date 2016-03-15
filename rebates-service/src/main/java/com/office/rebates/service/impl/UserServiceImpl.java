@@ -16,6 +16,7 @@ import com.office.rebates.dal.dao.RebatesUserMapper;
 import com.office.rebates.dal.dataobj.RebatesUser;
 import com.office.rebates.dal.dataobj.RebatesUserExample;
 import com.office.rebates.model.UserInfo;
+import com.office.rebates.model.UserLoginInfo;
 import com.office.rebates.model.common.Constants;
 import com.office.rebates.model.common.Messages;
 import com.office.rebates.model.common.RebatesException;
@@ -55,7 +56,9 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public Long registerUser(String userName, String password) throws RebatesException, Exception {		
+	public UserLoginInfo registerUser(String userName, String password) throws RebatesException, Exception {		
+		//UserLoginInfo userLoginInfo=new UserLoginInfo();
+		
 		//check if the user exist
 		RebatesUserExample userExample=new RebatesUserExample();
 		userExample.createCriteria().andNameEqualTo(userName);
@@ -76,11 +79,15 @@ public class UserServiceImpl implements UserService{
 		rebatesUser.setLastUpdateTime(now);
 		rebatesUserMapper.insert(rebatesUser);
 		logger.info("new user was inserted:"+JSON.toJSONString(rebatesUser));
-		return rebatesUser.getUserId();
+		
+		//login
+		UserLoginInfo userLoginInfo=login(userName, password);
+		return userLoginInfo;
 	}
 
 	@Override
-	public String login(String userName, String password) throws RebatesException, Exception {
+	public UserLoginInfo login(String userName, String password) throws RebatesException, Exception {
+		UserLoginInfo userLoginInfo=new UserLoginInfo();
 		//定位用户
 		RebatesUserExample userExample=new RebatesUserExample();
 		userExample.createCriteria().andNameEqualTo(userName);
@@ -102,7 +109,10 @@ public class UserServiceImpl implements UserService{
 		userInfo.setName(userName);
 		userInfo.setUserId(user.getUserId());
 		String token = tokenService.createToken(userInfo);
-		return token;
+		userLoginInfo.setName(userName);
+		userLoginInfo.setToken(token);
+		userLoginInfo.setUserId(user.getUserId());
+		return userLoginInfo;
 	}
 	
 	

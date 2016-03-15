@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.office.rebates.model.UserInfo;
+import com.office.rebates.model.UserLoginInfo;
 import com.office.rebates.model.common.Messages;
 import com.office.rebates.model.common.RebatesException;
 import com.office.rebates.model.common.ResultCode;
@@ -35,9 +36,9 @@ public class RebatesUserController {
     //注册用户
     @ResponseBody
 	@RequestMapping(value = RouteKey.REGISTER_USER, method = RequestMethod.POST)
-	public ResultCode<Long> createRebatesOrder(String userName,String password) {
+	public ResultCode<UserLoginInfo> createRebatesOrder(String userName,String password) {
     	logger.info("registering user with name:"+userName+",password:"+password);
-		ResultCode<Long> result=new ResultCode<Long>();		
+		ResultCode<UserLoginInfo> result=new ResultCode<UserLoginInfo>();		
 		//check params
 		if(userName==null||password==null){
 			result.setErrCode(Messages.MISSING_REQUIRED_PARAM_CODE);
@@ -47,8 +48,8 @@ public class RebatesUserController {
 		
 		//create the user
 		try {
-			Long userId=userService.registerUser(userName,password);
-			result.setData(userId);
+			UserLoginInfo userLoginInfo=userService.registerUser(userName,password);
+			result.setData(userLoginInfo);
 		} catch (RebatesException e) {
 			logger.error("fail to register user",e);
 			result.setErrCode(e.getErrCode());
@@ -65,9 +66,9 @@ public class RebatesUserController {
     //用户登陆
     @ResponseBody
 	@RequestMapping(value = RouteKey.LOGIN, method = RequestMethod.POST)
-	public ResultCode<String> lonin(String userName,String password,HttpServletResponse response) {
+	public ResultCode<UserLoginInfo> lonin(String userName,String password,HttpServletResponse response) {
     	logger.info("user with name:"+userName+",password:"+password+" is logging in");
-		ResultCode<String> result=new ResultCode<String>();		
+		ResultCode<UserLoginInfo> result=new ResultCode<UserLoginInfo>();		
 		//check params
 		if(userName==null||password==null){
 			result.setErrCode(Messages.MISSING_REQUIRED_PARAM_CODE);
@@ -75,6 +76,14 @@ public class RebatesUserController {
 			return result;
 		}
 		
+		try {
+			UserLoginInfo userLoginInfo=userService.login(userName, password);
+			result.setData(userLoginInfo);
+		} catch (Exception e) {
+			logger.error("fail to login user for unexpected reason",e);
+			result.setErrCode(Messages.UPEXPECTED_ERROR_CODE);
+			result.setErrMsg(e.getMessage());
+		}
 		return result;
 		
 
