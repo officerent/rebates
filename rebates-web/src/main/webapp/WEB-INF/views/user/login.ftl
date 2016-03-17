@@ -1,8 +1,3 @@
-
-
-
-
-
 <#include "../common/base.ftl">
 <!DOCTYPE html>
 <html class="no-js">
@@ -11,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="initial-scale=1,minimum-scale=1,maximum-scale=1,width=device-width,height=device-height,target-densitydpi=device-dpi,user-scalable=yes">
 
-    <title>Signin Page - Wrapkit Admin Template</title>
+    <title>3Q返利登录</title>
 
 
     <!-- favicon.ico and apple-touch-icon.png -->
@@ -174,7 +169,15 @@
 </script>
 <script src="${path}/wrap/base64/base64.js"></script>
 <script src="${path}/wrap/sha1/sha1.js"></script>
+<script src="${path}/wrap/jqueryui/jqueryUI.js"></script>
 <script>
+    function setCookie (name, value){
+        //设置名称为name,值为value的Cookie
+        document.cookie = name+"="+value+";path=/";
+        //即document.cookie= name+"="+value+";path=/";
+        // 时间可以不要，但路径(path)必须要填写，因为JS的默认路径是当前页，如果不填，此cookie只在当前页面生效！~
+    }
+
     function encodePass(value){
         var basePassword = Base64.encode(value);
         var encodeSha1 = sha1(basePassword);
@@ -194,6 +197,24 @@
             dataType:'json',
             data:formData,
             success:function(data){
+                var message = "";
+                if(data.errCode == 0){
+                    setCookie("user_token",data.token);
+                    setCookie("user_name",data.name);
+                }else{
+                    var key ={
+                        "100":"请重新输入账号密码",
+                        "101":"账户已被冻结",
+                        "102":"请重新登录",
+                        "113":"请重新输入账号密码",
+                        "114":"请重新输入账号密码",
+                        "104":"你的账号出现问题，请联系我们",
+                        "unknow":"#"+data.errCode
+                    }
+                    if(key[data.errCode]) message=key[data.errCode];
+                    else message=key.unknow;
+                    alert(message);
+                }
 
             },
             error:function (xhr, type, exception) {
@@ -219,6 +240,15 @@
                 success:function(data){
                     if(data.errCode==0){
                         $("#signinButton").click();
+                    }else{
+                        var key ={
+                            "106":"请填写账号密码",
+                            "112":"账户已存在",
+                            "unknow":"#"+data.errCode
+                        }
+                        if(key[data.errCode]) message=key[data.errCode];
+                        else message=key.unknow;
+                        alert(message);
                     }
                 },
                 error:function (xhr, type, exception) {
