@@ -16,12 +16,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 import com.office.rebates.model.UserInfo;
 import com.office.rebates.model.UserLoginInfo;
+import com.office.rebates.model.common.Constants;
 import com.office.rebates.model.common.Messages;
 import com.office.rebates.model.common.RebatesException;
 import com.office.rebates.model.common.ResultCode;
 import com.office.rebates.model.request.CreateOrderRequest;
 import com.office.rebates.service.RebatesOrderService;
 import com.office.rebates.service.UserService;
+import com.office.rebates.util.CookieHelper;
 
 
 @Controller
@@ -79,6 +81,8 @@ public class RebatesUserController {
 		try {
 			UserLoginInfo userLoginInfo=userService.login(userName, password);
 			result.setData(userLoginInfo);
+			setLoginCookie(userLoginInfo.getName(), userLoginInfo.getToken(), response);
+			
 		} catch (RebatesException e) {
 			logger.error("fail to login user",e);
 			result.setErrCode(e.getErrCode());
@@ -93,4 +97,31 @@ public class RebatesUserController {
 
 
 	}
+    
+    /**
+     * 登录成功之后种cookie，包括sid和token
+     * @param sid
+     * @param token
+     * @param response
+     */
+    private void setLoginCookie(String name, String token, HttpServletResponse response) {
+        //set user_token
+        CookieHelper.setCookie(
+                Constants.COOKIE_USER_TOKEN
+                , token
+                , "localhost"
+                , "/"
+                , 30 * 24 * 60 * 60  //cookie有效期30天
+                , response
+        );
+        //set user_name
+        CookieHelper.setCookie(
+        		Constants.COOKIE_USER_NAME
+                , name
+                , "localhost"
+                , "/"
+                , 30 * 24 * 60 * 60  //cookie有效期30天
+                , response
+        );
+    }
 }
