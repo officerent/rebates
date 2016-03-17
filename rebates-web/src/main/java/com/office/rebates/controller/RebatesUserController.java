@@ -24,6 +24,7 @@ import com.office.rebates.model.request.CreateOrderRequest;
 import com.office.rebates.service.RebatesOrderService;
 import com.office.rebates.service.UserService;
 import com.office.rebates.util.CookieHelper;
+import com.office.rebates.util.PropertiesUtils;
 
 
 @Controller
@@ -109,7 +110,7 @@ public class RebatesUserController {
         CookieHelper.setCookie(
                 Constants.COOKIE_USER_TOKEN
                 , token
-                , "localhost"
+                , PropertiesUtils.prop.get("domain.name")
                 , "/"
                 , 30 * 24 * 60 * 60  //cookie有效期30天
                 , response
@@ -118,7 +119,7 @@ public class RebatesUserController {
         CookieHelper.setCookie(
         		Constants.COOKIE_USER_NAME
                 , name
-                , "localhost"
+                , PropertiesUtils.prop.get("domain.name")
                 , "/"
                 , 30 * 24 * 60 * 60  //cookie有效期30天
                 , response
