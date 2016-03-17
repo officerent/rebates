@@ -79,7 +79,11 @@ public class RebatesUserController {
 		try {
 			UserLoginInfo userLoginInfo=userService.login(userName, password);
 			result.setData(userLoginInfo);
-		} catch (Exception e) {
+		} catch (RebatesException e) {
+			logger.error("fail to login user",e);
+			result.setErrCode(e.getErrCode());
+			result.setErrMsg(e.getErrMsg());
+		}catch (Exception e) {
 			logger.error("fail to login user for unexpected reason",e);
 			result.setErrCode(Messages.UPEXPECTED_ERROR_CODE);
 			result.setErrMsg(e.getMessage());
