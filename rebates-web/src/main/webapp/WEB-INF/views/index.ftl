@@ -36,7 +36,7 @@
 
 <!--头部 start -->
 <header class="header">
-    <aside class="top"><a href="${path}/web/index.html" class="goto-p"></a>
+    <aside class="top"><a href="${path}/index.html" class="goto-p"></a>
         <div class="warp">
             <nav class="nav">
                 <ul class="warp">
