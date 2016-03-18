@@ -38,14 +38,13 @@
 <header class="header">
     <aside class="top"><a href="${path}/web/index.html" class="goto-p"></a>
         <div class="warp">
-            <a href="${path}/web/index.do" class="logo"><img src="${path}/wrap/web/images/logo1.jpg" width="153" height="70" alt="SOHO中国"></a>
             <nav class="nav">
                 <ul class="warp">
-                    <li><i></i><a href="${path}/web/index.html">首页</a></li>
+                    <li><i></i><a href="${path}/index.html">首页</a></li>
                     <li><i></i><a href="${path}/wrap/web/faq.do">我的订单</a></li>
                     <li><i></i><a onclick="openAuction()" href="###">常见问题</a></li>
-                    <li><i></i><a target="_blank" href="${path}/wrap/web/crowdSourcing/sales.html?ajax=true">购买工位</a></li>
-                    <li><i></i><a target="_blank" href="${path}/wrap/web/crowdSourcing/sales.html?ajax=true">购买券</a></li>
+                    <li><i></i><a target="_blank" href="${path}/sales/fix_product.html">购买固定工位</a></li>
+                    <li><i></i><a target="_blank" href="${path}/wrap/web/crowdSourcing/sales.html?ajax=true">购买漫游券</a></li>
                 </ul>
             </nav>
             <span class="phone"><i>400-815-9888</i></span>
