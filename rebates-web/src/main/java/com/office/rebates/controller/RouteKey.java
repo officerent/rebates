@@ -37,6 +37,7 @@ public class RouteKey {
     public static final String WEB = "/web";
 
     public static final String WEB_INDEX = "/index.html";
+    public static final String FIX_PRODUCT ="sales/fix_product.html";
 
     public static final String PREFIX_AJAX = "/ajax";
     
