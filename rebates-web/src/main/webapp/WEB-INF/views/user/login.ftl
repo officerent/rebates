@@ -199,8 +199,7 @@
             success:function(data){
                 var message = "";
                 if(data.errCode == 0){
-                    setCookie("user_token",data.token);
-                    setCookie("user_name",data.name);
+                    window.location.href="/web/index.html";
                 }else{
                     var key ={
                         "100":"请重新输入账号密码",
