@@ -1,8 +1,13 @@
 package com.office.rebates.controller.login;
 
 import com.office.rebates.controller.RouteKey;
+import com.office.rebates.model.common.Constants;
+import com.office.rebates.util.CookieHelper;
+import com.office.rebates.util.PropertiesUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 登录控制器
@@ -16,7 +21,26 @@ public class LoginController {
      * 跳转至登录接口
      */
     @RequestMapping(RouteKey.DO_LOGIN)
-    public void login(){
-
+    public void login(String param, HttpServletResponse response){
+        if(param=="signOut"){
+            //set user_token
+            CookieHelper.setCookie(
+                    Constants.COOKIE_USER_TOKEN
+                    , ""
+                    , PropertiesUtils.prop.get("domain.name")
+                    , "/"
+                    , 0  //cookie有效期0天
+                    , response
+            );
+            //set user_name
+            CookieHelper.setCookie(
+                    Constants.COOKIE_USER_NAME
+                    , ""
+                    , PropertiesUtils.prop.get("domain.name")
+                    , "/"
+                    , 0  //cookie有效期0天
+                    , response
+            );
+        }
     }
 }

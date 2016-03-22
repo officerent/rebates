@@ -8,7 +8,7 @@
         <div class="pull-left">
           <a class="navbar-brand" href="index.html" role="logo" aria-label="Logo">
             
-			<span class='logo' alt="Brand">反馈系统</span>
+			<span class='logo' alt="Brand">后台管理系统</span>
           </a>
           <button data-sidebar="toggleVisible" class="btn btn-icon navbar-btn">
             <i class="fa fa-bars"></i>

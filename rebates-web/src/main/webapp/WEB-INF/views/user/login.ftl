@@ -115,7 +115,7 @@
         </div><!-- /.tab-pane -->
     </div><!-- /.tab-content -->
 </main><!--/#wrapper-->
-<p class="signin-cr text-light">&copy;<em id="currentYear"></em>  XLP</p>
+<p class="signin-cr text-light">&copy;<em id="currentYear"></em>  XL</p>
 
 
 <!-- Modal Recover -->
