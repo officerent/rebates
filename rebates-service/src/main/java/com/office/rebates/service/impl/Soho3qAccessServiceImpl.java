@@ -32,7 +32,11 @@ public class Soho3qAccessServiceImpl implements Soho3qAccessService{
 	@Override
 	public List<Soho3qProductModel> getProductList(String projectId, String checkInDate, String checkOutDate)
 			throws RebatesException {
-		return soho3qGetProductListApi.getProductList(projectId, checkInDate, checkOutDate);
+		List<Soho3qProductModel> soho3qProductModels = soho3qGetProductListApi.getProductList(projectId, checkInDate, checkOutDate);
+		for(Soho3qProductModel soho3qProductModel:soho3qProductModels){
+			soho3qProductModel.setTitle(soho3qProductModel.getTitle().replace("{0}","人"));
+		}
+		return soho3qProductModels;
 	}
 
 	
