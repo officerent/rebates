@@ -199,7 +199,7 @@
             success:function(data){
                 var message = "";
                 if(data.errCode == 0){
-                    window.location.href="/web/index.html";
+                    window.location.href="${path}/web/index.html";
                 }else{
                     var key ={
                         "100":"请重新输入账号密码",

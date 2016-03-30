@@ -20,9 +20,9 @@ public class LoginController {
     /**
      * 跳转至登录接口
      */
-    @RequestMapping(RouteKey.DO_LOGIN)
+/*    @RequestMapping(RouteKey.DO_LOGIN)
     public void login(String param, HttpServletResponse response){
-        if(param=="signOut"){
+        if("signOut".equals(param)){
             //set user_token
             CookieHelper.setCookie(
                     Constants.COOKIE_USER_TOKEN
@@ -42,5 +42,9 @@ public class LoginController {
                     , response
             );
         }
+    }*/
+    
+    @RequestMapping(RouteKey.DO_LOGIN)
+    public void login(){
     }
 }

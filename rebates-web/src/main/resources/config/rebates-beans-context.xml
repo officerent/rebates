@@ -144,6 +144,11 @@
 		<property name="timeOut" value="#{apiConfig['COMMON_TIMEOUT']}" />
 	</bean>
 	
+	<bean id="soho3qUserLoginApi" class="com.office.rebates.dal.rest.Soho3qUserLoginApi">
+		<property name="url" value="#{apiConfig['SOHO3Q_USER_LOGIN_URL']}" />
+		<property name="timeOut" value="#{apiConfig['COMMON_TIMEOUT']}" />
+	</bean>
+	
 	<!--cache client,expire after 20 hours-->
 	<bean id="simpleRedisClient" class="com.office.rebates.dal.cache.SimpleRedisCacheClient">
 		<constructor-arg>

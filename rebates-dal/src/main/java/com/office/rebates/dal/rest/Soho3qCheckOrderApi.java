@@ -25,12 +25,13 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.office.rebates.dal.dataobj.SalesPeople;
 import com.office.rebates.model.Soho3qOrder;
+import com.office.rebates.model.Soho3qUserLoginResult;
 import com.office.rebates.model.common.Messages;
 import com.office.rebates.model.common.RebatesException;
 
 public class Soho3qCheckOrderApi {
 	@Autowired
-	private Soho3qTokenApi soho3qTokenApi;
+	private Soho3qUserLoginApi soho3qUserLoginApi;
 	
 	static Logger logger = Logger.getLogger(Soho3qCheckOrderApi.class);	
 	public String getUrl() {
@@ -50,12 +51,13 @@ public class Soho3qCheckOrderApi {
 	
 	public List<Soho3qOrder> getSoho3qOrderBySales(SalesPeople people,Integer pageNum,Integer pageSize) throws RebatesException {
 		//List<Soho3qOrder> soho3qOrders = new ArrayList<Soho3qOrder>();
-		String token=soho3qTokenApi.getToken(people.getUserName(), people.getUserPassword());
-		List<Soho3qOrder> soho3qOrders=getSoho3qOrderByToken(token,pageNum,pageSize);
+		Soho3qUserLoginResult login=soho3qUserLoginApi.login(people.getUserName(), people.getUserPassword());
+		logger.info("got login info:"+JSON.toJSONString(login));
+		List<Soho3qOrder> soho3qOrders=getSoho3qOrderByToken(login.getToken(),login.getSid(),pageNum,pageSize);
 		return soho3qOrders;
 	}
 	
-	private List<Soho3qOrder> getSoho3qOrderByToken(String token,Integer pageNum,Integer pageSize) throws RebatesException {
+	private List<Soho3qOrder> getSoho3qOrderByToken(String token,String sid,Integer pageNum,Integer pageSize) throws RebatesException {
 		List<Soho3qOrder> soho3qOrders = new ArrayList<Soho3qOrder>();
 		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create(); 
 		HttpPost request = new HttpPost(url);
@@ -120,8 +122,8 @@ public class Soho3qCheckOrderApi {
 	}
 	
 	//获取该用户最近n次订单
-	public List<Soho3qOrder> getMostRecentSoho3qOrders(String token, Integer n) throws RebatesException {
-		List<Soho3qOrder> soho3qOrders=getSoho3qOrderByToken(token,1,n);
+	public List<Soho3qOrder> getMostRecentSoho3qOrders(String token,String sid, Integer n) throws RebatesException {
+		List<Soho3qOrder> soho3qOrders=getSoho3qOrderByToken(token,sid,1,n);
 		logger.info("most recent "+n+" soho3q orders are:"+JSON.toJSONString(soho3qOrders));
 		return soho3qOrders;
 		

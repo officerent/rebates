@@ -27,6 +27,9 @@ public class Constants {
 	public static String COOKIE_USER_TOKEN = "user_token";
 	public static String COOKIE_USER_NAME = "user_name";
 	
+	public static String SOHO3Q_USER_TOKEN = "token";
+	public static String SOHO3Q_SID = "sid";
+	
 	//user admin
 	public static Byte USER_NOT_ADMIN = 0;//不是管理员
 	public static Byte USER_ADMIN = 1; //是管理员

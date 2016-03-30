@@ -26,6 +26,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.office.rebates.dal.dataobj.SalesPeople;
 import com.office.rebates.model.Soho3qOrder;
+import com.office.rebates.model.Soho3qUserLoginResult;
 import com.office.rebates.model.common.Messages;
 import com.office.rebates.model.common.RebatesException;
 import com.office.rebates.model.request.CreateOrderRequest;
@@ -38,11 +39,14 @@ import com.office.rebates.model.OrderItem;
 
 
 public class Soho3qCreateOrderApi {
-	@Autowired
-	private Soho3qTokenApi soho3qTokenApi;
+	//@Autowired
+	//private Soho3qTokenApi soho3qTokenApi;
 	
 	@Autowired
 	private Soho3qCheckOrderApi soho3qCheckOrderApi;
+	
+	@Autowired
+	private Soho3qUserLoginApi soho3qUserLoginApi;
 	
 	static Logger logger = Logger.getLogger(Soho3qCreateOrderApi.class);	
 	public String getUrl() {
@@ -64,8 +68,10 @@ public class Soho3qCreateOrderApi {
 		logger.info("creating order by request:"+JSON.toJSONString(request)+" by sales people:"+JSON.toJSONString(people));
 		
 		//创建token
-		String token=soho3qTokenApi.getToken(people.getUserName(), people.getUserPassword());
-		logger.info("got access token:"+token);
+		//String token=soho3qTokenApi.getToken(people.getUserName(), people.getUserPassword());
+		
+		Soho3qUserLoginResult login=soho3qUserLoginApi.login(people.getUserName(), people.getUserPassword());
+		logger.info("got login info:"+JSON.toJSONString(login));
 		
 		//获得key
 		SelectProductRequest productRequest=new SelectProductRequest();
@@ -99,7 +105,7 @@ public class Soho3qCreateOrderApi {
 		}
 		
 		//获得workbench ids
-		Soho3qOrderProdSummary prodSummary=getOrderProductKey(key,token);
+		Soho3qOrderProdSummary prodSummary=getOrderProductSummary(key,login.getToken(),login.getSid());
 		logger.info("got product summary:"+JSON.toJSONString(prodSummary));
 		if(prodSummary==null){
 			logger.error("order product summary is null");
@@ -116,7 +122,7 @@ public class Soho3qCreateOrderApi {
 		submitOrderRequest.setProdInfoKey(key);
 		submitOrderRequest.setStartDate(prodSummary.getCheckInDate());
 		submitOrderRequest.setWorkbenchId(prodSummary.getWorkbenchIds());
-		boolean success=createSoho3qOrder(token,submitOrderRequest);
+		boolean success=createSoho3qOrder(login.getToken(),login.getSid(),submitOrderRequest);
 		if(!success){
 			logger.error("failt to create soho3q order");
 			throw new RebatesException(Messages.FAIL_TO_CREATE_SOHO3Q_ORDER_CODE,Messages.FAIL_TO_CREATE_SOHO3Q_ORDER_MSG);
@@ -124,7 +130,7 @@ public class Soho3qCreateOrderApi {
 		
 		//查询订单id
 		Long soho3qId=null;
-		List<Soho3qOrder> soho3qOrders=soho3qCheckOrderApi.getMostRecentSoho3qOrders(token,3);
+		List<Soho3qOrder> soho3qOrders=soho3qCheckOrderApi.getMostRecentSoho3qOrders(login.getToken(),login.getSid(),3);
 		if(soho3qOrders==null||soho3qOrders.isEmpty()){
 			logger.error("failed to get soho3q orders");
 			throw new RebatesException(Messages.FAIL_TO_GET_SOHO3Q_ORDER_CODE,Messages.FAIL_TO_GET_SOHO3Q_ORDER_MSG);
@@ -147,7 +153,7 @@ public class Soho3qCreateOrderApi {
 		return soho3qId;
 	}
 	
-	private boolean createSoho3qOrder(String token, SubmitOrderRequest submitOrderRequest) throws RebatesException {
+	private boolean createSoho3qOrder(String token,String sid, SubmitOrderRequest submitOrderRequest) throws RebatesException {
 		boolean success=false;
 		String submitOrderUrl="http://m.soho3q.com/salesvc/ajax/booking/submitcustomorder";
 		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create(); 
@@ -156,8 +162,14 @@ public class Soho3qCreateOrderApi {
 		BasicClientCookie cookie = new BasicClientCookie("token", token);
 		cookie.setDomain(".soho3q.com");
 		cookie.setPath("/");
+		
+		BasicClientCookie cookie2 = new BasicClientCookie("sid", sid);
+		cookie2.setDomain(".soho3q.com");
+		cookie2.setPath("/");
+		
 		CookieStore cookieStore = new BasicCookieStore();
 		cookieStore.addCookie(cookie);	
+		cookieStore.addCookie(cookie2);	
 		CloseableHttpClient closeableHttpClient = httpClientBuilder.setDefaultCookieStore(cookieStore).build();  
 		request.setConfig(config);	  
 		CloseableHttpResponse response=null;	
@@ -248,7 +260,7 @@ public class Soho3qCreateOrderApi {
 	}
 	
 	//获取product summary
-	private Soho3qOrderProdSummary getOrderProductKey(String key,String token) throws RebatesException {
+	private Soho3qOrderProdSummary getOrderProductSummary(String key,String token,String sid) throws RebatesException {
 		Soho3qOrderProdSummary orderSummary=null;
 		String productSummaryUrl="http://m.soho3q.com/salesvc/ajax/booking/getorderproduct";
 		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create(); 
@@ -257,8 +269,14 @@ public class Soho3qCreateOrderApi {
 		BasicClientCookie cookie = new BasicClientCookie("token", token);
 		cookie.setDomain(".soho3q.com");
 		cookie.setPath("/");
+		
+		BasicClientCookie cookie2 = new BasicClientCookie("sid", token);
+		cookie2.setDomain(".soho3q.com");
+		cookie2.setPath("/");
+		
 		CookieStore cookieStore = new BasicCookieStore();
 		cookieStore.addCookie(cookie);	
+		cookieStore.addCookie(cookie2);	
 		CloseableHttpClient closeableHttpClient = httpClientBuilder.setDefaultCookieStore(cookieStore).build();  
 		request.setConfig(config);	  
 		CloseableHttpResponse response=null;	
