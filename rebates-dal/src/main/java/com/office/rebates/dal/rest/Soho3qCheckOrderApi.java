@@ -68,8 +68,15 @@ public class Soho3qCheckOrderApi {
 		BasicClientCookie cookie = new BasicClientCookie("token", token);
 		cookie.setDomain(".soho3q.com");
 		cookie.setPath("/");
+		
+		BasicClientCookie cookie2 = new BasicClientCookie("sid", sid);
+		cookie2.setDomain(".soho3q.com");
+		cookie2.setPath("/");
+		
 		CookieStore cookieStore = new BasicCookieStore();
 		cookieStore.addCookie(cookie);	
+		cookieStore.addCookie(cookie2);	
+		
 		CloseableHttpClient closeableHttpClient = httpClientBuilder.setDefaultCookieStore(cookieStore).build();  
 		request.setConfig(config);	 
 		CloseableHttpResponse response=null;	

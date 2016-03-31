@@ -270,7 +270,7 @@ public class Soho3qCreateOrderApi {
 		cookie.setDomain(".soho3q.com");
 		cookie.setPath("/");
 		
-		BasicClientCookie cookie2 = new BasicClientCookie("sid", token);
+		BasicClientCookie cookie2 = new BasicClientCookie("sid", sid);
 		cookie2.setDomain(".soho3q.com");
 		cookie2.setPath("/");
 		
