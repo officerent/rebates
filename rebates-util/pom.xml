@@ -7,7 +7,22 @@
         <groupId>com.office.rebates</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-	<groupId>com.office.rebates</groupId>
+    <dependencies>
+
+        <!-- local dependency -->
+        <dependency>
+            <groupId>com.office.rebates</groupId>
+            <artifactId>rebates-model</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.office.rebates</groupId>
+            <artifactId>rebates-dal</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
+    <groupId>com.office.rebates</groupId>
   	<artifactId>rebates-util</artifactId>
   	 <modelVersion>4.0.0</modelVersion>
 </project>
