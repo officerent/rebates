@@ -45,8 +45,8 @@ public class RebatesOrderController {
 		ResultCode<Long> result=new ResultCode<Long>();		
 		//check params
 		if(request==null){
-			result.setErrCode(Messages.USER_NOT_LOGON_CODE);
-			result.setErrMsg(Messages.USER_NOT_LOGON_MSG);
+			result.setErrCode(Messages.REQUEST_NULL_CODE);
+			result.setErrMsg(Messages.REQUEST_NULL_MSG);
 			return result;
 		}
 		
@@ -100,8 +100,8 @@ public class RebatesOrderController {
 		ResultCode<Long> result=new ResultCode<Long>();		
 		//check params
 		if(request==null){
-			result.setErrCode(Messages.USER_NOT_LOGON_CODE);
-			result.setErrMsg(Messages.USER_NOT_LOGON_MSG);
+			result.setErrCode(Messages.REQUEST_NULL_CODE);
+			result.setErrMsg(Messages.REQUEST_NULL_MSG);
 			return result;
 		}
 		
