@@ -50,6 +50,7 @@ public class RouteKey {
     
     public static final String REBATES_ORDER = "/order";
     public static final String CREATE_ORDER = "/create";
+    public static final String CREATE_COUPON_ORDER = "/create_coupon";
     
     public static final String REBATES_USER = "/user";
     public static final String REGISTER_USER = "/register";   

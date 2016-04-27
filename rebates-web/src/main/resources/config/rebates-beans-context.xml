@@ -159,5 +159,10 @@
 			</bean>
 		</constructor-arg>
 	</bean>	
+	
+	<bean id="soho3qCreateCouponOrderApi" class="com.office.rebates.dal.rest.Soho3qCreateCouponOrderApi">
+		<property name="url" value="#{apiConfig['SOHO3Q_CREATE_COUPON_ORDER_URL']}" />
+		<property name="timeOut" value="#{apiConfig['LONG_TIMEOUT']}" />
+	</bean>
 
 </beans:beans>

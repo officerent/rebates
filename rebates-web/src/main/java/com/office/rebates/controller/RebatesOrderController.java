@@ -18,6 +18,7 @@ import com.office.rebates.model.UserInfo;
 import com.office.rebates.model.common.Messages;
 import com.office.rebates.model.common.RebatesException;
 import com.office.rebates.model.common.ResultCode;
+import com.office.rebates.model.request.CreateCouponOrderRequest;
 import com.office.rebates.model.request.CreateOrderRequest;
 import com.office.rebates.service.RebatesOrderService;
 import com.office.rebates.service.UserService;
@@ -31,6 +32,9 @@ public class RebatesOrderController {
     
     @Autowired
     private RebatesOrderService rebatesOrderService;
+    
+    @Autowired
+    private RebatesOrderService rebatesCouponOrderService;
     
     static Logger logger = LoggerFactory.getLogger(RebatesOrderController.class);
 	
@@ -80,6 +84,54 @@ public class RebatesOrderController {
 		//create the order
 		try {
 			Long orderId=rebatesOrderService.createRebatesOrder(request,userInfo);
+			result.setData(orderId);
+		} catch (RebatesException e) {
+			result.setErrCode(e.getErrCode());
+			result.setErrMsg(e.getErrMsg());
+		}
+		return result;
+
+	}
+    
+    //创建一个新的买券订单
+    @ResponseBody
+	@RequestMapping(value = RouteKey.CREATE_COUPON_ORDER, method = RequestMethod.POST)
+	public ResultCode<Long> createRebatesCouponOrder(@RequestBody CreateCouponOrderRequest request,HttpServletRequest httpServletRequest) {
+		ResultCode<Long> result=new ResultCode<Long>();		
+		//check params
+		if(request==null){
+			result.setErrCode(Messages.USER_NOT_LOGON_CODE);
+			result.setErrMsg(Messages.USER_NOT_LOGON_MSG);
+			return result;
+		}
+		
+		if(
+			request.getCustomerAlipay()==null||
+			request.getCustomerCompany()==null||
+			request.getCustomerMobile()==null||
+			request.getCustomerName()==null||
+			request.getCouponOrderItems()==null||
+			request.getCouponOrderItems().isEmpty())
+			{
+				result.setErrCode(Messages.MISSING_REQUIRED_PARAM_CODE);
+				result.setErrMsg(Messages.MISSING_REQUIRED_PARAM_MSG);
+				return result;
+			}
+		
+		//check if the user is logon
+		Cookie[] cookies=httpServletRequest.getCookies();
+		logger.info("creating order with parms:"+JSON.toJSONString(request)+",cookies:"+JSON.toJSONString(cookies));
+		UserInfo userInfo=userService.getUserInfo(cookies);
+		logger.info("user info is:"+JSON.toJSONString(userInfo));
+		if(userInfo==null||userInfo.getUserId()==null){
+			result.setErrCode(Messages.USER_NOT_LOGON_CODE);
+			result.setErrMsg(Messages.USER_NOT_LOGON_MSG);
+			return result;
+		}
+		
+		//create the order
+		try {
+			Long orderId=rebatesCouponOrderService.createRebatesCouponOrder(request,userInfo);
 			result.setData(orderId);
 		} catch (RebatesException e) {
 			result.setErrCode(e.getErrCode());

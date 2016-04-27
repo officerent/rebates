@@ -61,5 +61,8 @@ public class Messages {
 	
 	public static int FAIL_TO_LOGIN_SOHO3Q_CODE = 117;
 	public static String FAIL_TO_LOGIN_SOHO3Q_MSG = "fail to login soho3q";
+	
+	public static int FAIL_TO_CREATE_SOHO3Q_COUPON_ORDER_CODE = 118;
+	public static String FAIL_TO_CREATE_SOHO3Q_COUPON_ORDER_MSG = "fail to create soho3q coupon order";
 
 }
