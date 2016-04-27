@@ -21,12 +21,15 @@ import com.office.rebates.dal.dataobj.RebatesOrderItem;
 import com.office.rebates.dal.dataobj.SalesPeople;
 import com.office.rebates.dal.dataobj.SalesPeopleExample;
 import com.office.rebates.dal.rest.Soho3qCheckOrderApi;
+import com.office.rebates.dal.rest.Soho3qCreateCouponOrderApi;
 import com.office.rebates.dal.rest.Soho3qCreateOrderApi;
+import com.office.rebates.model.CouponOrderItemModel;
 import com.office.rebates.model.OrderItem;
 import com.office.rebates.model.Soho3qOrder;
 import com.office.rebates.model.UserInfo;
 import com.office.rebates.model.common.Messages;
 import com.office.rebates.model.common.RebatesException;
+import com.office.rebates.model.request.CreateCouponOrderRequest;
 import com.office.rebates.model.request.CreateOrderRequest;
 import com.office.rebates.service.RebatesOrderService;
 import com.office.rebates.util.DateUtil;
@@ -49,6 +52,9 @@ public class RebatesOrderServiceImpl implements RebatesOrderService{
     
 	@Autowired
 	private Soho3qCreateOrderApi soho3qCreateOrderApi;
+	
+	@Autowired
+	private Soho3qCreateCouponOrderApi soho3qCreateCouponOrderApi;
 	
 	@Autowired
 	private NewSalesPeopleMapper newSalesPeopleMapper;
@@ -138,6 +144,82 @@ public class RebatesOrderServiceImpl implements RebatesOrderService{
 		
 		int index=mod.intValue();
 		return salesPeoples.get(index);
+	}
+
+	@Override
+	public Long createRebatesCouponOrder(CreateCouponOrderRequest request, UserInfo userInfo) throws RebatesException {
+		//select a sales people to place to soho3q order
+		Date now=new Date();
+		SalesPeople people=getSalesPeople();
+		logger.info("got sales people to place order:"+JSON.toJSONString(people));
+		
+		//lock the sales people,确保一个销售不能同时下两个订单
+		newSalesPeopleMapper.getAndLockSalesPeople(people.getSalesId());
+		
+		//place order to soho3q
+		Long soho3qOrderId=soho3qCreateCouponOrderApi.createSoho3qCouponOrder(request,people);
+		logger.info("created soho3q order with id:"+soho3qOrderId);
+		if(soho3qOrderId==null){
+			logger.error("fail to create soho3q order");
+			throw new RebatesException(Messages.FAIL_TO_CREATE_SOHO3Q_ORDER_CODE,Messages.FAIL_TO_CREATE_SOHO3Q_ORDER_MSG);
+		}
+		
+		//insert rebates order
+		RebatesOrder rebatesOrder=new RebatesOrder();
+		//rebatesOrder.setCheckinDate(DateUtil.parseDate(request.getCheckInDate(), DateUtil.FORMAT_DEFAULT));
+		//rebatesOrder.setCheckoutDate(DateUtil.parseDate(request.getCheckOutDate(), DateUtil.FORMAT_DEFAULT));
+		rebatesOrder.setCreateTime(now);
+		rebatesOrder.setCustomerAlipay(request.getCustomerAlipay());
+		rebatesOrder.setCustomerCompany(request.getCustomerCompany());
+		rebatesOrder.setCustomerMobile(request.getCustomerMobile());
+		rebatesOrder.setCustomerName(request.getCustomerName());
+		//Double depositAmountCent=request.getDepositAmount()*100;
+		//rebatesOrder.setDepositAmount(depositAmountCent.intValue());
+		rebatesOrder.setLastUpdateTime(now);
+		
+		Double totalPrice=0d;
+		for(CouponOrderItemModel item:request.getCouponOrderItems()){
+			if(item.getPrice()!=null&&item.getAmount()!=null){
+				totalPrice+=item.getPrice()*item.getAmount();
+			}
+		}
+		
+		Double leaseAmountCent=totalPrice*100;
+		rebatesOrder.setLeaseAmount(leaseAmountCent.intValue());
+		//rebatesOrder.setPeriodMonth(request.getPeriodMonth());
+		//rebatesOrder.setPeriodWeek(request.getPeriodWeek());
+		//rebatesOrder.setPorjectId(request.getProjectId());
+		//rebatesOrder.setPorjectName(request.getProjectName());
+		rebatesOrder.setSalesId(people.getSalesId());
+		rebatesOrder.setSoho3qOrderId(soho3qOrderId);
+		rebatesOrder.setUserId(userInfo.getUserId());
+		rebatesOrderMapper.insert(rebatesOrder);
+		logger.info("created soho3q order :"+JSON.toJSONString(rebatesOrder));
+		
+		//insert rebates order items
+		if(request.getCouponOrderItems()!=null&&!request.getCouponOrderItems().isEmpty()){
+			for(CouponOrderItemModel orderItem:request.getCouponOrderItems()){
+				RebatesOrderItem rebatesOrderItem=new RebatesOrderItem();
+				//rebatesOrderItem.setBookNum(orderItem.getBookNum());
+				rebatesOrderItem.setCreateTime(now);
+				//Double depositCent=orderItem.getDepositPrice()*100;
+				//rebatesOrderItem.setDepositPrice(depositCent.intValue());
+				Double priceCent=orderItem.getPrice()*100;//产品单价，单位分
+				rebatesOrderItem.setFinalPrice(priceCent.intValue());
+				rebatesOrderItem.setLastUpdateTime(now);
+				rebatesOrderItem.setOrderId(rebatesOrder.getOrderId());
+				//Double originalPriceCent=orderItem.getOriginalPrice()*100;
+				rebatesOrderItem.setOriginalPrice(priceCent.intValue());
+				//rebatesOrderItem.setPorjectId(orderItem.getProjectId());
+				//rebatesOrderItem.setProductSubType(orderItem.getProductSubType());
+				//rebatesOrderItem.setProductType(orderItem.getProductType());
+				Double totalPriceCent=priceCent*orderItem.getAmount();
+				rebatesOrderItem.setTotalPrice(totalPriceCent.intValue());
+				rebatesOrderItemMapper.insert(rebatesOrderItem);
+				logger.info("created soho3q order item :"+JSON.toJSONString(rebatesOrderItem));
+			}
+		}
+		return rebatesOrder.getOrderId();
 	}
 
 
