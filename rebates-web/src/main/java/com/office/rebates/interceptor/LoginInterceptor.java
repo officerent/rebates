@@ -1,16 +1,10 @@
 package com.office.rebates.interceptor;
 
-import com.alibaba.fastjson.JSON;
-import com.office.rebates.model.UserInfo;
-import com.office.rebates.model.common.Messages;
-import com.office.rebates.util.LoginUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -27,8 +21,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
-        boolean flag = LoginUtils.getLoginStatus(request);
-        return flag;
+        return false;
     }
 
     @Override
