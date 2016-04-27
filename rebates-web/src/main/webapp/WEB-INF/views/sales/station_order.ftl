@@ -78,6 +78,7 @@
                         <tr>
                             <th>选择</th>
                             <th>产品名称</th>
+                            <th>产品数量</th>
                             <th>价格</th>
                         </tr>
                         </thead>
@@ -87,6 +88,7 @@
                                     <tr>
                                         <td name='roomId'><input type="checkbox" name="selectRoom" value="${product.productId!""}"/></td>
                                         <td>${product.title!""}</td>
+                                        <td><span id = "plus" class="glyphicon glyphicon-plus" aria-hidden="true"></span><input name="number" style="width: 100px;"/><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></td>
                                         <td>￥${product.finalPrice!""}/${product.priceTypeStr!""}</td>
                                     </tr>
                                 </#list>
@@ -174,6 +176,22 @@
                 alert(type, "Failed");
             }
         });
+    }
+
+
+//    点击加号
+    function plus(id){
+
+    }
+
+//    点击减号
+    function minus(id){
+
+    }
+
+//    手动输入
+    function input(id){
+
     }
 </script>
 </@layoutFooter>

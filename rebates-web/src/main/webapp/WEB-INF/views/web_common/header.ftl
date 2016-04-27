@@ -21,7 +21,7 @@
                     <a  class="btn btn-icon navbar-btn" href="${path}/user/login.html">登录</a>
                 </span>
                 <span id = "logoutStatus">
-                    <a id="signOut" aria-label="Signout" class="btn btn-icon navbar-btn" href="${path}/user/login.html?param=signOut"><i class="fa fa-sign-out"></i></a>
+                    <a id="signOut" aria-label="Signout" class="btn btn-icon navbar-btn" href="${path}/user/logout.html"><i class="fa fa-sign-out"></i></a>
                 </span>
             </div><!-- /navigation -->
 

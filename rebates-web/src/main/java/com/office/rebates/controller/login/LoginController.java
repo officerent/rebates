@@ -20,30 +20,29 @@ public class LoginController {
     /**
      * 跳转至登录接口
      */
-/*    @RequestMapping(RouteKey.DO_LOGIN)
-    public void login(String param, HttpServletResponse response){
-        if("signOut".equals(param)){
-            //set user_token
-            CookieHelper.setCookie(
-                    Constants.COOKIE_USER_TOKEN
-                    , ""
-                    , PropertiesUtils.prop.get("domain.name")
-                    , "/"
-                    , 0  //cookie有效期0天
-                    , response
-            );
-            //set user_name
-            CookieHelper.setCookie(
-                    Constants.COOKIE_USER_NAME
-                    , ""
-                    , PropertiesUtils.prop.get("domain.name")
-                    , "/"
-                    , 0  //cookie有效期0天
-                    , response
-            );
-        }
-    }*/
-    
+    @RequestMapping(RouteKey.DO_LOGOUT)
+    public String logout(HttpServletResponse response){
+        //set user_token
+        CookieHelper.setCookie(
+                Constants.COOKIE_USER_TOKEN
+                , ""
+                , PropertiesUtils.prop.get("domain.name")
+                , "/"
+                , 0  //cookie有效期0天
+                , response
+        );
+        //set user_name
+        CookieHelper.setCookie(
+                Constants.COOKIE_USER_NAME
+                , ""
+                , PropertiesUtils.prop.get("domain.name")
+                , "/"
+                , 0  //cookie有效期0天
+                , response
+        );
+        return "redirect:login.html";
+    }
+
     @RequestMapping(RouteKey.DO_LOGIN)
     public void login(){
     }
