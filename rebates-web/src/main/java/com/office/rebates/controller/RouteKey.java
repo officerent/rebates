@@ -58,6 +58,9 @@ public class RouteKey {
     
     public static final String REBATES_COUPON = "/coupon";
     public static final String COUPON_LIST = "/coupon_list";
+    
+    public static final String REBATES_INFO= "/info";
+    public static final String REBATES_RATIO= "/rebates_ratio";
 
     //登录
     public static final String DO_LOGIN = "/login.html";

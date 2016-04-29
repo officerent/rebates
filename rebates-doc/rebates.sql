@@ -70,6 +70,7 @@ CREATE TABLE `rebates_order` (
   `period_week` int(11) COMMENT '租期,周',
   `lease_amount` int(11) COMMENT '租金金额，单位分；对于使用权，表示订单总金额',
   `deposit_amount` int(11) COMMENT '押金金额，单位分',
+  `rebates_ratio` decimal(5,2) COMMENT '返利百分率',
   `create_time` datetime comment '创建时间',
   `last_update_time` datetime comment '最后一次更新时间',
   PRIMARY KEY (`order_id`),

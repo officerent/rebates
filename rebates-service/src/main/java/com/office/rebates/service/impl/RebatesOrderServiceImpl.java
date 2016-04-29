@@ -1,5 +1,6 @@
 package com.office.rebates.service.impl;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -33,6 +34,7 @@ import com.office.rebates.model.request.CreateCouponOrderRequest;
 import com.office.rebates.model.request.CreateOrderRequest;
 import com.office.rebates.service.RebatesOrderService;
 import com.office.rebates.util.DateUtil;
+import com.office.rebates.util.PropertiesUtils;
 
 
 @Service
@@ -98,6 +100,8 @@ public class RebatesOrderServiceImpl implements RebatesOrderService{
 		rebatesOrder.setSalesId(people.getSalesId());
 		rebatesOrder.setSoho3qOrderId(soho3qOrderId);
 		rebatesOrder.setUserId(userInfo.getUserId());
+		BigDecimal rebatesRatio=new BigDecimal(PropertiesUtils.prop.get("rebate_ratio"));
+		rebatesOrder.setRebatesRatio(rebatesRatio);
 		rebatesOrderMapper.insert(rebatesOrder);
 		logger.info("created soho3q order :"+JSON.toJSONString(rebatesOrder));
 		
@@ -193,6 +197,8 @@ public class RebatesOrderServiceImpl implements RebatesOrderService{
 		rebatesOrder.setSalesId(people.getSalesId());
 		rebatesOrder.setSoho3qOrderId(soho3qOrderId);
 		rebatesOrder.setUserId(userInfo.getUserId());
+		BigDecimal rebatesRatio=new BigDecimal(PropertiesUtils.prop.get("rebate_ratio"));
+		rebatesOrder.setRebatesRatio(rebatesRatio);
 		rebatesOrderMapper.insert(rebatesOrder);
 		logger.info("created soho3q order :"+JSON.toJSONString(rebatesOrder));
 		

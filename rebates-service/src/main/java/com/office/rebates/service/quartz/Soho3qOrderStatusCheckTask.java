@@ -1,5 +1,6 @@
 package com.office.rebates.service.quartz;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -100,54 +101,46 @@ public class Soho3qOrderStatusCheckTask {
 	}
 	
 	private void updateRebatesBonus(RebatesBonus oldRebateBonus,Soho3qOrder soho3qOrder, Byte rebatesBonusStatus) {
-		oldRebateBonus.setBonusAfterTax(convertYuanToCent(soho3qOrder.getBonusAfterTax()));
-		oldRebateBonus.setBonusBeforeTax(convertYuanToCent(soho3qOrder.getBonus()));
-		oldRebateBonus.setBonusTax(convertYuanToCent(soho3qOrder.getTax()));
-		Date now =new Date();
-		//oldRebateBonus.setCreateTime(now);
-		oldRebateBonus.setLastUpdateTime(now);
-		oldRebateBonus.setLeaseAmount(convertYuanToCent(soho3qOrder.getPaymentAmount()));				
-		if(soho3qOrder.getPaymentAmount()!=null){
-			Integer rebateRatio=Integer.parseInt(PropertiesUtils.prop.get("rebate_ratio"));
-			Integer rebatesAmount=convertYuanToCent(soho3qOrder.getPaymentAmount())*rebateRatio/100;
-			oldRebateBonus.setRebatesAmount(rebatesAmount);
-		}
+
 
 		RebatesOrderExample orderExample=new RebatesOrderExample();
 		orderExample.createCriteria().andSoho3qOrderIdEqualTo(soho3qOrder.getSoho3qOrderId());
 		List<RebatesOrder> rebatesOrders=rebatersOrderMapper.selectByExample(orderExample);
 		if(rebatesOrders.isEmpty()){//没有找到对应的订单
 			logger.info("can't find rebates order for this soho3q order");
+			return;
 		}else{
 			RebatesOrder rebateOrder=rebatesOrders.get(0);
 			logger.info("found rebates order for this soho3q order:"+JSON.toJSONString(rebateOrder));
 			oldRebateBonus.setOrderId(rebateOrder.getOrderId());			
 			oldRebateBonus.setSalesId(rebateOrder.getSalesId());
-		}
-		oldRebateBonus.setSoho3qOrderId(soho3qOrder.getSoho3qOrderId());
-		oldRebateBonus.setSoho3qOrderNum(soho3qOrder.getOrderSubNum());
-		oldRebateBonus.setStatus(rebatesBonusStatus);
-		oldRebateBonus.setSoho3qConfirmedOrderNum(soho3qOrder.getOrderNum());
-		oldRebateBonus.setUpdater(Constants.SYSTEM);
-		rebatersBonusMapper.updateByPrimaryKeySelective(oldRebateBonus);
-		logger.info("updated rebates bonus:"+JSON.toJSONString(oldRebateBonus));
-		
+			
+			oldRebateBonus.setBonusAfterTax(convertYuanToCent(soho3qOrder.getBonusAfterTax()));
+			oldRebateBonus.setBonusBeforeTax(convertYuanToCent(soho3qOrder.getBonus()));
+			oldRebateBonus.setBonusTax(convertYuanToCent(soho3qOrder.getTax()));
+			Date now =new Date();
+			//oldRebateBonus.setCreateTime(now);
+			oldRebateBonus.setLastUpdateTime(now);
+			oldRebateBonus.setLeaseAmount(convertYuanToCent(soho3qOrder.getPaymentAmount()));				
+			if(soho3qOrder.getPaymentAmount()!=null){
+				BigDecimal rebateRatio=rebateOrder.getRebatesRatio();
+				Integer paymentCent=convertYuanToCent(soho3qOrder.getPaymentAmount());
+				Double rebatesDouble=paymentCent*rebateRatio.doubleValue()/100;
+				Integer rebatesAmount=rebatesDouble.intValue();
+				oldRebateBonus.setRebatesAmount(rebatesAmount);
+			}
+			oldRebateBonus.setSoho3qOrderId(soho3qOrder.getSoho3qOrderId());
+			oldRebateBonus.setSoho3qOrderNum(soho3qOrder.getOrderSubNum());
+			oldRebateBonus.setStatus(rebatesBonusStatus);
+			oldRebateBonus.setSoho3qConfirmedOrderNum(soho3qOrder.getOrderNum());
+			oldRebateBonus.setUpdater(Constants.SYSTEM);
+			rebatersBonusMapper.updateByPrimaryKeySelective(oldRebateBonus);
+			logger.info("updated rebates bonus:"+JSON.toJSONString(oldRebateBonus));
+		}		
 	}
 
 	private void insertRebatesBonus(Soho3qOrder soho3qOrder,Byte rebatesBonusStatus) {
-		RebatesBonus rebateBonus=new RebatesBonus();
-		rebateBonus.setBonusAfterTax(convertYuanToCent(soho3qOrder.getBonusAfterTax()));
-		rebateBonus.setBonusBeforeTax(convertYuanToCent(soho3qOrder.getBonus()));
-		rebateBonus.setBonusTax(convertYuanToCent(soho3qOrder.getTax()));
-		Date now =new Date();
-		rebateBonus.setCreateTime(now);
-		rebateBonus.setLastUpdateTime(now);
-		rebateBonus.setLeaseAmount(convertYuanToCent(soho3qOrder.getPaymentAmount()));				
-		if(soho3qOrder.getPaymentAmount()!=null){
-			Integer rebateRatio=Integer.parseInt(PropertiesUtils.prop.get("rebate_ratio"));
-			Integer rebatesAmount=convertYuanToCent(soho3qOrder.getPaymentAmount())*rebateRatio/100;
-			rebateBonus.setRebatesAmount(rebatesAmount);
-		}
+
 
 		RebatesOrderExample orderExample=new RebatesOrderExample();
 		orderExample.createCriteria().andSoho3qOrderIdEqualTo(soho3qOrder.getSoho3qOrderId());
@@ -155,18 +148,36 @@ public class Soho3qOrderStatusCheckTask {
 		if(rebatesOrders.isEmpty()){//没有找到对应的订单
 			logger.info("can't find rebates order for this soho3q order");
 		}else{
+			RebatesBonus rebateBonus=new RebatesBonus();
+			rebateBonus.setBonusAfterTax(convertYuanToCent(soho3qOrder.getBonusAfterTax()));
+			rebateBonus.setBonusBeforeTax(convertYuanToCent(soho3qOrder.getBonus()));
+			rebateBonus.setBonusTax(convertYuanToCent(soho3qOrder.getTax()));
+			Date now =new Date();
+			rebateBonus.setCreateTime(now);
+			rebateBonus.setLastUpdateTime(now);
+			rebateBonus.setLeaseAmount(convertYuanToCent(soho3qOrder.getPaymentAmount()));				
+			
 			RebatesOrder rebateOrder=rebatesOrders.get(0);
 			logger.info("found rebates order for this soho3q order:"+JSON.toJSONString(rebateOrder));
+			
+			if(soho3qOrder.getPaymentAmount()!=null){
+				BigDecimal rebateRatio=rebateOrder.getRebatesRatio();
+				Integer paymentCent=convertYuanToCent(soho3qOrder.getPaymentAmount());
+				Double rebatesDouble=paymentCent*rebateRatio.doubleValue()/100;
+				Integer rebatesAmount=rebatesDouble.intValue();
+				rebateBonus.setRebatesAmount(rebatesAmount);
+			}
+			
 			rebateBonus.setOrderId(rebateOrder.getOrderId());			
 			rebateBonus.setSalesId(rebateOrder.getSalesId());
+			rebateBonus.setSoho3qOrderId(soho3qOrder.getSoho3qOrderId());
+			rebateBonus.setSoho3qOrderNum(soho3qOrder.getOrderSubNum());
+			rebateBonus.setStatus(rebatesBonusStatus);
+			rebateBonus.setSoho3qConfirmedOrderNum(soho3qOrder.getOrderNum());
+			rebateBonus.setUpdater(Constants.SYSTEM);
+			rebatersBonusMapper.insert(rebateBonus);
+			logger.info("insert rebates bonus:"+JSON.toJSONString(rebateBonus));
 		}
-		rebateBonus.setSoho3qOrderId(soho3qOrder.getSoho3qOrderId());
-		rebateBonus.setSoho3qOrderNum(soho3qOrder.getOrderSubNum());
-		rebateBonus.setStatus(rebatesBonusStatus);
-		rebateBonus.setSoho3qConfirmedOrderNum(soho3qOrder.getOrderNum());
-		rebateBonus.setUpdater(Constants.SYSTEM);
-		rebatersBonusMapper.insert(rebateBonus);
-		logger.info("insert rebates bonus:"+JSON.toJSONString(rebateBonus));
 	}
 
 	private Integer convertYuanToCent(Double bonusAfterTax) {
