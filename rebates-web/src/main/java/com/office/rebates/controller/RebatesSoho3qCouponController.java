@@ -25,7 +25,7 @@ import com.office.rebates.service.Soho3qCouponService;
 
 
 @Controller
-@RequestMapping(RouteKey.PREFIX_AJAX+"/"+RouteKey.REBATES_COUPON)
+@RequestMapping(RouteKey.PREFIX_AJAX+"/"+RouteKey.SOHO3Q)
 public class RebatesSoho3qCouponController {
     @Autowired
     private Soho3qCouponService soho3qCouponService;
@@ -33,14 +33,12 @@ public class RebatesSoho3qCouponController {
     
     static Logger logger = LoggerFactory.getLogger(RebatesSoho3qCouponController.class);
 	
-    //注册用户
     @ResponseBody
 	@RequestMapping(value = RouteKey.COUPON_LIST, method = RequestMethod.GET)
 	public ResultCode<List<CouponModel>> getCouponList() {
     	//logger.info("registering user with name:"+userName+",password:"+password);
     	ResultCode<List<CouponModel>> result=new ResultCode<List<CouponModel>>();		
 		
-		//create the user
 		try {
 			List<CouponModel> couponList=soho3qCouponService.getCouponList();
 			result.setData(couponList);

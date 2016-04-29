@@ -26,8 +26,7 @@ public class Soho3qCouponServiceImpl implements Soho3qCouponService{
 
 	@Override
 	public List<CouponModel> getCouponList() throws RebatesException {
-		// TODO Auto-generated method stub
-		return null;
+		return soho3qGetCouponListApi.getCouponList();
 	}
 	
 
