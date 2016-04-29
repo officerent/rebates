@@ -55,6 +55,9 @@ public class RouteKey {
     public static final String REBATES_USER = "/user";
     public static final String REGISTER_USER = "/register";   
     public static final String LOGIN = "/login";
+    
+    public static final String REBATES_COUPON = "/coupon";
+    public static final String COUPON_LIST = "/coupon_list";
 
     //登录
     public static final String DO_LOGIN = "/login.html";
