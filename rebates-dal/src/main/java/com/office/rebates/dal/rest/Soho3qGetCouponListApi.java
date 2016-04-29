@@ -17,6 +17,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.office.rebates.model.CouponModel;
+import com.office.rebates.model.common.Constants;
 import com.office.rebates.model.common.Messages;
 import com.office.rebates.model.common.RebatesException;
 
@@ -61,6 +62,23 @@ public class Soho3qGetCouponListApi {
 						if(listData!=null){
 							for(int i=0;i<listData.size();i++){
 								CouponModel coupon=JSON.parseObject(listData.getString(i),CouponModel.class);
+								if(Constants.CONPON_TYPE_MEMBERSHIP.equals(coupon.getCouponType())){
+									coupon.setDescription(Constants.DESCRIPTION_MEMBERSHIP);
+								}else if(Constants.CONPON_TYPE_STANDARD.equals(coupon.getCouponType())){
+									if(Constants.PRODUCT_TYPE_OPEN_STATION.equals(coupon.getProductType())){
+										coupon.setDescription(Constants.DESCRIPTION_OPEN_STATION);
+									}else if(Constants.PRODUCT_TYPE_ROOM.equals(coupon.getProductType())){
+										coupon.setDescription(Constants.DESCRIPTION_ROOM);
+									}
+								}
+								
+								if("*".equals(coupon.getCityId())){
+									coupon.setCityName("全国通用");
+								}
+								
+								if("*".equals(coupon.getProjectId())){
+									coupon.setProjectName("所有SOHO3Q通用");
+								}
 								//logger.info("got sales order :"+JSON.toJSONString(soho3qOrder));
 								couponList.add(coupon);
 							}
