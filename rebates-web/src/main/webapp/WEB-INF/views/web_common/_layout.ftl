@@ -134,6 +134,12 @@
             });
         </script>
 
+        <#--日期格式化-->
+        <script src="${path}/wrap/web/js/dateFormat.js"></script>
+
+        <script src="${path}/wrap/web/js/jquery.dateFormat.js"></script>
+
+
         <#nested>
     </body>
 </html>

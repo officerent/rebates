@@ -21,7 +21,7 @@
                             选择项目：
                             <div class="form-group">
                                 <label class="select">
-                                    <select id="projectId">
+                                    <select id="projectId" onchange="reacquireRoom();">
                                         <#list project as p>
                                             <option value="${p.projectId!''}" >${p.projectName!''}</option>
                                         </#list>
@@ -31,13 +31,13 @@
                             选择入驻时间：
                             <div class="form-group" >
                                <label class="select">
-                                   <input id="startTime" onclick="validatepicker(this)" data-date-format="yyyy-MM-dd" class="form-control date form_date validate[required]" name="startTime" placeholder="开始时间" value="${startTime!''}"/>
+                                   <input id="startTime" onclick="validatepicker(this)"  data-date-format="yyyy-MM-dd" class="form-control date form_date validate[required]" name="startTime" placeholder="开始时间" value="${startTime!''}"/>
                                </label>
                             </div><!-- /form-group -->
                             入驻时长：
                             <div class="form-group" style="width: 100px">
                                 <label class="select">
-                                    <select id="month">
+                                    <select id="month" onchange="reacquireRoom()">
                                         <option value="0">0</option>
                                         <option value="1" selected="selected">1</option>
                                         <option value="2">2</option>
@@ -57,7 +57,7 @@
                             （月）
                             <div class="form-group" style="width: 100px">
                                 <label class="select">
-                                    <select id="week">
+                                    <select id="week" onchange="reacquireRoom()">
                                         <option value="0" selected="selected">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -78,7 +78,8 @@
                         <tr>
                             <th>选择</th>
                             <th>产品名称</th>
-                            <th>产品数量</th>
+                            <th>产品剩余数量</th>
+                            <th>选择数量</th>
                             <th>价格</th>
                         </tr>
                         </thead>
@@ -86,9 +87,10 @@
                             <#if productList??>
                                 <#list productList as product>
                                     <tr>
-                                        <td name='roomId'><input type="checkbox" name="selectRoom" value="${product.productId!""}"/></td>
+                                        <td name='roomId'><input type="checkbox" name="selectRoom" value="${product.productSubtype!""}"/></td>
                                         <td>${product.title!""}</td>
-                                        <td><span id = "plus" class="glyphicon glyphicon-plus" aria-hidden="true"></span><input name="number" style="width: 100px;"/><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></td>
+                                        <td>${product.remainedNum!""}</td>
+                                        <td><span id = "plus" class="glyphicon glyphicon-plus" aria-hidden="true"></span><input name="number" style="width: 100px;"/><span id = "minus" class="glyphicon glyphicon-minus" aria-hidden="true"></span></td>
                                         <td>￥${product.finalPrice!""}/${product.priceTypeStr!""}</td>
                                     </tr>
                                 </#list>
@@ -137,10 +139,12 @@
     var date = new Date;
     $("#currentYear").append(date.getFullYear());
 
-    $("#projectId").on("change",function(){
-
-    });
-
+    /**
+     * 获取项目列表
+     * @param projectId 项目id
+     * @param checkInDate 开始时间
+     * @param checkOutDate 结束时间
+     */
     function getProductList(projectId,checkInDate,checkOutDate){
         var formDate = {
             projectId:projectId,
@@ -154,7 +158,7 @@
             data:formDate,
             success:function(data){
                 if(data.errCode==0){
-                    var list = data.result;
+                    var list = data.data;
                     $("#productList").empty();
                     var str = "";
                     for(var i = 0;i<list.length;i++){
@@ -178,6 +182,19 @@
         });
     }
 
+    /**
+     * 重新获取房源
+     */
+    function reacquireRoom(){
+        var projectId = $("#projectId").val();
+        var startTime = $("#startTime").val();
+        var month = $("#month").val();
+        var week = $("#week").val();
+        var endTime = changeDate(startTime,month,week);
+        getProductList(projectId,startTime,endTime);
+    }
+
+
 
 //    点击加号
     function plus(id){
@@ -193,5 +210,20 @@
     function input(id){
 
     }
+
+    /**
+     * 修改时间方法
+     * @param startTime 开始时间
+     * @param month 添加月份
+     * @param day 添加天数
+     */
+    function changeDate(startTime,month,day){
+        var now = new Date(startTime);
+       // now.setDate(startTime);
+        now.setMonth(now.getMonth() + parseInt(month))
+        now.setDate(now.getDate() +  parseInt(day));
+        return $.format.date(now,"yyyy-MM-dd");
+    }
+
 </script>
 </@layoutFooter>
