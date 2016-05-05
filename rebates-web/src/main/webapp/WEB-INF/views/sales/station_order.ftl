@@ -31,7 +31,7 @@
                             选择入驻时间：
                             <div class="form-group" >
                                <label class="select">
-                                   <input id="startTime" onclick="validatepicker(this)"  data-date-format="yyyy-MM-dd" class="form-control date form_date validate[required]" name="startTime" placeholder="开始时间" value="${startTime!''}"/>
+                                   <input id="startTime" onclick="validatepicker(this)" onchange="reacquireRoom()" data-date-format="yyyy-MM-dd" class="form-control date form_date validate[required]" name="startTime" placeholder="开始时间" value="${startTime!''}"/>
                                </label>
                             </div><!-- /form-group -->
                             入驻时长：
@@ -87,10 +87,24 @@
                             <#if productList??>
                                 <#list productList as product>
                                     <tr>
-                                        <td name='roomId'><input type="checkbox" name="selectRoom" value="${product.productSubtype!""}"/></td>
+                                        <td name='roomId'>
+                                            <#if product.remainedNum  gt 0 >
+                                                <input type="checkbox" name="selectRoom" value="${product.price!""}-${product.finalPrice!""}-${product.deposit!""}-${product.productType!""}-${product.productSubtype!""}-${product.remainedNum!""}"/>
+                                            <#else >
+                                                <input type="checkbox" name="selectRoom" value="${product.price!""}-${product.finalPrice!""}-${product.deposit!""}-${product.productType!""}-${product.productSubtype!""}-${product.remainedNum!""}" disabled = disabled/>
+                                            </#if>
+                                        </td>
                                         <td>${product.title!""}</td>
                                         <td>${product.remainedNum!""}</td>
-                                        <td><span id = "plus" class="glyphicon glyphicon-plus" aria-hidden="true"></span><input name="number" style="width: 100px;"/><span id = "minus" class="glyphicon glyphicon-minus" aria-hidden="true"></span></td>
+                                        <td>
+                                            <#if product.remainedNum  gt 0 >
+                                                <span onclick="plus('${product.price!""}-${product.finalPrice!""}-${product.deposit!""}-${product.productType!""}-${product.productSubtype!""}-${product.remainedNum!""}')" class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                                <input id="number-${product.price!""}-${product.finalPrice!""}-${product.deposit!""}-${product.productType!""}-${product.productSubtype!""}-${product.remainedNum!""}" name="number" style="width: 100px;" onblur="input('number-${product.price!""}-${product.finalPrice!""}-${product.deposit!""}-${product.productType!""}-${product.productSubtype!""}-${product.remainedNum!""}');" value = "0"/>
+                                                <span onclick="minus('${product.price!""}-${product.finalPrice!""}-${product.deposit!""}-${product.productType!""}-${product.productSubtype!""}-${product.remainedNum!""}')" class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+                                            <#else >
+                                                暂无工位
+                                            </#if>
+                                        </td>
                                         <td>￥${product.finalPrice!""}/${product.priceTypeStr!""}</td>
                                     </tr>
                                 </#list>
@@ -99,16 +113,137 @@
                     </table>
                 </div><!-- /.table-responsive -->
                 </div><!-- /.cols -->
+
+                <div class = "row">
+                    <div class="col-md-3">
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">
+                                客户手机号<span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <input name="customerMobile" type="text"  class="form-control validate[required]"  />
+                                </br>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">
+                                客户姓名<span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <input name="customerName" type="text"  class="form-control validate[required]"  />
+                                </br>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">
+                                客户公司<span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <input name="customerCompany" type="text"  class="form-control validate[required]"  />
+                                </br>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">
+                                客户支付宝账号<span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <input name="customerAlipay" type="text"  class="form-control validate[required]"  />
+                                </br>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-12 control-label">
+                                押金金额: &nbsp;<span id="depositAmount" >0</span>
+                            </label>
+                            </br>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-12 control-label">
+                                租金金额:&nbsp;<span id="leaseAmount" >0</span>
+                            </label>
+                            </br>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-12 control-label">
+                                总金额:&nbsp;<span id="totalAmount" >0</span>
+                            </label>
+                            </br>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+
+                    </div>
+                </div>
+                </br>
                 <div class="col-md-offset-3 col-md-9">
-                    <button class="btn btn-info" type="submit" style="left: 35%;">
-                        提交
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#customModal3">
+                        确认信息
                     </button>
+                    <#--<button class="btn btn-info" type="submit" style="left: 35%;">-->
+                        <#--确认-->
+                    <#--</button>-->
                     <button class="btn" type="reset" onclick="javascript:history.go(-1)">
                         返回
                     </button>
                 </div>
             </div><!-- /.content-body -->
 
+        <!-- customModal3 -->
+        <div class="modal" id="customModal3" data-transition="flipYIn" tabindex="-1" role="dialog" aria-labelledby="customModal3Label" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header bg-red">
+                        <h4 class="modal-title">
+                            <a href="#" data-dismiss="modal" class="pull-right" title="Continue shopping" data-toggle="tooltip" data-container="body">
+                                <i class="icon-basket-loaded"></i>
+                            </a>My Cart
+                        </h4>
+                    </div>
+                    <div class="panel-body">
+                        <p class="fa-2x pull-right"><strong><sup>$</sup>58<sup>.5</sup></strong></p>
+                        <p class="lead">Current total</p>
+                        <p class="text-muted">Please confirm your order!</p>
+                    </div>
+                    <table class="table no-margin">
+                        <tbody>
+                        <tr>
+                            <td class="text-center"><div class="fa fa-cutlery text-red"></div></td>
+                            <td>Soto Babat</td>
+                            <td class="text-muted"><strong><sup>$</sup> 12.5</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="text-center"><div class="icon-cup text-red"></div></td>
+                            <td>Jahe Wangi</td>
+                            <td class="text-muted"><strong><sup>$</sup> 8.0</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="text-center"><div class="fa fa-cutlery text-red"></div></td>
+                            <td>Sate&nbsp;&nbsp;&nbsp;<span class="text-muted" title="Deal added"><i class="icon-tag" aria-label="deal tag"></i> <small>#AUG15</small></span></td>
+                            <td class="text-muted"><strong><sup>$</sup> 20.0</strong></td>
+                        </tr>
+                        <td class="text-center"><div class="fa fa-cutlery text-red"></div></td>
+                        <td>Megono</td>
+                        <td class="text-muted"><strong><sup>$</sup> 12.0</strong></td>
+
+                        <tr>
+                            <td class="text-center"><div class="icon-cup text-red"></div></td>
+                            <td>Sop Buah</td>
+                            <td class="text-muted"><strong><sup>$</sup> 6.0</strong></td>
+                        </tr>
+                        <tr>
+                        </tr></tbody>
+                    </table>
+                    <div class="modal-footer">
+                        <a href="#" class="btn btn-danger btn-nofill">Confirm Order</a>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
 
             <!-- Template Setups -->
             <div class="modal fade" id="templateSetup">
@@ -146,6 +281,10 @@
      * @param checkOutDate 结束时间
      */
     function getProductList(projectId,checkInDate,checkOutDate){
+        //清零
+        setAmountValue("leaseAmount",0);
+        setAmountValue("depositAmount",0);
+        setAmountValue("totalAmount",0);
         var formDate = {
             projectId:projectId,
             checkInDate:checkInDate,
@@ -162,7 +301,26 @@
                     $("#productList").empty();
                     var str = "";
                     for(var i = 0;i<list.length;i++){
-                        str += "<tr><td name='roomId'>"+list[i].productId+"</td><td>"+list[i].title+"</td><td>￥"+list[i].finalPrice+"/"+list[i].priceTypeStr+"</td></tr>";
+                        var product = list[i];
+                        if(product.remainedNum > 0){
+                            str += '<tr>'+
+                                    '<td name="roomId"><input type="checkbox" name="selectRoom" value="'+product.price+'-'+product.finalPrice+'-'+product.deposit+'-'+product.productType+'-'+product.productSubtype+'-'+product.remainedNum+'"/></td>'+
+                                    '<td>'+product.title+'</td>'+
+                                    '<td>'+product.remainedNum+'</td>'+
+                                    '<td><span onclick="plus(\''+product.price+'-'+product.finalPrice+'-'+product.deposit+'-'+product.productType+'-'+product.productSubtype+'-'+product.remainedNum+'\')" class="glyphicon glyphicon-plus" aria-hidden="true"></span>'+
+                                    '<input id="number-'+product.price+'-'+product.finalPrice+'-'+product.deposit+'-'+product.productType+'-'+product.productSubtype+'-'+product.remainedNum+'" name="number" style="width: 100px;" onblur="input(\'number-'+product.price+'-'+product.finalPrice+'-'+product.deposit+'-'+product.productType+'-'+product.productSubtype+'-'+product.remainedNum+'\');" value = "0"/>'+
+                                    '<span onclick="minus(\''+product.price+'-'+product.finalPrice+'-'+product.deposit+'-'+product.productType+'-'+product.productSubtype+'-'+product.remainedNum+'\')" class="glyphicon glyphicon-minus" aria-hidden="true"></span></td>'+
+                                    '<td>￥'+product.finalPrice+'/'+product.priceTypeStr+'</td>'+
+                                    '</tr>';
+                        }else{
+                            str += '<tr>'+
+                                    '<td name="roomId"><input type="checkbox" name="selectRoom" value="'+product.price+'-'+product.finalPrice+'-'+product.deposit+'-'+product.productType+'-'+product.productSubtype+'-'+product.remainedNum+'" disabled = disabled/></td>'+
+                                    '<td>'+product.title+'</td>'+
+                                    '<td>'+product.remainedNum+'</td>'+
+                                    '<td>暂无工位</td>'+
+                                    '<td>￥'+product.finalPrice+'/'+product.priceTypeStr+'</td>'+
+                                    '</tr>';
+                        }
                     }
                     $("#productList").append(str);
                 }else{
@@ -194,22 +352,120 @@
         getProductList(projectId,startTime,endTime);
     }
 
+    /**
+     *  获取数值
+     */
+    function getAmountValue(id){
+       var amount = $("#"+id).text();
+        if(amount != null && amount != "" && amount !=0){
+            return parseFloat(amount);
+        }else{
+            return 0;
+        }
+    }
 
+    /**
+     * 设置数值
+     */
+    function setAmountValue(id,value){
+        var amount = $("#"+id);
+        amount.empty();
+        if(value != undefined && value != null && value != ""){
+            amount.append(value);
+        }else{
+            amount.append(0);
+        }
+    }
 
 //    点击加号
     function plus(id){
-
+        var number = parseInt($("#number-"+id).val());
+        var array = id.split("-");
+        var remainedNum = parseInt(array[5]);
+        if(number < remainedNum){
+            number ++;
+            checkedItem(id,'checked');
+        }else{
+            alert("不能超过工位剩余数");
+        }
+        $("#number-"+id).val(number);
+        sumTotal();
     }
 
 //    点击减号
     function minus(id){
-
+        var number = parseInt($("#number-"+id).val());
+        if(number > 0){
+            number --;
+            if(number == 0 ){
+                checkedItem(id,'cancel');
+            }
+        }else{
+            checkedItem(id,'cancel');
+            alert("工位数不能小于零");
+        }
+        $("#number-"+id).val(number);
+        sumTotal();
     }
 
 //    手动输入
     function input(id){
+        var number = parseInt($("#number-"+id).val());
+        var array = id.split("-");
+        var remainedNum = parseInt(array[5]);
+        if(number >= 0 && number <= remainedNum){
+            $("#number-"+id).val(number);
+            checkedItem(id,'checked');
+        }else{
+            $("#number-"+id).val(0);
+            checkedItem(id,'cancel');
+            alert("工位数不能小于零,并且不能大于剩余工位数");
+        }
 
+        sumTotal();
     }
+
+    function sumTotal(){
+        var sumLeaseAmount = 0;
+        var sumDepositAmount = 0;
+        var sumTotalAmount = 0;
+        $("input[type='checkbox'][name='selectRoom']:checked").each(
+                function(){
+                    var checkBoxValue = $(this).val();
+                    var roomValueArray =  checkBoxValue.split("-");
+                    var checkedNumber =  $("#number-"+checkBoxValue).val();
+                    sumLeaseAmount += roomValueArray[1] * checkedNumber;
+                    sumDepositAmount += roomValueArray[4] * roomValueArray[2];
+                }
+        );
+        sumTotalAmount = sumLeaseAmount + sumDepositAmount;
+        setAmountValue("leaseAmount",sumLeaseAmount);
+        setAmountValue("depositAmount",sumDepositAmount);
+        setAmountValue("totalAmount",sumTotalAmount);
+    }
+
+    function checkedItem(value,status){
+        if(status == "cancel"){
+            $("input[type='checkbox'][name='selectRoom']").each(
+                    function(){
+                        var checkBoxValue = $(this).val();
+                        if(checkBoxValue == value){
+                            $(this).prop("checked",false);
+                        }
+                    }
+            );
+        }else{
+            $("input[type='checkbox'][name='selectRoom']").each(
+                    function(){
+                        var checkBoxValue = $(this).val();
+                        if(checkBoxValue == value){
+                            $(this).prop("checked", true);
+                        }
+                    }
+            );
+        }
+    }
+
 
     /**
      * 修改时间方法
