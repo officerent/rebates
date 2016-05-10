@@ -181,7 +181,7 @@
                 </div>
                 </br>
                 <div class="col-md-offset-3 col-md-9">
-                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#customModal3">
+                    <button type="button" onclick="confirmInformation()" class="btn btn-info" data-toggle="modal" data-target="#customModal3">
                         确认信息
                     </button>
                     <#--<button class="btn btn-info" type="submit" style="left: 35%;">-->
@@ -201,42 +201,22 @@
                         <h4 class="modal-title">
                             <a href="#" data-dismiss="modal" class="pull-right" title="Continue shopping" data-toggle="tooltip" data-container="body">
                                 <i class="icon-basket-loaded"></i>
-                            </a>My Cart
+                            </a>我的购物车
                         </h4>
                     </div>
                     <div class="panel-body">
-                        <p class="fa-2x pull-right"><strong><sup>$</sup>58<sup>.5</sup></strong></p>
-                        <p class="lead">Current total</p>
-                        <p class="text-muted">Please confirm your order!</p>
+                        <p class="fa-2x pull-right"><strong><sup>¥</sup><sup id="confirmDepositAmount"></sup></strong></p>
+                        <p class="lead">押金总额:</p>
+                        <p class="fa-2x pull-right"><strong><sup>¥</sup><sup id="confirmLeaseAmount"></sup></strong></p>
+                        <p class="lead">租金总额:</p>
+                        <p class="fa-2x pull-right"><strong><sup>¥</sup><sup id="confirmTotalAmount"></sup></strong></p>
+                        <p class="lead">总金额:</p>
+                        <p class="text-muted">请确认你的订单</p>
                     </div>
                     <table class="table no-margin">
-                        <tbody>
-                        <tr>
-                            <td class="text-center"><div class="fa fa-cutlery text-red"></div></td>
-                            <td>Soto Babat</td>
-                            <td class="text-muted"><strong><sup>$</sup> 12.5</strong></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center"><div class="icon-cup text-red"></div></td>
-                            <td>Jahe Wangi</td>
-                            <td class="text-muted"><strong><sup>$</sup> 8.0</strong></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center"><div class="fa fa-cutlery text-red"></div></td>
-                            <td>Sate&nbsp;&nbsp;&nbsp;<span class="text-muted" title="Deal added"><i class="icon-tag" aria-label="deal tag"></i> <small>#AUG15</small></span></td>
-                            <td class="text-muted"><strong><sup>$</sup> 20.0</strong></td>
-                        </tr>
-                        <td class="text-center"><div class="fa fa-cutlery text-red"></div></td>
-                        <td>Megono</td>
-                        <td class="text-muted"><strong><sup>$</sup> 12.0</strong></td>
+                        <tbody id="confirmList">
 
-                        <tr>
-                            <td class="text-center"><div class="icon-cup text-red"></div></td>
-                            <td>Sop Buah</td>
-                            <td class="text-muted"><strong><sup>$</sup> 6.0</strong></td>
-                        </tr>
-                        <tr>
-                        </tr></tbody>
+                        </tbody>
                     </table>
                     <div class="modal-footer">
                         <a href="#" class="btn btn-danger btn-nofill">Confirm Order</a>
@@ -273,6 +253,110 @@
 <script>
     var date = new Date;
     $("#currentYear").append(date.getFullYear());
+
+    //订单实体
+    var createOrder = {
+        customerMobile : "",
+        customerName : "",
+        customerCompany : "",
+        customerAlipay : "",
+        projectId : "",
+        projectName : "",
+        checkInDate : "",
+        checkOutDate : "",
+        periodMonth : "",
+        periodWeek : "",
+        leaseAmount : "",
+        depositAmount : "",
+        orderItems : [
+            {
+                projectId : "",
+                originalPrice : "",
+                finalPrice : "",
+                depositPrice : "",
+                productType : "",
+                productSubType : "",
+                bookNum : ""
+            }
+        ]
+    }
+
+    var orderItem = {
+        projectId : "",
+        originalPrice : "",
+        finalPrice : "",
+        depositPrice : "",
+        productType : "",
+        productSubType : "",
+        bookNum : ""
+    }
+
+    /**
+     * 确认信息页,对象装载
+     */
+    function confirmInformation(){
+        var flag = true;
+        var customerMobile = getValueByName("customerMobile");
+        var customerName = getValueByName("customerName");
+        var customerCompany = getValueByName("customerCompany");
+        var customerAlipay = getValueByName("customerAlipay");
+        var projectId = getValueById("projectId");
+        var projectName = $("#projectId").find("option:selected").text();
+        var checkInDate = getValueById("startTime");
+        var periodMonth = getValueById("month");
+        var periodWeek = getValueById("week");
+        var checkOutDate = changeDate(checkInDate,periodMonth,periodWeek);
+        var leaseAmount= getAmountValue("leaseAmount");
+        var depositAmount = getAmountValue("depositAmount");
+        createOrder.customerMobile = customerMobile;
+        createOrder.customerName = customerName;
+        createOrder.customerCompany = customerCompany;
+        createOrder.customerAlipay = customerAlipay;
+        createOrder.projectId = projectId;
+        createOrder.projectName = projectName;
+        createOrder.checkInDate = checkInDate;
+        createOrder.checkOutDate = checkOutDate;
+        createOrder.periodMonth = periodMonth;
+        createOrder.periodWeek = periodWeek;
+        createOrder.leaseAmount = leaseAmount;
+        createOrder.depositAmount = depositAmount;
+        $("input[type='checkbox'][name='selectRoom']:checked").each(
+                function(){
+                    var checkBoxValue = $(this).val();
+                    var roomValueArray =  checkBoxValue.split("-");
+                    var originalPrice = roomValueArray[0];
+                    var finalPrice = roomValueArray[1];
+                    var depositPrice = roomValueArray[2];
+                    var productType = roomValueArray[3];
+                    var productSubType = roomValueArray[4];
+                    var bookNum = $("#number-"+checkBoxValue).val();
+                    if(bookNum > 0){
+                        flag = false;
+                        orderItem.projectId = projectId;
+                        orderItem.bookNum = bookNum;
+                        orderItem.depositPrice = depositPrice;
+                        orderItem.finalPrice = finalPrice;
+                        orderItem.originalPrice = originalPrice;
+                        orderItem.productSubType = productSubType;
+                        orderItem.productType = productType;
+                        createOrder.orderItems.push(orderItem);
+                    }
+                }
+        );
+        if(flag){
+            alert("请至少选择一个商品");
+        }else{
+            var str = "";
+            var list = createOrder.orderItems;
+            for(var i = 0;i<list.length;i++){
+                str +='<tr>'+
+                        '<td>'+list[i].+'</td>'+
+                        '<td class="text-muted"><strong><sup>¥</sup></strong></td>'+
+                        '</tr>';
+            }
+        }
+
+    }
 
     /**
      * 获取项目列表
@@ -365,6 +449,30 @@
     }
 
     /**
+     * 通过id获取值
+     */
+    function getValueById(id){
+        var value = $("#"+id).val()
+        if(value != undefined && value != null && value != ""){
+            return value;
+        }else{
+            return "";
+        }
+    }
+
+    /**
+     * 通过名字
+     */
+    function getValueByName(name){
+        var value = $("input[name='"+name+"']").val()
+        if(value != undefined && value != null && value != ""){
+            return value;
+        }else{
+            return "";
+        }
+    }
+
+    /**
      * 设置数值
      */
     function setAmountValue(id,value){
@@ -435,7 +543,7 @@
                     var roomValueArray =  checkBoxValue.split("-");
                     var checkedNumber =  $("#number-"+checkBoxValue).val();
                     sumLeaseAmount += roomValueArray[1] * checkedNumber;
-                    sumDepositAmount += roomValueArray[4] * roomValueArray[2];
+                    sumDepositAmount += roomValueArray[4] * roomValueArray[2] * checkedNumber;
                 }
         );
         sumTotalAmount = sumLeaseAmount + sumDepositAmount;
