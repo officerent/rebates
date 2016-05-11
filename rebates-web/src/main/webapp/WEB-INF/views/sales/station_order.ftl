@@ -181,12 +181,11 @@
                 </div>
                 </br>
                 <div class="col-md-offset-3 col-md-9">
-                    <button type="button" onclick="confirmInformation()" class="btn btn-info" data-toggle="modal" data-target="#customModal3">
+                    <a id="confirmButton" type="hidden"  data-toggle="modal" data-target="#customModal3">
+                    </a>
+                    <button onclick="confirmInformation()" class="btn btn-info" style="left: 35%;">
                         确认信息
                     </button>
-                    <#--<button class="btn btn-info" type="submit" style="left: 35%;">-->
-                        <#--确认-->
-                    <#--</button>-->
                     <button class="btn" type="reset" onclick="javascript:history.go(-1)">
                         返回
                     </button>
@@ -195,7 +194,7 @@
 
         <!-- customModal3 -->
         <div class="modal" id="customModal3" data-transition="flipYIn" tabindex="-1" role="dialog" aria-labelledby="customModal3Label" aria-hidden="true">
-            <div class="modal-dialog modal-sm">
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header bg-red">
                         <h4 class="modal-title">
@@ -219,7 +218,7 @@
                         </tbody>
                     </table>
                     <div class="modal-footer">
-                        <a href="#" class="btn btn-danger btn-nofill">Confirm Order</a>
+                        <a href="#" onclick="submitOrder();" class="btn btn-danger btn-nofill">提交订单</a>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -269,15 +268,7 @@
         leaseAmount : "",
         depositAmount : "",
         orderItems : [
-            {
-                projectId : "",
-                originalPrice : "",
-                finalPrice : "",
-                depositPrice : "",
-                productType : "",
-                productSubType : "",
-                bookNum : ""
-            }
+
         ]
     }
 
@@ -320,6 +311,7 @@
         createOrder.periodWeek = periodWeek;
         createOrder.leaseAmount = leaseAmount;
         createOrder.depositAmount = depositAmount;
+        createOrder.orderItems.splice(0,createOrder.orderItems.length);
         $("input[type='checkbox'][name='selectRoom']:checked").each(
                 function(){
                     var checkBoxValue = $(this).val();
@@ -346,16 +338,55 @@
         if(flag){
             alert("请至少选择一个商品");
         }else{
+            $("#confirmButton").click();
             var str = "";
+            var stationNumber = 0;
+            var depositPrice = parseInt(createOrder.orderItems[0].depositPrice);
             var list = createOrder.orderItems;
             for(var i = 0;i<list.length;i++){
+                var title = "";
+                if(list[i].productSubType == 1){
+                    title = list[i].productSubType + "人办公桌";
+                }else{
+                    title = list[i].productSubType + "人独立办公室";
+                }
+                stationNumber += parseInt(list[i].productSubType);
+                var content = list[i].finalPrice + "/周*" + parseInt(createOrder.periodMonth) * 4 + parseInt(createOrder.periodWeek) + "*"+list[i].bookNum;
+                var price = list[i].finalPrice * (parseInt(createOrder.periodMonth) * 4 + parseInt(createOrder.periodWeek)) * parseInt(list[i].bookNum);
                 str +='<tr>'+
-                        '<td>'+list[i].+'</td>'+
-                        '<td class="text-muted"><strong><sup>¥</sup></strong></td>'+
+                        '<td>'+title+'</td>'+
+                        '<td>¥'+content+'</td>'+
+                        '<td class="text-muted"><strong>¥'+price+'</strong></td>'+
                         '</tr>';
             }
+            str +='<tr>'+
+                    '<td>押金</td>'+
+                    '<td><sup>¥</sup>'+depositPrice+'/位*'+stationNumber+'</td>'+
+                    '<td class="text-muted"><strong>¥'+parseInt(depositPrice) * parseInt(stationNumber)+'</strong></td>'+
+                    '</tr>';
+            setAmountValue("confirmLeaseAmount",createOrder.leaseAmount);
+            setAmountValue("confirmDepositAmount",createOrder.depositAmount);
+            setAmountValue("confirmTotalAmount",parseInt(createOrder.leaseAmount)+parseInt(createOrder.depositAmount));
+            $("#confirmList").empty();
+            $("#confirmList").append(str);
         }
 
+    }
+
+    function submitOrder(){
+        $.ajax({
+            url:"${path}/ajax/order/create",
+            type:"post",
+            dataType:'json',
+            contentType:"application/json;charset=UTF-8",
+            data:JSON.stringify(createOrder),
+            success:function(data){
+                alertMessage(data.errCode);
+            },
+            error:function(xhr, type, exception){
+                alert(type, "Failed");
+            }
+        })
     }
 
     /**
@@ -408,20 +439,32 @@
                     }
                     $("#productList").append(str);
                 }else{
-                    var key ={
-                        "106":"请填写账号密码",
-                        "112":"账户已存在",
-                        "unknow":"#"+data.errCode
-                    }
-                    if(key[data.errCode]) message=key[data.errCode];
-                    else message=key.unknow;
-                    alert(message);
+                    alertMessage(data.errCode);
                 }
             },
             error:function (xhr, type, exception) {
                 alert(type, "Failed");
             }
         });
+    }
+
+    /**
+     * 错误提示
+     */
+    function alertMessage(code){
+        var key ={
+            "106":"请填写账号密码",
+            "104":"请重新登录账户",
+            "112":"账户已存在",
+            "unknow":"#"+code
+        }
+        if(key[code]) message=key[code];
+        else message=key.unknow;
+        if(code == 0){
+            alert("恭喜您已成功下单");
+        }else{
+            alert(message);
+        }
     }
 
     /**
@@ -537,12 +580,14 @@
         var sumLeaseAmount = 0;
         var sumDepositAmount = 0;
         var sumTotalAmount = 0;
+        var periodMonth = getValueById("month");
+        var periodWeek = getValueById("week");
         $("input[type='checkbox'][name='selectRoom']:checked").each(
                 function(){
                     var checkBoxValue = $(this).val();
                     var roomValueArray =  checkBoxValue.split("-");
                     var checkedNumber =  $("#number-"+checkBoxValue).val();
-                    sumLeaseAmount += roomValueArray[1] * checkedNumber;
+                    sumLeaseAmount += roomValueArray[1] * checkedNumber *(parseInt(periodMonth) * 4 + parseInt(periodWeek));
                     sumDepositAmount += roomValueArray[4] * roomValueArray[2] * checkedNumber;
                 }
         );
