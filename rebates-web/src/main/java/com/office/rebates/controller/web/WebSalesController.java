@@ -32,9 +32,12 @@ public class WebSalesController {
     @Autowired
     private WebSalesService webSalesService;
 
+    /**
+     * 下券订单
+     */
     @RequestMapping(RouteKey.COUPON_ORDER)
-    public void couponOrder(){
-
+    public void couponOrder(Model model){
+        model.addAttribute("couponList",webSalesService.getCouponList());
     }
 
     /**

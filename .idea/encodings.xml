@@ -7,21 +7,5 @@
     <file url="file://$PROJECT_DIR$/rebates-service" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/rebates-util" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/rebates-web" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/rebates-web/src/main/webapp/WEB-INF/views/web/index.ftl" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/rebates-web/src/main/webapp/wrap/base64/base64.js" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/rebates-web/src/main/webapp/wrap/sha1/sha1.js" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/rebates-web/src/main/webapp/wrap/web/css/WdataPicker.css" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/rebates-web/src/main/webapp/wrap/web/css/common.css" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/rebates-web/src/main/webapp/wrap/web/css/dy_style.css" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/rebates-web/src/main/webapp/wrap/web/css/lxy_style.css" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/rebates-web/src/main/webapp/wrap/web/images/logo1.jpg" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/rebates-web/src/main/webapp/wrap/web/js/WdataPicker.js" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/rebates-web/src/main/webapp/wrap/web/js/common.js" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/rebates-web/src/main/webapp/wrap/web/js/dateFormat.js" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/rebates-web/src/main/webapp/wrap/web/js/index-banner.js" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/rebates-web/src/main/webapp/wrap/web/js/index.js" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/rebates-web/src/main/webapp/wrap/web/js/jquery.dateFormat.js" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/rebates-web/src/main/webapp/wrap/web/js/jquery.js" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/rebates-web/src/main/webapp/wrap/web/js/jquery.validate.js" charset="GBK" />
   </component>
 </project>

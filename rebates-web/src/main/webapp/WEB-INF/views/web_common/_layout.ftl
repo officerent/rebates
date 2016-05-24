@@ -139,6 +139,8 @@
 
         <script src="${path}/wrap/web/js/jquery.dateFormat.js"></script>
 
+        <#--公共js方法-->
+        <script src="${path}/wrap/common/js/common.js"></script>
 
         <#nested>
     </body>

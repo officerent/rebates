@@ -17,12 +17,12 @@
       <profile default="true" name="Default" enabled="false">
         <processorPath useClasspath="true" />
       </profile>
-      <profile default="false" name="Annotation profile for rebates-service" enabled="true">
+      <profile default="false" name="Annotation profile for rebates-util" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="rebates-service" />
+        <module name="rebates-util" />
       </profile>
       <profile default="false" name="Annotation profile for rebates-web" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -45,16 +45,16 @@
         <processorPath useClasspath="true" />
         <module name="rebates-dal" />
       </profile>
-      <profile default="false" name="Annotation profile for rebates-util" enabled="true">
+      <profile default="false" name="Annotation profile for rebates-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="rebates-util" />
+        <module name="rebates-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="parent" target="1.7" />
+      <module name="rebates" target="1.7" />
       <module name="rebates-dal" target="1.7" />
       <module name="rebates-model" target="1.7" />
       <module name="rebates-service" target="1.7" />

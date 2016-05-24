@@ -121,7 +121,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="col-sm-3 control-label">
-                                客户手机号<span class="text-danger">*</span>
+                                手机号<span class="text-danger">*</span>
                             </label>
                             <div class="col-md-9">
                                 <input name="customerMobile" type="text"  class="form-control validate[required]"  />
@@ -130,7 +130,7 @@
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">
-                                客户姓名<span class="text-danger">*</span>
+                                姓名<span class="text-danger">*</span>
                             </label>
                             <div class="col-md-9">
                                 <input name="customerName" type="text"  class="form-control validate[required]"  />
@@ -139,16 +139,16 @@
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">
-                                客户公司<span class="text-danger">*</span>
+                                公司名称<span class="text-danger">*</span>
                             </label>
                             <div class="col-md-9">
-                                <input name="customerCompany" type="text"  class="form-control validate[required]"  />
+                                <input name="customerCompany" type="text"  class="form-control "  />
                                 </br>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">
-                                客户支付宝账号<span class="text-danger">*</span>
+                                支付宝账号(返利到该支付宝)<span class="text-danger">*</span>
                             </label>
                             <div class="col-md-9">
                                 <input name="customerAlipay" type="text"  class="form-control validate[required]"  />
@@ -157,20 +157,20 @@
                         </div>
                         <div class="form-group">
                             <label class="col-sm-12 control-label">
-                                押金金额: &nbsp;<span id="depositAmount" >0</span>
+                                预计押金金额: &nbsp;<span id="depositAmount" >0</span>
                             </label>
                             </br>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-12 control-label">
-                                租金金额:&nbsp;<span id="leaseAmount" >0</span>
+                                预计租金金额:&nbsp;<span id="leaseAmount" >0</span>
                             </label>
                             </br>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-12 control-label">
-                                总金额:&nbsp;<span id="totalAmount" >0</span>
+                                预计总金额:&nbsp;<span id="totalAmount" >0</span>
                             </label>
                             </br>
                         </div>
@@ -205,11 +205,11 @@
                     </div>
                     <div class="panel-body">
                         <p class="fa-2x pull-right"><strong><sup>¥</sup><sup id="confirmDepositAmount"></sup></strong></p>
-                        <p class="lead">押金总额:</p>
+                        <p class="lead">预计押金总额:</p>
                         <p class="fa-2x pull-right"><strong><sup>¥</sup><sup id="confirmLeaseAmount"></sup></strong></p>
-                        <p class="lead">租金总额:</p>
+                        <p class="lead">预计租金总额:</p>
                         <p class="fa-2x pull-right"><strong><sup>¥</sup><sup id="confirmTotalAmount"></sup></strong></p>
-                        <p class="lead">总金额:</p>
+                        <p class="lead">预计总金额:</p>
                         <p class="text-muted">请确认你的订单</p>
                     </div>
                     <table class="table no-margin">
@@ -336,7 +336,7 @@
                 }
         );
         if(flag){
-            alert("请至少选择一个商品");
+            messageBox("提示信息","请至少选择一个商品");
         }else{
             $("#confirmButton").click();
             var str = "";
@@ -374,6 +374,9 @@
     }
 
     function submitOrder(){
+        if(createOrder.customerCompany == null || createOrder.customerCompany == ""){
+            createOrder.customerCompany = createOrder.customerName;
+        }
         $.ajax({
             url:"${path}/ajax/order/create",
             type:"post",
@@ -461,9 +464,9 @@
         if(key[code]) message=key[code];
         else message=key.unknow;
         if(code == 0){
-            alert("恭喜您已成功下单");
+            messageBox("提示信息","恭喜您已成功下单");
         }else{
-            alert(message);
+            messageBox("错误提示",message);
         }
     }
 
@@ -537,7 +540,7 @@
             number ++;
             checkedItem(id,'checked');
         }else{
-            alert("不能超过工位剩余数");
+            messageBox("提示信息","不能超过工位剩余数");
         }
         $("#number-"+id).val(number);
         sumTotal();
@@ -553,7 +556,7 @@
             }
         }else{
             checkedItem(id,'cancel');
-            alert("工位数不能小于零");
+            messageBox("提示信息","工位数不能小于零");
         }
         $("#number-"+id).val(number);
         sumTotal();
@@ -570,7 +573,7 @@
         }else{
             $("#number-"+id).val(0);
             checkedItem(id,'cancel');
-            alert("工位数不能小于零,并且不能大于剩余工位数");
+            messageBox("提示信息","工位数不能小于零,并且不能大于剩余工位数");
         }
 
         sumTotal();

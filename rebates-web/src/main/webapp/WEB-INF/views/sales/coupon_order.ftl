@@ -1,1048 +1,638 @@
-<#include "../common/base.ftl">
-<html><!--<![endif]--><head>
-    <title>SOHO3Q 首页</title>
-    <meta name="keywords" content="返利">
-    <meta name="description" content="返利">
-    <link rel="shortcut icon" href="${path}/wrap/web/images/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="${path}/wrap/web/css/common.css">
-    <link rel="stylesheet" href="${path}/wrap/web/css/dy_style.css">
-    <link rel="stylesheet" href="${path}/wrap/web/css/lxy_style.css">
-    <link href="${path}/wrap/web/css/WdataPicker.css" rel="stylesheet" type="text/css">
-
-    <!--[if lt IE 9]>
-    <script src="${path}/wrap/web/js/html5.js"></script>
-    <script src="${path}/wrap/web/js/respond.src.js"></script>
-    <![endif]-->
-    <script>if(/*@cc_on!@*/false && document.documentMode === 10) document.documentElement.className+=' ie10';</script><!-- 添加IE10+Class -->
-
-    <script src="${path}/wrap/web/js/jquery.js"></script>
-    <script src="${path}/wrap/web/js/common.js"></script>
-    <script src="${path}/wrap/web/js/WdataPicker.js"></script>
-
-    <script src="${path}/wrap/web/js/jquery.validate.js" type="text/javascript"></script>
-
-
-
-    <!--页面内引用文件-->
-    <script type="text/javascript" src="${path}/wrap/web/js/index-banner.js"></script>
-    <script type="text/javascript" src="${path}/wrap/web/js/index.js"></script>
-
-
-</head>
-
-
-
-<body class="int">
-
-<!--头部 start -->
-<header class="header">
-    <aside class="top"><a href="${path}/web/index.html" class="goto-p"></a>
-        <div class="warp">
-            <nav class="nav">
-                <ul class="warp">
-                    <li><i></i><a href="${path}/index.html">首页</a></li>
-                    <li><i></i><a href="${path}/wrap/web/faq.do">我的订单</a></li>
-                    <li><i></i><a onclick="openAuction()" href="###">常见问题</a></li>
-                    <li><i></i><a target="_blank" href="${path}/sales/fix_product.html">购买固定工位</a></li>
-                    <li><i></i><a target="_blank" href="${path}/wrap/web/crowdSourcing/sales.html?ajax=true">购买漫游券</a></li>
-                </ul>
-            </nav>
-            <span class="phone"><i>400-815-9888</i></span>
-            <a href="${path}/wrap/user/login.ftl" class="login">登录</a>
-        </div>
-    </aside>
-</header>
-
-
-
-<script type="text/javascript">
-    if('zh_CN'=='zh_CN'){
-        $("body").attr("class","int");
-    }else if('zh_CN'=='en_US'){
-        $("body").attr("class","int en");
-    }else {
-        $("body").attr("class","int");
-    }
-
-    $(function(){
-        //领取优惠活动
-        $(document).on("click",".new-in-b2 .lab ul li:first-child + li a,.member-bak1 .user-r2 .xbox dd a",function(e){
-            getregpakage();
-        });
-
-    });
-
-
-    function getregpakage(){
-        var localObj = window.location;
-        var contextPath = localObj.protocol+"//"+localObj.host;
-        var flag = 'Y';
-        var checkurl=contextPath+'${path}/wrap/web/onlineAction.do?actionType=checkSession&ajax=true';
-        $.ajax({
-            type: "POST",
-            url: checkurl,
-            dataType: "json",
-            success: function(json){
-                flag=json.success;
-                if("N"==flag){
-                    window.parent.location.href=contextPath+"${path}/wrap/web/views/user/registration.jsp";
-                }else{
-                    var url = '${path}/wrap/auth/memberCenterWeb.do?actionType=getCashCoupon&ajax=true';
-                    $.ajax({
-                        type: "POST",
-                        url: url,
-                        data:{
-                            cashCouponCategory : 'RED_ENVELOPE'
-                        },
-                        success: function(callbakData){
-                            var json=eval("("+callbakData+")");
-                            if(json.errorFlag == 'forward'){
-                                window.location.href='${path}/wrap/web/views/user/registration.jsp';
-                            }else if(json.errorFlag == 'true'){
-                                $("body").append(json.errorMessage);
-                                $(".tpis-5tb").css("background","none");
-                            }else{
-                                alert(json.errorMessage);
-                                return;
-                            }
-                        }
-                    });
-                }
-            }
-        });
-    }
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script type="text/javascript">
-    jQuery(document).ready(function() {
-        $("#PROJECT_ID").val('');
-        $("#projectNameLabel").html("办公位置");
-        $("#PROJECT_OFFICE").text('办公位置');
-        $("#bespeakDate").val("来访日期");
-        $("#bespeakTime").val("来访时间");
-        $("#bespeakVisitorName").val("姓名");
-        $("#bespeakVisitorTelephone").val("手机");
-
-
-        //获取项目图中选择的项目
-
-
-        /**
-         $("#bespeakDate").each(function(i) {
-			    $(this).focus(function(){
-					WdatePicker({
-						skin:'whyGreen'
-						,minDate:"%y-%M-%d",
-						onpicked:function(){}
-						});
-				});
-			});
-         */
-        /**
-         $(".dateselect1").each(function(i) {
-			    $(this).focus(function(){
-					WdatePicker({
-						skin:'whyGreen'
-						//,minDate:"%y-%M-%d",
-						,minDate:"2015-02-01",
-						lang:'zh-cn',
-						onpicked:function(){
-							$("#leaseStartDate").val($(this).val());
-						}
-						});
-				});
-			});
-         $(".dateselect2").each(function(i) {
-		        $(this).focus(function(){
-		    		WdatePicker({
-		    			skin:'whyGreen'
-		    			//,minDate:"%y-%M-%d",
-		    			,minDate:"2015-02-01",
-		    			lang:'zh-cn',
-		    			onpicked:function(){
-		    				$("#leaseEndDate").val($(this).val());
-		    			}
-		    			});
-		    	});
-		    });
-         */
-            //筛选事件；
-        $(document).on("click",".down-select dd .list .nr span",function(e){
-            $(this).addClass("on").siblings().removeClass("on");
-            e.preventDefault();
-            e.stopPropagation();
-            $(this).parent().parent().find("input").val($(this).text());
-            //alert($("#siteNum").val()+"=="+$("#stationType").val()+"=="+$("#promotion").val());
-        });
-
-
-        /**
-         $(document).on("click",".child-box a",function(){
-				$("#week_").val($(this).data("val"));
-				getLeaseEndDate();
-			});
-         */
-            //手动填写的周期
-        $(document).on("click",".data-selt01 .other-chidl .b a",function(){
-            var value=$(this).parent().find("input").val();
-            $("#week_").val(value);
-            getLeaseEndDate();
-        });
-        $(document).on("click",".tab_list .tab_a",function(){
-            $(this).addClass("on").siblings().removeClass("on");
-            var ii=$(this).index();
-            $(this).parents(".tab_list").find(".tab_b").eq(ii).show().siblings().hide();
-            //$("#PROJECT_DATA").val('办公位置');//防止出现用户来回选tab页，导致可以进入
-            //$("#PROJECT_ID").val("");
-            //$("#projectNameLabel").text('办公位置');
-            //$("#M_0060_Visit_Time").html("来访时间");
-            //$("#PROJECT_OFFICE").text('办公位置');
-        });
-
-
-        /**
-         var projectIdValue = $("#PROJECT_ID").val();
-         $("#PROJECT_ID").val('');
-         if(projectIdValue=='' || projectIdValue==null || projectIdValue.length==0 ){
-					$('#bespeakDateDiv').children().remove();
-					var bespeakdivcon = '<input type="text" class="select-data"  id="bespeakDate" value="来访日期" onfocus="if(this.value == '+"\'来访日期\'"+') { this.value ='+"\'\'"+' }" onblur="if(this.value == '+"\'\'"+') { this.value ='+"\'来访日期\'"+' }" name="bespeakDate" onclick="WdatePicker({el:'+"\'bespeakDate\'"+',readOnly:true,dateFmt:'+"\'yyyy-MM-dd\'"+",minDate:"+"\'%y-%M-%d\'";
-					bespeakdivcon+=",disabledDates:['^20[0-9][0-9]']";
-					bespeakdivcon+='})\">';
-					bespeakdivcon+='<i class="icon"></i>';
-					$('#bespeakDateDiv').html(bespeakdivcon);  //不能看房日期设置
-			}
-         */
-
-        $("#queding").click(function(){
-            $(".data-selt01 dd").hide();
-            getLeaseEndDate();
-        });
-
-        $("#quxiao").click(function(){
-            $("#week_").val("");
-            $("#month_").val("");
-
-            $("#enterDateMonth").text('入驻周期');
-            $("#enterDate").text('');
-
-            $("#Enter_Date").val('入驻周期');
-            $("#Enter_Date_Month").val('入驻周期');
-
-            $(".data-selt01 .zhangbing a").css("background","#fff");
-            $(".data-selt01 .zhangbing a").css("color","#ff9e2c");
-
-            $(".data-selt01 .zhangbing1 a").css("background","#fff");
-            $(".data-selt01 .zhangbing1 a").css("color","#ff9e2c");
-            //$("#span_").text("");
-            $("leaseEndDate").val("");
-        });
-    });
-
-    function getLeaseEndDate(){
-        var week_=$("#week_").val();
-        var month_=$("#month_").val();
-
-        var leaseStartDate=$("#leaseStartDate").val();
-        if(leaseStartDate=='起始时间'){
-            return false;
-        }
-        if(week_=='' && month_=='')return false;
-        if(week_=='0' && month_=='0'){
-            alert("入住月数和周数不能同时为0，请重现选择入组周期！");
-            $("#enterDate").text('入驻周期');
-            $("#week_").val('0');
-            $("#input_enter").val("");
-            $("#Enter_Date").val('入驻周期');
-
-            $("#enterDateMonth").text('入驻周期');
-            $("#month_").val('0');
-            $("#input_enter").val("");
-            $("#Enter_Date_Month").val('入驻周期');
-
-            $("#leaseEndDate").val("");
-            $("#span_").text('结束时间');
-            return false;
-        }
-
-
-        if(!checkNumber(week_) && !checkNumber(month_)){
-            $("#enterDate").text('入驻周期');
-            $("#week_").val('入驻周期');
-            $("#input_enter").val("");
-            $("#Enter_Date").val('入驻周期');
-
-            $("#enterDateMonth").text('入驻周期');
-            $("#month_").val('入驻周期');
-            $("#input_enter").val("");
-            $("#Enter_Date_Month").val('入驻周期');
-
-            alert('请选择入驻周期');
-            return false;
-        }
-        $("#Enter_Date").val(week_);
-        $("#Enter_Date_Month").val(month_);
-        $.ajax({
-            type: "POST",
-            url: '${path}/wrap/web/onlineAction.do?actionType=getEndDate&ajax=true',
-            data:{
-                week_:week_,
-                month_:month_,
-                leaseStartDate:leaseStartDate
-            },
-            success: function(param){
-                var json=eval("("+param+")");
-                if(json.key=="true"){
-                    $("#leaseEndDate").val(json.endDate);
-                    $("#span_").text(leaseStartDate+' 到 '+json.endDate);
-                }else{
-                    alert(json.message);
-                }
-            }
-        });
-    }
-    function booking(){
-        var porjectName=$("#PROJECT_DATA").val();
-        var startDate = $("#Start_Date").val();
-        var enterDate = $("#Enter_Date").val();
-        var enterDateMonth = $("#Enter_Date_Month").val();
-        var leaseEndDate = $("#leaseEndDate").val();
-        if('办公位置'==porjectName){
-            alert('请选择办公位置');
-            return;
-        }
-        if('起始时间'==startDate){
-            alert('请选择起始时间');
-            return;
-        }
-        if('入驻周期'== enterDate && '入驻周期'== enterDateMonth){
-            alert('请选择入驻周期');
-            return;
-        }
-
-        var projectId=$("#PROJECT_ID").val();
-//			$("#ul1_cf").attr("action","${path}/wrap/web/onlineAction.do?actionType=viewProjectDetail&PROJECT_ID="+projectId).submit();
-        $("#ul1_cf").attr("action","${path}/wrap/web/onlineAction.do?actionType=showProducts&PROJECT_ID="+projectId).submit();
-    }
-
-    //预约看房
-    function bookingHouse(){
-
-        var projectId=$("#PROJECT_ID").val();
-        var projectName=$("#projectNameLabel").html();
-        var bespeakDate = $("#bespeakDate").val();
-        var bespeakTime = $("#bespeakTime").val();
-        var bespeakVisitorName = $("#bespeakVisitorName").val();
-        var bespeakVisitorTelephone = $("#bespeakVisitorTelephone").val();
-        var url = '${path}/wrap/web/lookingHouseBespeak.do?actionType=create&ajax=true';
-        if("办公位置"==projectName || projectId==null || projectId=='' || projectId.length==0){
-            alert("请选择办公位置");
-            return false;
-        }
-        if("来访日期"==bespeakDate || bespeakDate=='' || bespeakDate==null || bespeakDate.length==0){
-            alert("请选择您要预约的日期");
-            return;
-        }
-
-        var arr = bespeakDate.split("-");
-        var starttime = new Date(arr[0], arr[1], arr[2]);
-        var starttimes = starttime.getTime();
-        var endtime=new Date('2015','02','01');
-        var endtimes=endtime.getTime();
-        if(starttimes<endtimes){
-            alert("BOK00022");
-            $("#bespeakDate").val('来访日期');
-            return;
-        }
-
-        if("来访时间"==bespeakTime || bespeakTime=='' || bespeakTime==null || bespeakTime.length==0){
-            alert("请选择您要预约的时间");
-            return;
-        }
-        if("姓名"==bespeakVisitorName || bespeakVisitorName=='' || bespeakVisitorName==null || bespeakVisitorName.length==0 ){
-            alert("请填写您的姓名");
-            return;
-        }
-
-        if("手机"==bespeakVisitorTelephone){
-            alert("请填写您的手机号码");
-            return;
-        }else{
-            if(!isPhone(bespeakVisitorTelephone)){
-                alert("请填写正确的手机号码");
-                return;
-            }
-        }
-        $.ajax({
-            type: "POST",
-            url: url,
-            data:{
-                projectId:projectId,
-                bespeakDate:bespeakDate,
-                bespeakVisitorName:bespeakVisitorName,
-                bespeakVisitorTelephone:bespeakVisitorTelephone,
-                bespeakTime : bespeakTime
-            },
-            success: function(param){
-                var json=eval("("+param+")");
-                if(json.error){
-                    alert(json.message);
-                }else{
-                    $("body").append('<div class="img-5tb"><div class="box"><a style="cursor: pointer;" class="close"></a><dl><dt></dt><dd><h2>您已预约成功！</h2><p>如有问题请咨询<em>400-815-9888</em></p></dd></dl></div></div>')
-                    $(document).on("click",".img-5tb",function(){
-                        $(".img-5tb").remove();
-                        $('#PROJECT_ID').val('');
-                        $("#projectNameLabel").html("办公位置");
-                        $("#M_0060_Visit_Time").html("来访时间");
-                        $("#bespeakTime").val('');
-                        $('#bespeakDate').val("来访日期");
-                        $('#bespeakVisitorName').val("姓名");
-                        $('#bespeakVisitorTelephone').val("手机");
-                    })
-                }
-            }
-        });
-
-    }
-
-
-
-    function setProjectId(projectId,projectName){
-        var oldProjectId = $("#PROJECT_ID").val();
-        $("#PROJECT_ID").val(projectId);
-        $("#PROJECT_DATA").val(projectName);
-        if(oldProjectId != projectId){
-            getNobookingDate(projectId);
-        }
-    }
-
-    //获取不看房日期
-    function getNobookingDate(projectId){
-        $.ajax({
-            type: "POST",
-            url: '${path}/wrap/web/lookingHouseBespeak.do?actionType=getNobookingDate&ajax=true&projectId='+projectId,
-            success: function(param){
-                var json=eval("("+param+")");
-                setNobookingDate(json.days,json.noBookingDateRange);
-            }
-        });
-    }
-
-    //设置不看房日期
-    function setNobookingDate(days,noBookingDateRange){
-        $('#bespeakDateDiv').children().remove();
-        var bespeakdivcon = '<input type="text" class="select-data"  id="bespeakDate" value="来访日期" onfocus="if(this.value == '+"\'来访日期\'"+') { this.value ='+"\'\'"+' }" onblur="if(this.value == '+"\'\'"+') { this.value ='+"\'来访日期\'"+' }" name="bespeakDate" onclick="WdatePicker({el:'+"\'bespeakDate\'"+',readOnly:true,dateFmt:'+"\'yyyy-MM-dd\'"+",minDate:"+"\'%y-%M-%d\'";
-        bespeakdivcon+=",disabledDates:["+days+"],maxDate:"+noBookingDateRange+",lang:'zh-cn'";
-        bespeakdivcon+='})\">';
-        bespeakdivcon+='<i class="icon"></i>';
-        $('#bespeakDateDiv').html(bespeakdivcon);  //不能看房日期设置
-    }
-
-    //手机格式校验
-    function isPhone(str){
-        var myreg = /^[1][0-9]{10}$/;
-        if(!myreg.test(str)){
-            return false;
-        }else{
-            return true;
-        }
-    }
-    function checkNumber(num){
-        var patrn = /^(-|\+)?\d+(\.\d+)?$/;
-        if (patrn.test(num)){
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    function selectDateThis(el){
-        if($("#PROJECT_ID").val()==""){
-            alert("请选择办公位置");
-            $(el).blur();
-        }else{
-            WdatePicker({el:'bespeakDate',readOnly:true,dateFmt:'yyyy-MM-dd',minDate:'%y-%M-%d'});
-        }
-    }
-
-    function selectLeaseStartDateThis(el){
-        WdatePicker({
-            skin:'whyGreen'
-            ,minDate:"%y-%M-%d",
-            //minDate:"2015-02-01",
-            lang:'zh-cn',
-            maxDate:'2016-6-11',
-            onpicked:function(){
-                $("#leaseStartDate").val($(this).val());
-                $("#Start_Date").val($(this).val());
-            }
-        });
-    }
-
-    //获取预约时间（数据字典）
-    function setBespeakTimeValue(bespeakTime){
-        $('#bespeakTime').val(bespeakTime);
-    }
-
-    function selectPeriodStay(obj){
-        $("#week_").val($(obj).data("val"));
-        $("#Enter_Date").val($(obj).data("val"));
-        $("#enterDate").text($(obj).attr("data-val") + '周');
-        getLeaseEndDate();
-    }
-
-    function selectPeriodStayMonth(obj){
-        //alert("asdas111");
-        $("#month_").val($(obj).data("val"));
-        $("#Enter_Date_Month").val($(obj).data("val"));
-        $("#enterDateMonth").text($(obj).attr("data-val") + '月');
-        getLeaseEndDate();
-    }
-
-
-
-    function getregpakage(){
-        var localObj = window.location;
-        var contextPath = localObj.protocol+"//"+localObj.host;
-        var flag = 'Y';
-        var checkurl=contextPath+'${path}/wrap/web/onlineAction.do?actionType=checkSession&ajax=true';
-        $.ajax({
-            type: "POST",
-            url: checkurl,
-            dataType: "json",
-            success: function(json){
-                flag=json.success;
-                if("N"==flag){
-                    window.parent.location.href=contextPath+"${path}/wrap/web/views/user/registration.jsp";
-                }else{
-                    var url = '${path}/wrap/auth/memberCenterWeb.do?actionType=getCashCoupon&ajax=true';
-                    $.ajax({
-                        type: "POST",
-                        url: url,
-                        data:{
-                            cashCouponCategory : 'RED_ENVELOPE'
-                        },
-                        success: function(callbakData){
-                            var json=eval("("+callbakData+")");
-                            if(json.errorFlag == 'forward'){
-                                window.location.href='${path}/wrap/web/views/user/registration.jsp';
-                            }else if(json.errorFlag == 'true'){
-                                $("body").append(json.errorMessage);
-                                $(".tpis-5tb").css("background","none");
-                            }else{
-                                alert(json.errorMessage);
-                                return;
-                            }
-                        }
-                    });
-                }
-            }
-        });
-    }
-</script>
-
-
-<div class="banner-search" style="top: 663px;">
-    <div class="warp tab_list">
-        <div class="tab_t">
-            <!-- <span class="tab_a_links"><a title="红包使用截止日期为3月15日" onclick="getregpakage()">抢红包立减<em>500</em>元</a><i></i></span>  -->
-
-            <span class="tab_a  on">在线订位<i></i></span>
-
-            <span class="tab_a">预约参观<i></i></span>
-        </div>
-        <div class="tab-nr">
-
-            <div class="tab_b" style="display: block;">
-                <form action="" method="post" id="ul1_cf">
-                    <ul class="ul1 ul2 cf ">
-                        <li class="i1">
-                            <dl class="select-box">
-                                <dt data-val="0"><b id="PROJECT_OFFICE">办公位置</b><i class="ico"></i></dt>
-                                <dd>
-
-                                    <a style="cursor: pointer;" onclick="setProjectId(&#39;2c90bf4e49d12cbb0149d14b00f50006&#39;,&#39;望京SOHO&#39;)">望京SOHO</a>
-
-                                    <a style="cursor: pointer;" onclick="setProjectId(&#39;402825824f600c7d014f698089ef2bee&#39;,&#39;丹棱SOHO&#39;)">丹棱SOHO</a>
-
-                                    <a style="cursor: pointer;" onclick="setProjectId(&#39;402825824e303945014e3d84dff80ade&#39;,&#39;中关村SOHO&#39;)">中关村SOHO</a>
-
-                                    <a style="cursor: pointer;" onclick="setProjectId(&#39;402884ac4a52541b014a529612a20011&#39;,&#39;银河SOHO&#39;)">银河SOHO</a>
-
-                                    <a style="cursor: pointer;" onclick="setProjectId(&#39;402884ac4a52541b014a52b29603002a&#39;,&#39;光华路SOHO2&#39;)">光华路SOHO2</a>
-
-                                    <a style="cursor: pointer;" onclick="setProjectId(&#39;2c90bf4e49d12cbb0149d1506a270007&#39;,&#39;SOHO复兴广场&#39;)">SOHO复兴广场</a>
-
-                                    <a style="cursor: pointer;" onclick="setProjectId(&#39;402884ac4a52541b014a52b77b4e0031&#39;,&#39;外滩SOHO&#39;)">外滩SOHO</a>
-
-                                    <a style="cursor: pointer;" onclick="setProjectId(&#39;402825824e77ddd6014e8b46b9db1b0c&#39;,&#39;SOHO东海广场&#39;)">SOHO东海广场</a>
-
-                                    <a style="cursor: pointer;" onclick="setProjectId(&#39;40282582526410c601527d52840d5013&#39;,&#39;凌空SOHO&#39;)">凌空SOHO</a>
-
-                                    <a style="cursor: pointer;" onclick="setProjectId(&#39;402884ac4a52541b014a52bf86060038&#39;,&#39;虹口SOHO&#39;)">虹口SOHO</a>
-
-                                </dd>
-                            </dl>
-                            <input type="hidden" id="PROJECT_DATA" name="PROJECT_DATA" value="办公位置">
-                            <input class="select-hidden" type="hidden" id="PROJECT_ID" name="PROJECT_ID" value="">
-                        </li>
-
-                        <li class="data-down">
-                            <input class="select-data dateselect1" placeholder="起始时间" type="text" value="起始时间" onblur="if(this.value == &quot;&quot;){ this.value = &quot;&quot; }else{getLeaseEndDate()}" onfocus="if(this.value == &quot;&quot;) { this.value = &quot;&quot; }" onclick="selectLeaseStartDateThis(this)" readonly="" id="leaseStartDate" name="leaseStartDate"><i class="icon"></i>
-                            <input type="hidden" id="Start_Date" name="Start_Date" value="起始时间">
-                        </li>
-
-                        <li class="i3">
-                            <dl class="data-selt01">
-                                <dt>
-                                    <span id="enterDateMonth">入驻周期</span>
-                                    <span id="enterDate"></span>
-                                    <i class="ico"></i>
-                                </dt>
-                                <dd>
-                                    <input type="hidden" id="month_" name="month_" value="">
-                                    <div class="zhangbing">
-                                        <a style="cursor: pointer;" onclick="selectPeriodStayMonth(this)" data-val="1">1 月</a>
-                                        <a style="cursor: pointer;" onclick="selectPeriodStayMonth(this)" data-val="2">2 月</a>
-                                        <a style="cursor: pointer;" onclick="selectPeriodStayMonth(this)" data-val="3">3 月</a>
-                                        <a style="cursor: pointer;" onclick="selectPeriodStayMonth(this)" data-val="4">4 月</a>
-                                        <a style="cursor: pointer;" onclick="selectPeriodStayMonth(this)" data-val="5">5 月</a>
-                                        <a style="cursor: pointer;" onclick="selectPeriodStayMonth(this)" data-val="6">6 月</a>
-                                        <a style="cursor: pointer;" onclick="selectPeriodStayMonth(this)" data-val="7">7 月</a>
-                                        <a style="cursor: pointer;" onclick="selectPeriodStayMonth(this)" data-val="8">8 月</a>
-                                        <a style="cursor: pointer;" onclick="selectPeriodStayMonth(this)" data-val="9">9 月</a>
-                                        <a style="cursor: pointer;" onclick="selectPeriodStayMonth(this)" data-val="10">10月</a>
-                                        <a style="cursor: pointer;" onclick="selectPeriodStayMonth(this)" data-val="11">11月</a>
-                                        <a style="cursor: pointer;" onclick="selectPeriodStayMonth(this)" data-val="12">12月</a>
-                                    </div>
-                                    <input type="hidden" id="week_" name="week_" value="">
-                                    <div class="zhangbing1">
-                                        <a style="cursor: pointer;" onclick="selectPeriodStay(this)" data-val="1">1 周</a>
-                                        <a style="cursor: pointer;" onclick="selectPeriodStay(this)" data-val="2">2 周</a>
-                                        <a style="cursor: pointer;" onclick="selectPeriodStay(this)" data-val="3">3 周</a>
-                                    </div>
-                                    <div class="child-btn">
-                                        <a href="http://www.soho3q.com/entry/web/index.jsp#" id="queding">确定</a>
-                                        <a href="http://www.soho3q.com/entry/web/index.jsp#" id="quxiao">取消</a>
-                                    </div>
-                                    <!--
-                                    <div class="other-chidl">
-                                        <span class="n">其他</span>
-                                        <div class="b">
-                                            <input type="text" id="input_enter">
-                                            <i class="i">周</i>
-                                            <a style="cursor: pointer;" class="sub">确定</a>
-                                        </div>
-                                    </div>
-                                     -->
-                                </dd>
-                            </dl>
-                            <input type="hidden" id="Enter_Date_Month" name="Enter_Date_Month" value="入驻周期">
-                            <input type="hidden" id="Enter_Date" name="Enter_Date" value="入驻周期">
-                        </li>
-
-                        <li class="i4">
-                            <span class="p" id="span_">结束时间</span>
-                            <input name="leaseEndDate" id="leaseEndDate" value="" type="hidden">
-                        </li>
-
-                        <li class="i5">
-                            <a style="cursor: pointer;" onclick="booking()">立即订位</a>
-                        </li>
-
-
-                    </ul></form>
-            </div>
-
-
-            <div class="tab_b" style="display: none;">
-                <ul class="ul1 cf ">
-                    <li class="i1">
-                        <dl class="select-box">
-                            <dt data-val="0"><b id="projectNameLabel">办公位置</b><i class="ico"></i></dt>
-                            <dd>
-
-
-
-
-                                <a style="cursor: pointer;" onclick="setProjectId(&#39;2c90bf4e49d12cbb0149d14b00f50006&#39;,&#39;望京SOHO&#39;)">望京SOHO</a>
-
-                                <a style="cursor: pointer;" onclick="setProjectId(&#39;402825824f600c7d014f698089ef2bee&#39;,&#39;丹棱SOHO&#39;)">丹棱SOHO</a>
-
-                                <a style="cursor: pointer;" onclick="setProjectId(&#39;402825824e303945014e3d84dff80ade&#39;,&#39;中关村SOHO&#39;)">中关村SOHO</a>
-
-                                <a style="cursor: pointer;" onclick="setProjectId(&#39;402884ac4a52541b014a529612a20011&#39;,&#39;银河SOHO&#39;)">银河SOHO</a>
-
-                                <a style="cursor: pointer;" onclick="setProjectId(&#39;402884ac4a52541b014a52b29603002a&#39;,&#39;光华路SOHO2&#39;)">光华路SOHO2</a>
-
-                                <a style="cursor: pointer;" onclick="setProjectId(&#39;2c90bf4e49d12cbb0149d1506a270007&#39;,&#39;SOHO复兴广场&#39;)">SOHO复兴广场</a>
-
-                                <a style="cursor: pointer;" onclick="setProjectId(&#39;402884ac4a52541b014a52b77b4e0031&#39;,&#39;外滩SOHO&#39;)">外滩SOHO</a>
-
-                                <a style="cursor: pointer;" onclick="setProjectId(&#39;402825824e77ddd6014e8b46b9db1b0c&#39;,&#39;SOHO东海广场&#39;)">SOHO东海广场</a>
-
-                                <a style="cursor: pointer;" onclick="setProjectId(&#39;40282582526410c601527d52840d5013&#39;,&#39;凌空SOHO&#39;)">凌空SOHO</a>
-
-                                <a style="cursor: pointer;" onclick="setProjectId(&#39;402884ac4a52541b014a52bf86060038&#39;,&#39;虹口SOHO&#39;)">虹口SOHO</a>
-
-                            </dd>
-                        </dl>
-                        <input class="select-hidden" type="hidden" id="projectId" name="projectId">
-                        <input class="select-hidden" type="hidden" id="PROJECT_ID" name="PROJECT_ID" value="">
-                    </li>
-                    <li class="data-down">
-                        <div id="bespeakDateDiv">
-                            <input class="select-data" id="bespeakDate" name="bespeakDate" type="text" value="来访日期" onblur="if(this.value == &#39;&#39;) { this.value = &#39;来访日期&#39; }" onfocus="if(this.value == &#39;来访日期&#39;) { this.value = &#39;&#39; }" onclick="selectDateThis(this)" readonly=""><i class="icon"></i>
+<#include "../web_common/_layout.ftl" />
+
+<@layoutHead>
+
+</@layoutHead>
+<@layoutBody classBody="wrapkit-sidebar-left wrapkit-sidebar-lg bg-grd-dark wrapkit-sidebar-horizontal" >
+
+</@layoutBody>
+<main class="wrapkit-wrapper" id="wrapper" data-init-layout="true">
+
+    <!-- ============================================
+    MAIN CONTENT SECTION
+    =============================================== -->
+    <section class="content-wrapper" role="main" data-init-content="true">
+        <div class="content">
+
+            <div class="content-body">
+                <div class="panel fade in panel-default panel-fill" data-fill-color="true" data-init-panel="true">
+                    <div class="panel-body">
+                        <form class="form-inline">
+                            选择券种类：
+                            <div class="form-group">
+                                <label class="select">
+                                    <select id="projectId" onchange="reacquireRoom();">
+                                    <#list couponList as c>
+                                        <option value="${p.projectId!''}" >${c.name!''}</option>
+                                    </#list>
+                                    </select>
+                                </label>
+                            </div><!-- /form-group -->
+                            选择入驻时间：
+                            <div class="form-group" >
+                                <label class="select">
+                                    <input id="startTime" onclick="validatepicker(this)" onchange="reacquireRoom()" data-date-format="yyyy-MM-dd" class="form-control date form_date validate[required]" name="startTime" placeholder="开始时间" value="${startTime!''}"/>
+                                </label>
+                            </div><!-- /form-group -->
+                            入驻时长：
+                            <div class="form-group" style="width: 100px">
+                                <label class="select">
+                                    <select id="month" onchange="reacquireRoom()">
+                                        <option value="0">0</option>
+                                        <option value="1" selected="selected">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                    </select>
+                                </label>
+                            </div><!-- /form-group -->
+                            （月）
+                            <div class="form-group" style="width: 100px">
+                                <label class="select">
+                                    <select id="week" onchange="reacquireRoom()">
+                                        <option value="0" selected="selected">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                    </select>
+                                </label>
+                            </div><!-- /form-group -->
+                            （周）
+                        </form>
+                    </div><!-- /.panel-body -->
+                </div><!-- /.panel -->
+
+
+                <div class="table-responsive">
+
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>选择</th>
+                            <th>产品名称</th>
+                            <th>产品剩余数量</th>
+                            <th>选择数量</th>
+                            <th>价格</th>
+                        </tr>
+                        </thead>
+                        <tbody id ="productList">
+                        <#if productList??>
+                            <#list productList as product>
+                            <tr>
+                                <td name='roomId'>
+                                    <#if product.remainedNum  gt 0 >
+                                        <input type="checkbox" name="selectRoom" value="${product.price!""}-${product.finalPrice!""}-${product.deposit!""}-${product.productType!""}-${product.productSubtype!""}-${product.remainedNum!""}"/>
+                                    <#else >
+                                        <input type="checkbox" name="selectRoom" value="${product.price!""}-${product.finalPrice!""}-${product.deposit!""}-${product.productType!""}-${product.productSubtype!""}-${product.remainedNum!""}" disabled = disabled/>
+                                    </#if>
+                                </td>
+                                <td>${product.title!""}</td>
+                                <td>${product.remainedNum!""}</td>
+                                <td>
+                                    <#if product.remainedNum  gt 0 >
+                                        <span onclick="plus('${product.price!""}-${product.finalPrice!""}-${product.deposit!""}-${product.productType!""}-${product.productSubtype!""}-${product.remainedNum!""}')" class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                        <input id="number-${product.price!""}-${product.finalPrice!""}-${product.deposit!""}-${product.productType!""}-${product.productSubtype!""}-${product.remainedNum!""}" name="number" style="width: 100px;" onblur="input('number-${product.price!""}-${product.finalPrice!""}-${product.deposit!""}-${product.productType!""}-${product.productSubtype!""}-${product.remainedNum!""}');" value = "0"/>
+                                        <span onclick="minus('${product.price!""}-${product.finalPrice!""}-${product.deposit!""}-${product.productType!""}-${product.productSubtype!""}-${product.remainedNum!""}')" class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+                                    <#else >
+                                        暂无工位
+                                    </#if>
+                                </td>
+                                <td>￥${product.finalPrice!""}/${product.priceTypeStr!""}</td>
+                            </tr>
+                            </#list>
+                        </#if>
+                        </tbody>
+                    </table>
+                </div><!-- /.table-responsive -->
+            </div><!-- /.cols -->
+
+            <div class = "row">
+                <div class="col-md-3">
+
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">
+                            客户手机号<span class="text-danger">*</span>
+                        </label>
+                        <div class="col-md-9">
+                            <input name="customerMobile" type="text"  class="form-control validate[required]"  />
+                            </br>
                         </div>
-                    </li>
-                    <li>
-                        <dl class="select-box">
-                            <dt data-val="0">
-                                <b id="M_0060_Visit_Time">来访时间</b><i class="ico"></i>
-                            </dt>
-                            <dd>
-
-                                <a href="http://www.soho3q.com/entry/web/index.jsp#" onclick="setBespeakTimeValue(&#39;08:00&#39;)">08:00</a>
-
-                                <a href="http://www.soho3q.com/entry/web/index.jsp#" onclick="setBespeakTimeValue(&#39;09:00&#39;)">09:00</a>
-
-                                <a href="http://www.soho3q.com/entry/web/index.jsp#" onclick="setBespeakTimeValue(&#39;10:00&#39;)">10:00</a>
-
-                                <a href="http://www.soho3q.com/entry/web/index.jsp#" onclick="setBespeakTimeValue(&#39;11:00&#39;)">11:00</a>
-
-                                <a href="http://www.soho3q.com/entry/web/index.jsp#" onclick="setBespeakTimeValue(&#39;12:00&#39;)">12:00</a>
-
-                                <a href="http://www.soho3q.com/entry/web/index.jsp#" onclick="setBespeakTimeValue(&#39;14:00&#39;)">14:00</a>
-
-                                <a href="http://www.soho3q.com/entry/web/index.jsp#" onclick="setBespeakTimeValue(&#39;15:00&#39;)">15:00</a>
-
-                                <a href="http://www.soho3q.com/entry/web/index.jsp#" onclick="setBespeakTimeValue(&#39;16:00&#39;)">16:00</a>
-
-                                <a href="http://www.soho3q.com/entry/web/index.jsp#" onclick="setBespeakTimeValue(&#39;17:00&#39;)">17:00</a>
-
-                                <a href="http://www.soho3q.com/entry/web/index.jsp#" onclick="setBespeakTimeValue(&#39;18:00&#39;)">18:00</a>
-
-                                <a href="http://www.soho3q.com/entry/web/index.jsp#" onclick="setBespeakTimeValue(&#39;19:00&#39;)">19:00</a>
-
-                                <a href="http://www.soho3q.com/entry/web/index.jsp#" onclick="setBespeakTimeValue(&#39;20:00&#39;)">20:00</a>
-
-                            </dd>
-                            <input class="select-hidden" type="hidden" value="来访时间" id="bespeakTime">
-                        </dl>
-                    </li>
-                    <li class="i21"><input class="select-data" type="text" value="姓名" id="bespeakVisitorName" name="bespeakVisitorName" onblur="if(this.value == &#39;&#39;) { this.value = &#39;姓名&#39; }" onfocus="if(this.value == &#39;姓名&#39;) { this.value = &#39;&#39; }">
-                    </li>
-                    <li class="i22">
-                        <input class="select-data" type="text" value="手机" id="bespeakVisitorTelephone" name="bespeakVisitorTelephone" onblur="if(this.value == &#39;&#39;) { this.value = &#39;手机&#39; }" onfocus="if(this.value == &#39;手机&#39;) { this.value = &#39;&#39; }">
-                    </li>
-                    <li class="i5">
-                        <a style="cursor: pointer;" onclick="bookingHouse()">立即预约</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-<div class="in-banner" style="height: 708px; top: 50px;">
-    <div class="banner-warp">
-
-        <div class="bon left">
-            <a href="javascript:;"></a>
-            <div class="blist">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            </div>
-        </div>
-
-        <div class="bon right">
-            <a href="javascript:;"></a>
-            <div class="blist" style="left: 50px;">
-
-                <!--
-                <dl>
-
-
-                              <dt><img src="images/home_banner_lzy09.jpg" width="163" height="108"></dt>
-                              <dd><b></b><i> 抢红包立减</i></dd>
-
-
-
-
-                </dl>
-            -->
-
-
-
-
-                <dl class="safety-area" style="display: none;">
-                    <dt>
-                        <img src="./SOHO3Q 首页_files/1441512391071.jpg" width="163" height="108">
-                    </dt>
-                    <dd>
-                        <b></b><i> </i>
-                    </dd>
-                </dl>
-
-
-
-
-
-
-                <dl class="safety-area">
-                    <dt>
-                        <img src="./SOHO3Q 首页_files/1422504362164.jpg" width="163" height="108">
-                    </dt>
-                    <dd>
-                        <b></b><i> </i>
-                    </dd>
-                </dl>
-
-
-
-
-
-
-
-                <dl style="display: none;">
-                    <dt>
-                        <img src="./SOHO3Q 首页_files/1422504390480.jpg" width="163" height="108">
-                    </dt>
-                    <dd>
-                        <b></b><i>这里，共享的不仅是空间</i>
-                    </dd>
-                </dl>
-
-
-
-
-
-
-                <dl style="display: none;">
-                    <dt>
-                        <img src="./SOHO3Q 首页_files/1422504408412.jpg" width="163" height="108">
-                    </dt>
-                    <dd>
-                        <b></b><i>新风PM2.5过滤 提供洁净室内空气</i>
-                    </dd>
-                </dl>
-
-
-
-
-
-
-                <dl style="display: none;">
-                    <dt>
-                        <img src="./SOHO3Q 首页_files/1422504433555.jpg" width="163" height="108">
-                    </dt>
-                    <dd>
-                        <b></b><i> 可以只租一个办公桌</i>
-                    </dd>
-                </dl>
-
-
-
-
-
-
-                <dl style="display: none;">
-                    <dt>
-                        <img src="./SOHO3Q 首页_files/1422504455798.jpg" width="163" height="108">
-                    </dt>
-                    <dd>
-                        <b></b><i>可以租一间办公室</i>
-                    </dd>
-                </dl>
-
-
-
-
-
-
-                <dl style="display: none;">
-                    <dt>
-                        <img src="./SOHO3Q 首页_files/1422504475736.jpg" width="163" height="108">
-                    </dt>
-                    <dd>
-                        <b></b><i>可以只租一周</i>
-                    </dd>
-                </dl>
-
-
-
-            </div>
-        </div>
-
-
-        <div class="hide">
-            <!--
-             <span></span>
-             -->
-
-
-            <span class=""></span>
-
-            <span class=""></span>
-
-            <span class=""></span>
-
-            <span class=""></span>
-
-            <span class=""></span>
-
-            <span class="on"></span>
-
-            <span class=""></span>
-
-        </div>
-
-    </div>
-</div>
-
-<section class="main" style="top: 708px;">
-    <div class="main-index">
-        <div class="q3-box">
-
-        </div>
-
-
-
-
-
-
-
-        <div class="new-in-b4">
-            <ul class="cf">
-                <li>
-                    <a href="http://www.soho3q.com/entry/web/index.do?page=facilities"></a>
-                    <div class="img">
-                        <img src="./SOHO3Q 首页_files/indx_21.jpg" width="115" height="115">
                     </div>
-                    <h2>3Q设施</h2>
-
-                    <article>
-                        SOHO 3Q为用户提供完善的配套<br>服务，例如：会议室、免费WiFi、免费咖啡等
-                    </article> <i class="icon"></i>
-
-                </li>
-                <li>
-                    <a href="http://www.soho3q.com/entry/web/faq.do"></a>
-                    <div class="img">
-                        <img src="./SOHO3Q 首页_files/indx_23.jpg" width="115" height="115">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">
+                            客户姓名<span class="text-danger">*</span>
+                        </label>
+                        <div class="col-md-9">
+                            <input name="customerName" type="text"  class="form-control validate[required]"  />
+                            </br>
+                        </div>
                     </div>
-                    <h2>常见问题</h2>
-
-                    <article>
-                        什么是SOHO 3Q办公空间，如何预约<br>怎么签合同等
-                    </article> <i class="icon"></i>
-                </li>
-                <li>
-                    <a href="http://www.soho3q.com/entry/web/index.do?page=down"></a>
-                    <div class="img">
-                        <img src="./SOHO3Q 首页_files/indx_25.jpg" width="115" height="115">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">
+                            客户公司<span class="text-danger">*</span>
+                        </label>
+                        <div class="col-md-9">
+                            <input name="customerCompany" type="text"  class="form-control validate[required]"  />
+                            </br>
+                        </div>
                     </div>
-                    <h2>客户端下载</h2>
-                    <article>
-                        方便用户下载客户端进行3Q办公位置的选择和在线定位，成为我们的用户后您还可以获取更多服务。
-                    </article> <i class="icon"></i>
-                </li>
-            </ul>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">
+                            客户支付宝账号<span class="text-danger">*</span>
+                        </label>
+                        <div class="col-md-9">
+                            <input name="customerAlipay" type="text"  class="form-control validate[required]"  />
+                            </br>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-12 control-label">
+                            押金金额: &nbsp;<span id="depositAmount" >0</span>
+                        </label>
+                        </br>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-12 control-label">
+                            租金金额:&nbsp;<span id="leaseAmount" >0</span>
+                        </label>
+                        </br>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-12 control-label">
+                            总金额:&nbsp;<span id="totalAmount" >0</span>
+                        </label>
+                        </br>
+                    </div>
+                </div>
+                <div class="col-md-3">
+
+                </div>
+            </div>
+            </br>
+            <div class="col-md-offset-3 col-md-9">
+                <a id="confirmButton" type="hidden"  data-toggle="modal" data-target="#customModal3">
+                </a>
+                <button onclick="confirmInformation()" class="btn btn-info" style="left: 35%;">
+                    确认信息
+                </button>
+                <button class="btn" type="reset" onclick="javascript:history.go(-1)">
+                    返回
+                </button>
+            </div>
+        </div><!-- /.content-body -->
+
+        <!-- customModal3 -->
+        <div class="modal" id="customModal3" data-transition="flipYIn" tabindex="-1" role="dialog" aria-labelledby="customModal3Label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-red">
+                        <h4 class="modal-title">
+                            <a href="#" data-dismiss="modal" class="pull-right" title="Continue shopping" data-toggle="tooltip" data-container="body">
+                                <i class="icon-basket-loaded"></i>
+                            </a>我的购物车
+                        </h4>
+                    </div>
+                    <div class="panel-body">
+                        <p class="fa-2x pull-right"><strong><sup>¥</sup><sup id="confirmDepositAmount"></sup></strong></p>
+                        <p class="lead">押金总额:</p>
+                        <p class="fa-2x pull-right"><strong><sup>¥</sup><sup id="confirmLeaseAmount"></sup></strong></p>
+                        <p class="lead">租金总额:</p>
+                        <p class="fa-2x pull-right"><strong><sup>¥</sup><sup id="confirmTotalAmount"></sup></strong></p>
+                        <p class="lead">总金额:</p>
+                        <p class="text-muted">请确认你的订单</p>
+                    </div>
+                    <table class="table no-margin">
+                        <tbody id="confirmList">
+
+                        </tbody>
+                    </table>
+                    <div class="modal-footer">
+                        <a href="#" onclick="submitOrder();" class="btn btn-danger btn-nofill">提交订单</a>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+        <!-- Template Setups -->
+        <div class="modal fade" id="templateSetup">
+            <div class="modal-dialog">
+                <!-- modal-content -->
+                <div class="modal-content"></div>
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.templateSetup -->
+
+        </div><!-- /.content -->
+    </section><!-- /MAIN -->
+
+
+
+    <!-- ============================================
+    FOOTER SECTION
+    =============================================== -->
+    <footer class="footer-wrapper footer-default" role="contentinfo" data-init-footer="true">
+        <div class="footer">
+            <div class="pull-right text-muted"><small>Currently v1.0</small></div>
+            <div>&copy;<em id="currentYear"></em>  XL</div>
         </div>
-    </div>
-</section>
+    </footer><!-- /.FOOTER -->
+
+</main>
+<@layoutFooter>
+<script>
+    var date = new Date;
+    $("#currentYear").append(date.getFullYear());
+
+    //订单实体
+    var createOrder = {
+        customerMobile : "",
+        customerName : "",
+        customerCompany : "",
+        customerAlipay : "",
+        projectId : "",
+        projectName : "",
+        checkInDate : "",
+        checkOutDate : "",
+        periodMonth : "",
+        periodWeek : "",
+        leaseAmount : "",
+        depositAmount : "",
+        orderItems : [
+
+        ]
+    }
+
+    var orderItem = {
+        projectId : "",
+        originalPrice : "",
+        finalPrice : "",
+        depositPrice : "",
+        productType : "",
+        productSubType : "",
+        bookNum : ""
+    }
+
+    /**
+     * 确认信息页,对象装载
+     */
+    function confirmInformation(){
+        var flag = true;
+        var customerMobile = getValueByName("customerMobile");
+        var customerName = getValueByName("customerName");
+        var customerCompany = getValueByName("customerCompany");
+        var customerAlipay = getValueByName("customerAlipay");
+        var projectId = getValueById("projectId");
+        var projectName = $("#projectId").find("option:selected").text();
+        var checkInDate = getValueById("startTime");
+        var periodMonth = getValueById("month");
+        var periodWeek = getValueById("week");
+        var checkOutDate = changeDate(checkInDate,periodMonth,periodWeek);
+        var leaseAmount= getAmountValue("leaseAmount");
+        var depositAmount = getAmountValue("depositAmount");
+        createOrder.customerMobile = customerMobile;
+        createOrder.customerName = customerName;
+        createOrder.customerCompany = customerCompany;
+        createOrder.customerAlipay = customerAlipay;
+        createOrder.projectId = projectId;
+        createOrder.projectName = projectName;
+        createOrder.checkInDate = checkInDate;
+        createOrder.checkOutDate = checkOutDate;
+        createOrder.periodMonth = periodMonth;
+        createOrder.periodWeek = periodWeek;
+        createOrder.leaseAmount = leaseAmount;
+        createOrder.depositAmount = depositAmount;
+        createOrder.orderItems.splice(0,createOrder.orderItems.length);
+        $("input[type='checkbox'][name='selectRoom']:checked").each(
+                function(){
+                    var checkBoxValue = $(this).val();
+                    var roomValueArray =  checkBoxValue.split("-");
+                    var originalPrice = roomValueArray[0];
+                    var finalPrice = roomValueArray[1];
+                    var depositPrice = roomValueArray[2];
+                    var productType = roomValueArray[3];
+                    var productSubType = roomValueArray[4];
+                    var bookNum = $("#number-"+checkBoxValue).val();
+                    if(bookNum > 0){
+                        flag = false;
+                        orderItem.projectId = projectId;
+                        orderItem.bookNum = bookNum;
+                        orderItem.depositPrice = depositPrice;
+                        orderItem.finalPrice = finalPrice;
+                        orderItem.originalPrice = originalPrice;
+                        orderItem.productSubType = productSubType;
+                        orderItem.productType = productType;
+                        createOrder.orderItems.push(orderItem);
+                    }
+                }
+        );
+        if(flag){
+            alert("请至少选择一个商品");
+        }else{
+            $("#confirmButton").click();
+            var str = "";
+            var stationNumber = 0;
+            var depositPrice = parseInt(createOrder.orderItems[0].depositPrice);
+            var list = createOrder.orderItems;
+            for(var i = 0;i<list.length;i++){
+                var title = "";
+                if(list[i].productSubType == 1){
+                    title = list[i].productSubType + "人办公桌";
+                }else{
+                    title = list[i].productSubType + "人独立办公室";
+                }
+                stationNumber += parseInt(list[i].productSubType);
+                var content = list[i].finalPrice + "/周*" + parseInt(createOrder.periodMonth) * 4 + parseInt(createOrder.periodWeek) + "*"+list[i].bookNum;
+                var price = list[i].finalPrice * (parseInt(createOrder.periodMonth) * 4 + parseInt(createOrder.periodWeek)) * parseInt(list[i].bookNum);
+                str +='<tr>'+
+                        '<td>'+title+'</td>'+
+                        '<td>¥'+content+'</td>'+
+                        '<td class="text-muted"><strong>¥'+price+'</strong></td>'+
+                        '</tr>';
+            }
+            str +='<tr>'+
+                    '<td>押金</td>'+
+                    '<td><sup>¥</sup>'+depositPrice+'/位*'+stationNumber+'</td>'+
+                    '<td class="text-muted"><strong>¥'+parseInt(depositPrice) * parseInt(stationNumber)+'</strong></td>'+
+                    '</tr>';
+            setAmountValue("confirmLeaseAmount",createOrder.leaseAmount);
+            setAmountValue("confirmDepositAmount",createOrder.depositAmount);
+            setAmountValue("confirmTotalAmount",parseInt(createOrder.leaseAmount)+parseInt(createOrder.depositAmount));
+            $("#confirmList").empty();
+            $("#confirmList").append(str);
+        }
+
+    }
+
+    function submitOrder(){
+        $.ajax({
+            url:"${path}/ajax/order/create",
+            type:"post",
+            dataType:'json',
+            contentType:"application/json;charset=UTF-8",
+            data:JSON.stringify(createOrder),
+            success:function(data){
+                alertMessage(data.errCode);
+            },
+            error:function(xhr, type, exception){
+                alert(type, "Failed");
+            }
+        })
+    }
+
+    /**
+     * 获取项目列表
+     * @param projectId 项目id
+     * @param checkInDate 开始时间
+     * @param checkOutDate 结束时间
+     */
+    function getProductList(projectId,checkInDate,checkOutDate){
+        //清零
+        setAmountValue("leaseAmount",0);
+        setAmountValue("depositAmount",0);
+        setAmountValue("totalAmount",0);
+        var formDate = {
+            projectId:projectId,
+            checkInDate:checkInDate,
+            checkOutDate:checkOutDate
+        }
+        $.ajax({
+            url:"${path}/ajax/soho3q/product_list",
+            type:"get",
+            dataType:'json',
+            data:formDate,
+            success:function(data){
+                if(data.errCode==0){
+                    var list = data.data;
+                    $("#productList").empty();
+                    var str = "";
+                    for(var i = 0;i<list.length;i++){
+                        var product = list[i];
+                        if(product.remainedNum > 0){
+                            str += '<tr>'+
+                                    '<td name="roomId"><input type="checkbox" name="selectRoom" value="'+product.price+'-'+product.finalPrice+'-'+product.deposit+'-'+product.productType+'-'+product.productSubtype+'-'+product.remainedNum+'"/></td>'+
+                                    '<td>'+product.title+'</td>'+
+                                    '<td>'+product.remainedNum+'</td>'+
+                                    '<td><span onclick="plus(\''+product.price+'-'+product.finalPrice+'-'+product.deposit+'-'+product.productType+'-'+product.productSubtype+'-'+product.remainedNum+'\')" class="glyphicon glyphicon-plus" aria-hidden="true"></span>'+
+                                    '<input id="number-'+product.price+'-'+product.finalPrice+'-'+product.deposit+'-'+product.productType+'-'+product.productSubtype+'-'+product.remainedNum+'" name="number" style="width: 100px;" onblur="input(\'number-'+product.price+'-'+product.finalPrice+'-'+product.deposit+'-'+product.productType+'-'+product.productSubtype+'-'+product.remainedNum+'\');" value = "0"/>'+
+                                    '<span onclick="minus(\''+product.price+'-'+product.finalPrice+'-'+product.deposit+'-'+product.productType+'-'+product.productSubtype+'-'+product.remainedNum+'\')" class="glyphicon glyphicon-minus" aria-hidden="true"></span></td>'+
+                                    '<td>￥'+product.finalPrice+'/'+product.priceTypeStr+'</td>'+
+                                    '</tr>';
+                        }else{
+                            str += '<tr>'+
+                                    '<td name="roomId"><input type="checkbox" name="selectRoom" value="'+product.price+'-'+product.finalPrice+'-'+product.deposit+'-'+product.productType+'-'+product.productSubtype+'-'+product.remainedNum+'" disabled = disabled/></td>'+
+                                    '<td>'+product.title+'</td>'+
+                                    '<td>'+product.remainedNum+'</td>'+
+                                    '<td>暂无工位</td>'+
+                                    '<td>￥'+product.finalPrice+'/'+product.priceTypeStr+'</td>'+
+                                    '</tr>';
+                        }
+                    }
+                    $("#productList").append(str);
+                }else{
+                    alertMessage(data.errCode);
+                }
+            },
+            error:function (xhr, type, exception) {
+                alert(type, "Failed");
+            }
+        });
+    }
+
+    /**
+     * 错误提示
+     */
+    function alertMessage(code){
+        var key ={
+            "106":"请填写账号密码",
+            "104":"请重新登录账户",
+            "112":"账户已存在",
+            "unknow":"#"+code
+        }
+        if(key[code]) message=key[code];
+        else message=key.unknow;
+        if(code == 0){
+            alert("恭喜您已成功下单");
+        }else{
+            alert(message);
+        }
+    }
+
+    /**
+     * 重新获取房源
+     */
+    function reacquireRoom(){
+        var projectId = $("#projectId").val();
+        var startTime = $("#startTime").val();
+        var month = $("#month").val();
+        var week = $("#week").val();
+        var endTime = changeDate(startTime,month,week);
+        getProductList(projectId,startTime,endTime);
+    }
+
+    /**
+     *  获取数值
+     */
+    function getAmountValue(id){
+        var amount = $("#"+id).text();
+        if(amount != null && amount != "" && amount !=0){
+            return parseFloat(amount);
+        }else{
+            return 0;
+        }
+    }
+
+    /**
+     * 通过id获取值
+     */
+    function getValueById(id){
+        var value = $("#"+id).val()
+        if(value != undefined && value != null && value != ""){
+            return value;
+        }else{
+            return "";
+        }
+    }
+
+    /**
+     * 通过名字
+     */
+    function getValueByName(name){
+        var value = $("input[name='"+name+"']").val()
+        if(value != undefined && value != null && value != ""){
+            return value;
+        }else{
+            return "";
+        }
+    }
+
+    /**
+     * 设置数值
+     */
+    function setAmountValue(id,value){
+        var amount = $("#"+id);
+        amount.empty();
+        if(value != undefined && value != null && value != ""){
+            amount.append(value);
+        }else{
+            amount.append(0);
+        }
+    }
+
+    //    点击加号
+    function plus(id){
+        var number = parseInt($("#number-"+id).val());
+        var array = id.split("-");
+        var remainedNum = parseInt(array[5]);
+        if(number < remainedNum){
+            number ++;
+            checkedItem(id,'checked');
+        }else{
+            alert("不能超过工位剩余数");
+        }
+        $("#number-"+id).val(number);
+        sumTotal();
+    }
+
+    //    点击减号
+    function minus(id){
+        var number = parseInt($("#number-"+id).val());
+        if(number > 0){
+            number --;
+            if(number == 0 ){
+                checkedItem(id,'cancel');
+            }
+        }else{
+            checkedItem(id,'cancel');
+            alert("工位数不能小于零");
+        }
+        $("#number-"+id).val(number);
+        sumTotal();
+    }
+
+    //    手动输入
+    function input(id){
+        var number = parseInt($("#number-"+id).val());
+        var array = id.split("-");
+        var remainedNum = parseInt(array[5]);
+        if(number >= 0 && number <= remainedNum){
+            $("#number-"+id).val(number);
+            checkedItem(id,'checked');
+        }else{
+            $("#number-"+id).val(0);
+            checkedItem(id,'cancel');
+            alert("工位数不能小于零,并且不能大于剩余工位数");
+        }
+
+        sumTotal();
+    }
+
+    function sumTotal(){
+        var sumLeaseAmount = 0;
+        var sumDepositAmount = 0;
+        var sumTotalAmount = 0;
+        var periodMonth = getValueById("month");
+        var periodWeek = getValueById("week");
+        $("input[type='checkbox'][name='selectRoom']:checked").each(
+                function(){
+                    var checkBoxValue = $(this).val();
+                    var roomValueArray =  checkBoxValue.split("-");
+                    var checkedNumber =  $("#number-"+checkBoxValue).val();
+                    sumLeaseAmount += roomValueArray[1] * checkedNumber *(parseInt(periodMonth) * 4 + parseInt(periodWeek));
+                    sumDepositAmount += roomValueArray[4] * roomValueArray[2] * checkedNumber;
+                }
+        );
+        sumTotalAmount = sumLeaseAmount + sumDepositAmount;
+        setAmountValue("leaseAmount",sumLeaseAmount);
+        setAmountValue("depositAmount",sumDepositAmount);
+        setAmountValue("totalAmount",sumTotalAmount);
+    }
+
+    function checkedItem(value,status){
+        if(status == "cancel"){
+            $("input[type='checkbox'][name='selectRoom']").each(
+                    function(){
+                        var checkBoxValue = $(this).val();
+                        if(checkBoxValue == value){
+                            $(this).prop("checked",false);
+                        }
+                    }
+            );
+        }else{
+            $("input[type='checkbox'][name='selectRoom']").each(
+                    function(){
+                        var checkBoxValue = $(this).val();
+                        if(checkBoxValue == value){
+                            $(this).prop("checked", true);
+                        }
+                    }
+            );
+        }
+    }
 
 
+    /**
+     * 修改时间方法
+     * @param startTime 开始时间
+     * @param month 添加月份
+     * @param day 添加天数
+     */
+    function changeDate(startTime,month,day){
+        var now = new Date(startTime);
+        // now.setDate(startTime);
+        now.setMonth(now.getMonth() + parseInt(month))
+        now.setDate(now.getDate() +  parseInt(day));
+        return $.format.date(now,"yyyy-MM-dd");
+    }
 
-
-
-
-
-
-<!--底部 start-->
-<footer class="footer" style="top: 708px;">
-    <div class="warp">
-        <div class="left-f">
-            <a href="http://www.soho3q.com/entry/web/index.do?page=about">关于我们</a><i>|</i>
-            <a href="http://www.soho3q.com/entry/web/index.do?page=job">招聘信息</a><i>|</i>
-            <a href="http://www.soho3q.com/entry/web/index.do?page=policy">隐私政策</a><i>|</i>
-            <a href="http://www.soho3q.com/entry/web/index.do?page=statement">法律声明</a><i>|</i>
-            <a href="http://www.soho3q.com/entry/web/index.do?page=contact">联系我们</a></div>
-        <div class="copy">© 2012-2014 SOHO中国 版权所有　<a href="http://www.miitbeian.gov.cn/publish/query/indexFirst.action" target="_blank" style="color: yellow;">京ICP备14061435号</a>　</div>
-        <div class="share">
-            <span>分享：</span>
-            <a href="javascript:;" class="s1 weibo" data-tit="SOHO 3Q分享"></a>
-            <!--  <a href="javascript:;" class="s2 tqweibo" data-tit="SOHOChina分享"></a> -->
-            <!--  <a href="javascript:;" class="s3 qq" data-tit="SOHOChina分享"></a> -->
-            <a href="javascript:;" class="s4 weixina" data-img="/entry/web/upload/1855537519.png"></a>
-            <!-- <a href="javascript:;" class="s5 baidu" data-tit="SOHOChina分享"></a> -->
-        </div>
-
-    </div>
-</footer>
-<!--end-->
-
-<div lang="zh-cn" style="position: absolute; z-index: 100006; display: none; top: 376px; left: 240.797px;"><iframe hidefocus="true" width="9" height="7" frameborder="0" border="0" scrolling="no" src="about:blank" style="width: 282px; height: 316px;"></iframe></div></body></html>
+</script>
+</@layoutFooter>

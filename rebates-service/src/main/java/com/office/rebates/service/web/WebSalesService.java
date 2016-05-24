@@ -1,5 +1,6 @@
 package com.office.rebates.service.web;
 
+import com.office.rebates.model.CouponModel;
 import com.office.rebates.model.Soho3qProductModel;
 import com.office.rebates.model.Soho3qProjectModel;
 
@@ -22,4 +23,11 @@ public interface WebSalesService {
      * @return
      */
     public List<Soho3qProductModel> getProductList(String projectId,String checkInDate,String checkOutDate);
+
+    /**
+     * 获取工位券列表
+     * @return
+     */
+    public List<CouponModel> getCouponList();
+
 }
