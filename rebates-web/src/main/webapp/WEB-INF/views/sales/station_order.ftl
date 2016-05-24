@@ -272,15 +272,7 @@
         ]
     }
 
-    var orderItem = {
-        projectId : "",
-        originalPrice : "",
-        finalPrice : "",
-        depositPrice : "",
-        productType : "",
-        productSubType : "",
-        bookNum : ""
-    }
+
 
     /**
      * 确认信息页,对象装载
@@ -324,6 +316,15 @@
                     var bookNum = $("#number-"+checkBoxValue).val();
                     if(bookNum > 0){
                         flag = false;
+                        var orderItem = {
+                            projectId : "",
+                            originalPrice : "",
+                            finalPrice : "",
+                            depositPrice : "",
+                            productType : "",
+                            productSubType : "",
+                            bookNum : ""
+                        }
                         orderItem.projectId = projectId;
                         orderItem.bookNum = bookNum;
                         orderItem.depositPrice = depositPrice;
@@ -331,7 +332,11 @@
                         orderItem.originalPrice = originalPrice;
                         orderItem.productSubType = productSubType;
                         orderItem.productType = productType;
+                       // var length = createOrder.orderItems.length;
+                        //查询push为什么会覆盖问题
+                        //createOrder.orderItems[length]=orderItem;
                         createOrder.orderItems.push(orderItem);
+
                     }
                 }
         );
@@ -351,7 +356,7 @@
                     title = list[i].productSubType + "人独立办公室";
                 }
                 stationNumber += parseInt(list[i].productSubType);
-                var content = list[i].finalPrice + "/周*" + parseInt(createOrder.periodMonth) * 4 + parseInt(createOrder.periodWeek) + "*"+list[i].bookNum;
+                var content = list[i].finalPrice + "/周 * " + (parseInt(createOrder.periodMonth) * 4 + parseInt(createOrder.periodWeek)) + "(周) * "+list[i].bookNum;
                 var price = list[i].finalPrice * (parseInt(createOrder.periodMonth) * 4 + parseInt(createOrder.periodWeek)) * parseInt(list[i].bookNum);
                 str +='<tr>'+
                         '<td>'+title+'</td>'+

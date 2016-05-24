@@ -54,6 +54,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="parent" target="1.7" />
       <module name="rebates" target="1.7" />
       <module name="rebates-dal" target="1.7" />
       <module name="rebates-model" target="1.7" />
