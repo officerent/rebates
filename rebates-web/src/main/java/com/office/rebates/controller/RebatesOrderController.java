@@ -53,7 +53,7 @@ public class RebatesOrderController {
 		if(request.getCheckInDate()==null||
 			request.getCheckOutDate()==null||
 			request.getCustomerAlipay()==null||
-			request.getCustomerCompany()==null||
+			//request.getCustomerCompany()==null||
 			request.getCustomerMobile()==null||
 			request.getCustomerName()==null||
 			request.getDepositAmount()==null||
@@ -69,7 +69,9 @@ public class RebatesOrderController {
 				result.setErrMsg(Messages.MISSING_REQUIRED_PARAM_MSG);
 				return result;
 			}
-		
+		if(request.getCustomerCompany()==null){
+			request.setCustomerCompany(request.getCustomerName());
+		}
 		//check if the user is logon
 		Cookie[] cookies=httpServletRequest.getCookies();
 		logger.info("creating order with parms:"+JSON.toJSONString(request)+",cookies:"+JSON.toJSONString(cookies));
@@ -109,7 +111,7 @@ public class RebatesOrderController {
 			request.getCustomerAlipay()==null||
 			request.getCustomerCompany()==null||
 			request.getCustomerMobile()==null||
-			request.getCustomerName()==null||
+			//request.getCustomerName()==null||
 			request.getCouponOrderItems()==null||
 			request.getCouponOrderItems().isEmpty())
 			{
@@ -117,6 +119,10 @@ public class RebatesOrderController {
 				result.setErrMsg(Messages.MISSING_REQUIRED_PARAM_MSG);
 				return result;
 			}
+		
+		if(request.getCustomerCompany()==null){
+			request.setCustomerCompany(request.getCustomerName());
+		}
 		
 		//check if the user is logon
 		Cookie[] cookies=httpServletRequest.getCookies();
