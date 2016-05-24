@@ -18,101 +18,54 @@
                 <div class="panel fade in panel-default panel-fill" data-fill-color="true" data-init-panel="true">
                     <div class="panel-body">
                         <form class="form-inline">
-                            选择券种类：
-                            <div class="form-group">
+                            <div class="form-group col-md-2" >
+                                <label>
+                                    选择券种类：
+                                </label>
+                            </div>
+                            <div class="form-group  col-md-2">
                                 <label class="select">
-                                    <select id="projectId" onchange="reacquireRoom();">
-                                    <#list couponList as c>
-                                        <option value="${p.projectId!''}" >${c.name!''}</option>
-                                    </#list>
+                                    <select id="coupon" onchange="reacquireCoupon();">
+                                        <#list couponList as c>
+                                            <option value="${c.couponId!''}-${c.price!''}-${c.productType!''}" >${c.name!''}</option>
+                                        </#list>
                                     </select>
                                 </label>
                             </div><!-- /form-group -->
-                            选择入驻时间：
-                            <div class="form-group" >
-                                <label class="select">
-                                    <input id="startTime" onclick="validatepicker(this)" onchange="reacquireRoom()" data-date-format="yyyy-MM-dd" class="form-control date form_date validate[required]" name="startTime" placeholder="开始时间" value="${startTime!''}"/>
+                            <div class="form-group col-md-4" >
+                                <label>
+                                    <input type = "hidden" />
+                                </label>
+                            </div>
+                            <div class="form-group col-md-4" >
+                                <label>
+                                    <span onclick="plus()" class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                    <input id="number" name="number" style="width: 100px;" onblur="input();" value = "1"/>
+                                    <span onclick="minus()" class="glyphicon glyphicon-minus" aria-hidden="true"></span>
                                 </label>
                             </div><!-- /form-group -->
-                            入驻时长：
-                            <div class="form-group" style="width: 100px">
-                                <label class="select">
-                                    <select id="month" onchange="reacquireRoom()">
-                                        <option value="0">0</option>
-                                        <option value="1" selected="selected">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-                                        <option value="9">9</option>
-                                        <option value="10">10</option>
-                                        <option value="11">11</option>
-                                        <option value="12">12</option>
-                                    </select>
-                                </label>
-                            </div><!-- /form-group -->
-                            （月）
-                            <div class="form-group" style="width: 100px">
-                                <label class="select">
-                                    <select id="week" onchange="reacquireRoom()">
-                                        <option value="0" selected="selected">0</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                    </select>
-                                </label>
-                            </div><!-- /form-group -->
-                            （周）
                         </form>
                     </div><!-- /.panel-body -->
                 </div><!-- /.panel -->
+                <div class = "row" id ="selectCoupon">
+                    <div class="col-md-3">
 
+                    </div>
+                    <div class="col-md-6" >
+                        <div class="form-group">
+                            <label>Radios</label>
+                            <div class="radio">
+                                <label><input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="checked"> Option one is this and that—be sure to include why it's great</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> Option two can be something else and selecting it will deselect option one</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
 
-                <div class="table-responsive">
-
-                    <table class="table table-hover">
-                        <thead>
-                        <tr>
-                            <th>选择</th>
-                            <th>产品名称</th>
-                            <th>产品剩余数量</th>
-                            <th>选择数量</th>
-                            <th>价格</th>
-                        </tr>
-                        </thead>
-                        <tbody id ="productList">
-                        <#if productList??>
-                            <#list productList as product>
-                            <tr>
-                                <td name='roomId'>
-                                    <#if product.remainedNum  gt 0 >
-                                        <input type="checkbox" name="selectRoom" value="${product.price!""}-${product.finalPrice!""}-${product.deposit!""}-${product.productType!""}-${product.productSubtype!""}-${product.remainedNum!""}"/>
-                                    <#else >
-                                        <input type="checkbox" name="selectRoom" value="${product.price!""}-${product.finalPrice!""}-${product.deposit!""}-${product.productType!""}-${product.productSubtype!""}-${product.remainedNum!""}" disabled = disabled/>
-                                    </#if>
-                                </td>
-                                <td>${product.title!""}</td>
-                                <td>${product.remainedNum!""}</td>
-                                <td>
-                                    <#if product.remainedNum  gt 0 >
-                                        <span onclick="plus('${product.price!""}-${product.finalPrice!""}-${product.deposit!""}-${product.productType!""}-${product.productSubtype!""}-${product.remainedNum!""}')" class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                        <input id="number-${product.price!""}-${product.finalPrice!""}-${product.deposit!""}-${product.productType!""}-${product.productSubtype!""}-${product.remainedNum!""}" name="number" style="width: 100px;" onblur="input('number-${product.price!""}-${product.finalPrice!""}-${product.deposit!""}-${product.productType!""}-${product.productSubtype!""}-${product.remainedNum!""}');" value = "0"/>
-                                        <span onclick="minus('${product.price!""}-${product.finalPrice!""}-${product.deposit!""}-${product.productType!""}-${product.productSubtype!""}-${product.remainedNum!""}')" class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-                                    <#else >
-                                        暂无工位
-                                    </#if>
-                                </td>
-                                <td>￥${product.finalPrice!""}/${product.priceTypeStr!""}</td>
-                            </tr>
-                            </#list>
-                        </#if>
-                        </tbody>
-                    </table>
-                </div><!-- /.table-responsive -->
-            </div><!-- /.cols -->
+                    </div>
+                </div>
 
             <div class = "row">
                 <div class="col-md-3">
@@ -121,7 +74,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="col-sm-3 control-label">
-                            客户手机号<span class="text-danger">*</span>
+                            手机号<span class="text-danger">*</span>
                         </label>
                         <div class="col-md-9">
                             <input name="customerMobile" type="text"  class="form-control validate[required]"  />
@@ -130,7 +83,7 @@
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">
-                            客户姓名<span class="text-danger">*</span>
+                            姓名<span class="text-danger">*</span>
                         </label>
                         <div class="col-md-9">
                             <input name="customerName" type="text"  class="form-control validate[required]"  />
@@ -139,16 +92,16 @@
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">
-                            客户公司<span class="text-danger">*</span>
+                            公司名称<span class="text-danger">*</span>
                         </label>
                         <div class="col-md-9">
-                            <input name="customerCompany" type="text"  class="form-control validate[required]"  />
+                            <input name="customerCompany" type="text"  class="form-control "  />
                             </br>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">
-                            客户支付宝账号<span class="text-danger">*</span>
+                            支付宝账号(返利到该支付宝)<span class="text-danger">*</span>
                         </label>
                         <div class="col-md-9">
                             <input name="customerAlipay" type="text"  class="form-control validate[required]"  />
@@ -157,20 +110,7 @@
                     </div>
                     <div class="form-group">
                         <label class="col-sm-12 control-label">
-                            押金金额: &nbsp;<span id="depositAmount" >0</span>
-                        </label>
-                        </br>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-12 control-label">
-                            租金金额:&nbsp;<span id="leaseAmount" >0</span>
-                        </label>
-                        </br>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-12 control-label">
-                            总金额:&nbsp;<span id="totalAmount" >0</span>
+                            预计支付金额: &nbsp;<span id="payAmount" >0</span>
                         </label>
                         </br>
                     </div>
@@ -204,12 +144,8 @@
                         </h4>
                     </div>
                     <div class="panel-body">
-                        <p class="fa-2x pull-right"><strong><sup>¥</sup><sup id="confirmDepositAmount"></sup></strong></p>
-                        <p class="lead">押金总额:</p>
-                        <p class="fa-2x pull-right"><strong><sup>¥</sup><sup id="confirmLeaseAmount"></sup></strong></p>
-                        <p class="lead">租金总额:</p>
                         <p class="fa-2x pull-right"><strong><sup>¥</sup><sup id="confirmTotalAmount"></sup></strong></p>
-                        <p class="lead">总金额:</p>
+                        <p class="lead">预计总金额:</p>
                         <p class="text-muted">请确认你的订单</p>
                     </div>
                     <table class="table no-margin">
@@ -254,32 +190,21 @@
     $("#currentYear").append(date.getFullYear());
 
     //订单实体
-    var createOrder = {
+    var createCouponOrder = {
         customerMobile : "",
         customerName : "",
         customerCompany : "",
         customerAlipay : "",
-        projectId : "",
-        projectName : "",
-        checkInDate : "",
-        checkOutDate : "",
-        periodMonth : "",
-        periodWeek : "",
-        leaseAmount : "",
-        depositAmount : "",
-        orderItems : [
+        couponOrderItems : [
 
         ]
     }
 
-    var orderItem = {
-        projectId : "",
-        originalPrice : "",
-        finalPrice : "",
-        depositPrice : "",
-        productType : "",
-        productSubType : "",
-        bookNum : ""
+    var couponOrderItems = {
+        couponId : 0,
+        amount : 0,
+        price : 0,
+        giftCouponId : 0
     }
 
     /**
@@ -390,65 +315,6 @@
     }
 
     /**
-     * 获取项目列表
-     * @param projectId 项目id
-     * @param checkInDate 开始时间
-     * @param checkOutDate 结束时间
-     */
-    function getProductList(projectId,checkInDate,checkOutDate){
-        //清零
-        setAmountValue("leaseAmount",0);
-        setAmountValue("depositAmount",0);
-        setAmountValue("totalAmount",0);
-        var formDate = {
-            projectId:projectId,
-            checkInDate:checkInDate,
-            checkOutDate:checkOutDate
-        }
-        $.ajax({
-            url:"${path}/ajax/soho3q/product_list",
-            type:"get",
-            dataType:'json',
-            data:formDate,
-            success:function(data){
-                if(data.errCode==0){
-                    var list = data.data;
-                    $("#productList").empty();
-                    var str = "";
-                    for(var i = 0;i<list.length;i++){
-                        var product = list[i];
-                        if(product.remainedNum > 0){
-                            str += '<tr>'+
-                                    '<td name="roomId"><input type="checkbox" name="selectRoom" value="'+product.price+'-'+product.finalPrice+'-'+product.deposit+'-'+product.productType+'-'+product.productSubtype+'-'+product.remainedNum+'"/></td>'+
-                                    '<td>'+product.title+'</td>'+
-                                    '<td>'+product.remainedNum+'</td>'+
-                                    '<td><span onclick="plus(\''+product.price+'-'+product.finalPrice+'-'+product.deposit+'-'+product.productType+'-'+product.productSubtype+'-'+product.remainedNum+'\')" class="glyphicon glyphicon-plus" aria-hidden="true"></span>'+
-                                    '<input id="number-'+product.price+'-'+product.finalPrice+'-'+product.deposit+'-'+product.productType+'-'+product.productSubtype+'-'+product.remainedNum+'" name="number" style="width: 100px;" onblur="input(\'number-'+product.price+'-'+product.finalPrice+'-'+product.deposit+'-'+product.productType+'-'+product.productSubtype+'-'+product.remainedNum+'\');" value = "0"/>'+
-                                    '<span onclick="minus(\''+product.price+'-'+product.finalPrice+'-'+product.deposit+'-'+product.productType+'-'+product.productSubtype+'-'+product.remainedNum+'\')" class="glyphicon glyphicon-minus" aria-hidden="true"></span></td>'+
-                                    '<td>￥'+product.finalPrice+'/'+product.priceTypeStr+'</td>'+
-                                    '</tr>';
-                        }else{
-                            str += '<tr>'+
-                                    '<td name="roomId"><input type="checkbox" name="selectRoom" value="'+product.price+'-'+product.finalPrice+'-'+product.deposit+'-'+product.productType+'-'+product.productSubtype+'-'+product.remainedNum+'" disabled = disabled/></td>'+
-                                    '<td>'+product.title+'</td>'+
-                                    '<td>'+product.remainedNum+'</td>'+
-                                    '<td>暂无工位</td>'+
-                                    '<td>￥'+product.finalPrice+'/'+product.priceTypeStr+'</td>'+
-                                    '</tr>';
-                        }
-                    }
-                    $("#productList").append(str);
-                }else{
-                    alertMessage(data.errCode);
-                }
-            },
-            error:function (xhr, type, exception) {
-                alert(type, "Failed");
-            }
-        });
-    }
-
-    /**
      * 错误提示
      */
     function alertMessage(code){
@@ -468,15 +334,12 @@
     }
 
     /**
-     * 重新获取房源
+     * 选择工位券
      */
-    function reacquireRoom(){
-        var projectId = $("#projectId").val();
-        var startTime = $("#startTime").val();
-        var month = $("#month").val();
-        var week = $("#week").val();
-        var endTime = changeDate(startTime,month,week);
-        getProductList(projectId,startTime,endTime);
+    function reacquireCoupon(){
+        var couponArray = $("#coupon").val();
+        setValueById("number",1);
+        setAmountValue("payAmount",couponArray[1]);
     }
 
     /**
@@ -488,30 +351,6 @@
             return parseFloat(amount);
         }else{
             return 0;
-        }
-    }
-
-    /**
-     * 通过id获取值
-     */
-    function getValueById(id){
-        var value = $("#"+id).val()
-        if(value != undefined && value != null && value != ""){
-            return value;
-        }else{
-            return "";
-        }
-    }
-
-    /**
-     * 通过名字
-     */
-    function getValueByName(name){
-        var value = $("input[name='"+name+"']").val()
-        if(value != undefined && value != null && value != ""){
-            return value;
-        }else{
-            return "";
         }
     }
 
