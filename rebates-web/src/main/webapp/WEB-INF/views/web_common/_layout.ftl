@@ -141,7 +141,7 @@
 
         <#--公共js方法-->
         <script src="${path}/wrap/common/js/common.js"></script>
-        <script type="text/javascript" src="${path}/wrap/template/juicer-min.js"></script>
+        <script type="text/javascript" src="${path}/wrap/template/template.js"></script>
         <#nested>
     </body>
 </html>
