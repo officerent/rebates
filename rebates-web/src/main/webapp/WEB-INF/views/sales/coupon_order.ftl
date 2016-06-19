@@ -40,9 +40,9 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <label>
-                                    <span onclick="plus()" class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                    <input id="number" name="number" style="width: 100px;" onblur="input();" value="1"/>
-                                    <span onclick="minus()" class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+                                    <span onclick="plusCoupon();" class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                    <input id="number" name="number" style="width: 100px;" onblur="inputCoupon();" value="1"/>
+                                    <span onclick="minusCoupon();" class="glyphicon glyphicon-minus" aria-hidden="true"></span>
                                 </label>
                             </div>
                             <!-- /form-group -->
@@ -355,9 +355,9 @@
         }
     }
 
-    window.onload = function () {
+    $(function(){
         reacquireCoupon();
-    };
+    });
 
     /**
      * 选择工位券
@@ -399,50 +399,34 @@
     }
 
     //    点击加号
-    function plus(id) {
-        var number = parseInt($("#number-" + id).val());
-        var array = id.split("-");
-        var remainedNum = parseInt(array[5]);
-        if (number < remainedNum) {
-            number++;
-            checkedItem(id, 'checked');
-        } else {
-            alert("不能超过工位剩余数");
-        }
-        $("#number-" + id).val(number);
+    function plusCoupon() {
+        var number = parseInt($("#number").val());
+        number++;
+        $("#number").val(number);
         sumTotal();
     }
 
     //    点击减号
-    function minus(id) {
-        var number = parseInt($("#number-" + id).val());
+    function minusCoupon() {
+        var number = parseInt($("#number").val());
         if (number > 0) {
             number--;
-            if (number == 0) {
-                checkedItem(id, 'cancel');
-            }
         } else {
-            checkedItem(id, 'cancel');
             alert("工位数不能小于零");
         }
-        $("#number-" + id).val(number);
+        $("#number").val(number);
         sumTotal();
     }
 
     //    手动输入
-    function input(id) {
-        var number = parseInt($("#number-" + id).val());
-        var array = id.split("-");
-        var remainedNum = parseInt(array[5]);
-        if (number >= 0 && number <= remainedNum) {
-            $("#number-" + id).val(number);
-            checkedItem(id, 'checked');
+    function inputCoupon() {
+        var number = parseInt($("#number").val());
+        if (number >= 0){
+            $("#number").val(number);
         } else {
-            $("#number-" + id).val(0);
-            checkedItem(id, 'cancel');
+            $("#number").val(0);
             alert("工位数不能小于零,并且不能大于剩余工位数");
         }
-
         sumTotal();
     }
 
@@ -477,24 +461,11 @@
     }
 
     function sumTotal() {
-        var sumLeaseAmount = 0;
-        var sumDepositAmount = 0;
         var sumTotalAmount = 0;
-        var periodMonth = getValueById("month");
-        var periodWeek = getValueById("week");
-        $("input[type='checkbox'][name='selectRoom']:checked").each(
-                function () {
-                    var checkBoxValue = $(this).val();
-                    var roomValueArray = checkBoxValue.split("-");
-                    var checkedNumber = $("#number-" + checkBoxValue).val();
-                    sumLeaseAmount += roomValueArray[1] * checkedNumber * (parseInt(periodMonth) * 4 + parseInt(periodWeek));
-                    sumDepositAmount += roomValueArray[4] * roomValueArray[2] * checkedNumber;
-                }
-        );
-        sumTotalAmount = sumLeaseAmount + sumDepositAmount;
-        setAmountValue("leaseAmount", sumLeaseAmount);
-        setAmountValue("depositAmount", sumDepositAmount);
-        setAmountValue("totalAmount", sumTotalAmount);
+        var price = parseFloat(getAmountValue("price"));
+        var number = parseInt(getValueById("number"));
+        sumTotalAmount = (price * number).toFixed(2);
+        setAmountValue("payAmount", sumTotalAmount);
     }
 
     function checkedItem(value, status) {
