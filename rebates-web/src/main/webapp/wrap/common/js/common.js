@@ -35,6 +35,6 @@ function messageBox(messageTitle,messageText){
     $.gritter.add({
         title: messageTitle,
         text: messageText,
-        class_name: 'gritter-info gritter-center'
+        class_name: 'gritter-info gritter-center',
     });
 }

@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="${path}/wrap/styles/bootstrap-datetimepicker.min.css" />
     <!-- 表单验证css样式 -->
     <link rel="stylesheet" href="${path}/wrap/validationengine/css/validationEngine.jquery.css">
+    <link rel="stylesheet" href="${path}/wrap/styles/jquery.gritter.css">
 
     <script src="${path}/wrap/web/js/jquery.js"></script>
     <script src="${path}/wrap/web/js/cookie.js"></script>
@@ -138,10 +139,12 @@
         <script src="${path}/wrap/web/js/dateFormat.js"></script>
 
         <script src="${path}/wrap/web/js/jquery.dateFormat.js"></script>
+        <script src="${path}/wrap/scripts/jquery.gritter.min.js"></script>
 
         <#--公共js方法-->
         <script src="${path}/wrap/common/js/common.js"></script>
         <script type="text/javascript" src="${path}/wrap/template/template.js"></script>
+
         <#nested>
     </body>
 </html>
