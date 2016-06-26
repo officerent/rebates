@@ -18,6 +18,18 @@ function getValueById(id){
         return "error: id is null";
     }
 }
+
+/**
+ * 通过名字
+ */
+function getValueByName(name){
+    var value = $("input[name='"+name+"']").val()
+    if(value != undefined && value != null && value != ""){
+        return value;
+    }else{
+        return "";
+    }
+}
 //消息提示
 function messageBox(messageTitle,messageText){
     $.gritter.add({

@@ -139,6 +139,22 @@
                             </h4>
                         </div>
                         <div class="panel-body">
+                            <p class="fa-2x pull-right"><strong><sup id="confirmName"></sup></strong>
+                            </p>
+
+                            <p class="lead">用户名:</p>
+                            <p class="fa-2x pull-right"><strong><sup id="confirmMobile"></sup></strong>
+                            </p>
+
+                            <p class="lead">手机号:</p>
+                            <p class="fa-2x pull-right"><strong><sup id="confirmCompanyName"></sup></strong>
+                            </p>
+
+                            <p class="lead">公司名称:</p>
+                            <p class="fa-2x pull-right"><strong><sup id="confirmAlipay"></sup></strong>
+                            </p>
+
+                            <p class="lead">支付宝账号:</p>
                             <p class="fa-2x pull-right"><strong><sup>¥</sup><sup id="confirmTotalAmount"></sup></strong>
                             </p>
 
@@ -233,91 +249,63 @@
      * 确认信息页,对象装载
      */
     function confirmInformation() {
-        var flag = true;
+        var title = $("#coupon").find("option:selected").text();
+        var totalAmount = getAmountValue("payAmount");
         var customerMobile = getValueByName("customerMobile");
         var customerName = getValueByName("customerName");
         var customerCompany = getValueByName("customerCompany");
         var customerAlipay = getValueByName("customerAlipay");
-        var projectId = getValueById("projectId");
-        var projectName = $("#projectId").find("option:selected").text();
-        var checkInDate = getValueById("startTime");
-        var periodMonth = getValueById("month");
-        var periodWeek = getValueById("week");
-        var checkOutDate = changeDate(checkInDate, periodMonth, periodWeek);
-        var leaseAmount = getAmountValue("leaseAmount");
-        var depositAmount = getAmountValue("depositAmount");
-        createOrder.customerMobile = customerMobile;
-        createOrder.customerName = customerName;
-        createOrder.customerCompany = customerCompany;
-        createOrder.customerAlipay = customerAlipay;
-        createOrder.projectId = projectId;
-        createOrder.projectName = projectName;
-        createOrder.checkInDate = checkInDate;
-        createOrder.checkOutDate = checkOutDate;
-        createOrder.periodMonth = periodMonth;
-        createOrder.periodWeek = periodWeek;
-        createOrder.leaseAmount = leaseAmount;
-        createOrder.depositAmount = depositAmount;
-        createOrder.orderItems.splice(0, createOrder.orderItems.length);
-        $("input[type='checkbox'][name='selectRoom']:checked").each(
-                function () {
-                    var checkBoxValue = $(this).val();
-                    var roomValueArray = checkBoxValue.split("-");
-                    var originalPrice = roomValueArray[0];
-                    var finalPrice = roomValueArray[1];
-                    var depositPrice = roomValueArray[2];
-                    var productType = roomValueArray[3];
-                    var productSubType = roomValueArray[4];
-                    var bookNum = $("#number-" + checkBoxValue).val();
-                    if (bookNum > 0) {
-                        flag = false;
-                        orderItem.projectId = projectId;
-                        orderItem.bookNum = bookNum;
-                        orderItem.depositPrice = depositPrice;
-                        orderItem.finalPrice = finalPrice;
-                        orderItem.originalPrice = originalPrice;
-                        orderItem.productSubType = productSubType;
-                        orderItem.productType = productType;
-                        createOrder.orderItems.push(orderItem);
-                    }
-                }
-        );
-        if (flag) {
-            alert("请至少选择一个商品");
-        } else {
-            $("#confirmButton").click();
-            var str = "";
-            var stationNumber = 0;
-            var depositPrice = parseInt(createOrder.orderItems[0].depositPrice);
-            var list = createOrder.orderItems;
-            for (var i = 0; i < list.length; i++) {
-                var title = "";
-                if (list[i].productSubType == 1) {
-                    title = list[i].productSubType + "人办公桌";
-                } else {
-                    title = list[i].productSubType + "人独立办公室";
-                }
-                stationNumber += parseInt(list[i].productSubType);
-                var content = list[i].finalPrice + "/周*" + parseInt(createOrder.periodMonth) * 4 + parseInt(createOrder.periodWeek) + "*" + list[i].bookNum;
-                var price = list[i].finalPrice * (parseInt(createOrder.periodMonth) * 4 + parseInt(createOrder.periodWeek)) * parseInt(list[i].bookNum);
-                str += '<tr>' +
-                        '<td>' + title + '</td>' +
-                        '<td>¥' + content + '</td>' +
-                        '<td class="text-muted"><strong>¥' + price + '</strong></td>' +
-                        '</tr>';
+        var giftCoupon = "";
+        createCouponOrder.customerAlipay = customerAlipay;
+        createCouponOrder.customerCompany = customerCompany;
+        createCouponOrder.customerMobile = customerMobile;
+        createCouponOrder.customerName = customerName;
+        createCouponOrder.couponOrderItems.splice(0,createCouponOrder.couponOrderItems.length);
+        var coupon = getValueById("coupon");
+        var couponArray = coupon.split("-");
+        var number = getValueById("number");
+        if(couponArray[2] != ""){
+            couponOrderItems.couponId = couponArray[0];
+            couponOrderItems.price = couponArray[1];
+        }else{
+            giftCoupon = $('input[name="giftCouponId"][checked]');
+            if(giftCoupon.length == 0){
+                messageBox("提示信息","请至少选择一种赠品");
+                return;
             }
-            str += '<tr>' +
-                    '<td>押金</td>' +
-                    '<td><sup>¥</sup>' + depositPrice + '/位*' + stationNumber + '</td>' +
-                    '<td class="text-muted"><strong>¥' + parseInt(depositPrice) * parseInt(stationNumber) + '</strong></td>' +
-                    '</tr>';
-            setAmountValue("confirmLeaseAmount", createOrder.leaseAmount);
-            setAmountValue("confirmDepositAmount", createOrder.depositAmount);
-            setAmountValue("confirmTotalAmount", parseInt(createOrder.leaseAmount) + parseInt(createOrder.depositAmount));
-            $("#confirmList").empty();
-            $("#confirmList").append(str);
+            couponOrderItems.couponId = couponArray[0];
+            couponOrderItems.price = couponArray[1];
+            couponOrderItems.giftCouponId = giftCoupon.val();
         }
+        couponOrderItems.amount = number;
+        createCouponOrder.couponOrderItems.push(couponOrderItems);
 
+        $("#confirmButton").click();
+        var str = "";
+        var list = createCouponOrder.couponOrderItems;
+        for(var i = 0; i<list.length ; i++){
+            var content = list[i].price + "/张" + " * " + list[i].amount +"(张)";
+            var price = list[i].price * (parseInt(list[i].amount));
+            str += '<tr>' +
+                    '<td>' + title + '</td>' +
+                    '<td>¥' + content + '</td>' +
+                    '<td class="text-muted"><strong>¥' + price + '</strong></td>' +
+                    '</tr>';
+        }
+        if(couponArray[2] == ""){
+            str += '<tr>' +
+                    '<td>赠送</td>' +
+                    '<td>' + giftCoupon.text() + '</td>' +
+                    '<td class="text-muted"><strong>1张</strong></td>' +
+                    '</tr>';
+        }
+        setAmountValue("confirmTotalAmount", parseInt(totalAmount));
+        setAmountValue("confirmName", createCouponOrder.customerName);
+        setAmountValue("confirmMobile", createCouponOrder.customerMobile);
+        setAmountValue("confirmCompanyName", createCouponOrder.customerCompany);
+        setAmountValue("confirmAlipay", createCouponOrder.customerAlipay);
+        $("#confirmList").empty();
+        $("#confirmList").append(str);
     }
 
     function submitOrder() {
