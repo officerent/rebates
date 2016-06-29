@@ -18,7 +18,7 @@
                 <div class="panel fade in panel-default panel-fill" data-fill-color="true" data-init-panel="true">
                     <div class="panel-body">
                         <form class="form-inline">
-                            <div class="form-group col-md-2">
+                            <div class="form-group col-md-1">
                                 <label>
                                     选择券种类：
                                 </label>
@@ -32,11 +32,8 @@
                                     </select>
                                 </label>
                             </div>
-                            <!-- /form-group -->
-                            <div class="form-group col-md-4">
-                                <label>
-                                    价格:<span id="price"></span>
-                                </label>
+                            <div class="form-group col-md-1">
+
                             </div>
                             <div class="form-group col-md-4">
                                 <label>
@@ -46,20 +43,38 @@
                                 </label>
                             </div>
                             <!-- /form-group -->
+                            <div class="form-group col-md-1">
+                                <label>
+                                    价格:<span id="price"></span>/张
+                                </label>
+                            </div>
+
+                            <!-- /form-group -->
                         </form>
                     </div>
                     <!-- /.panel-body -->
                 </div>
                 <!-- /.panel -->
-                <div class="row" id="selectCoupon">
 
-                </div>
 
                 <div class="row">
                     <div class="col-md-3">
 
                     </div>
                     <div class="col-md-6">
+                        <div class="form-group" id="selectCouponList" style="display: none">
+                            <label class="col-sm-3 control-label">
+                                选择赠送工位券<span class="text-danger">*</span>
+                            </label>
+
+                            <div class="col-md-9">
+                                <div class="row" id="selectCoupon">
+
+                                </div>
+                                </br>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label class="col-sm-3 control-label">
                                 手机号<span class="text-danger">*</span>
@@ -355,9 +370,12 @@
         setValueById("number", 1);
         setAmountValue("payAmount", couponArray[1]);
         setAmountValue("price", couponArray[1]);
-        $("#selectCoupon").empty();
         if(couponArray[2] == null || couponArray[2] ==""){
+            $("#selectCouponList").prop("style","");
+            $("#selectCoupon").empty();
             getCouponList();
+        }else{
+            $("#selectCouponList").prop("style","display: none");
         }
     }
 
