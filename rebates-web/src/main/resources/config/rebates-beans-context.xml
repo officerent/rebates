@@ -150,7 +150,7 @@
 	</bean>
 	
 	<!--cache client,expire after 20 hours-->
-	<bean id="simpleRedisClient" class="com.office.rebates.dal.cache.SimpleRedisCacheClient">
+	<bean id="simpleRedisClient" class="com.office.rebates.dal.cache.SimpleRedisCacheClient" scope="prototype">
 		<constructor-arg>
 			<bean class="com.office.rebates.dal.cache.CacheConfig">
 				<property name="host" value="#{apiConfig['redis.host']}" />
