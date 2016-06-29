@@ -70,5 +70,9 @@ public class RouteKey {
     public static final String PROJECT_LIST = "/project_list";
     public static final String PRODUCT_LIST = "/product_list";
     
+    //返利相关
+    public static final String BONUS= "/bonus";
+    public static final String BONUS_RECENT10= "/most_recent_list";
+    
 
 }
