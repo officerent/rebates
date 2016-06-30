@@ -27,16 +27,18 @@
 
     <script src="${path}/wrap/web/js/jquery.js"></script>
     <script src="${path}/wrap/web/js/cookie.js"></script>
+
+    <#nested>
 </head>
 </#macro>
 
 <#--layout主体部分-->
-<#macro layoutBody classBody="">
+<#macro layoutBody mainClass="" classBody="">
 <body class="${classBody!""}">
     <!--[if lt IE 9]>
     <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-    <main class="wrapkit-wrapper" id="wrapper">
+    <main class="wrapkit-wrapper ${mainClass!""}" id="wrapper">
 
     <#include "header.ftl">
 

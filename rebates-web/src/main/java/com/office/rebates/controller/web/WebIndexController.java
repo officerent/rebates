@@ -1,8 +1,17 @@
 package com.office.rebates.controller.web;
 
 import com.office.rebates.controller.RouteKey;
+import com.office.rebates.model.BonusModel;
+import com.office.rebates.service.web.WebIndexService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * web端控制器
@@ -13,11 +22,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class WebIndexController {
 
     /**
+     * 服务
+     */
+    @Autowired
+    private WebIndexService webIndexService;
+
+    private static Logger logger = LoggerFactory.getLogger(WebIndexController.class);
+    /**
      * web端首页
      */
     @RequestMapping(RouteKey.WEB_INDEX)
-    public void index(){
-
+    public void index(Model model){
+        List<BonusModel> bonusModels = new ArrayList<>();
+        try {
+            bonusModels = webIndexService.getBonusList();
+        } catch (Exception e) {
+            logger.error("WebIndexController.index",e);
+        }
+        model.addAttribute("data",bonusModels);
     }
     
     /**
