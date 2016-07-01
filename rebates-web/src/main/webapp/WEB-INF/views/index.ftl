@@ -1,4 +1,4 @@
-<#include "../web_common/_layout.ftl" />
+<#include "./web_common/_layout.ftl" />
 
 <@layoutHead>
     <style>

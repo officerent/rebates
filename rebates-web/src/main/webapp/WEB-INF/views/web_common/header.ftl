@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <!-- use .pull-*, couse we need this float on any screen size -->
             <div class="pull-left">
-                <a class="navbar-brand" href="${path}/web/index.html" role="logo" aria-label="Logo">
+                <a class="navbar-brand" href="${path}/index.html" role="logo" aria-label="Logo">
                     <span class='logo' alt="Brand">SOHO3Q</span>
                 </a>
                 <button data-sidebar="toggleVisible" class="btn btn-icon navbar-btn">

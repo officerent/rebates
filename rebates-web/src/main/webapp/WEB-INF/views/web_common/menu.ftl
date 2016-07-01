@@ -8,7 +8,7 @@
     <div class="nav-wrapper">
         <ul class="nav nav-left nav-tabs nav-contrast-teal" role="navigation">
             <li class="nav-item" role="presentation">
-                <a href="${path}/web/index.html">首页</a>
+                <a href="${path}/index.html">首页</a>
             </li>
             <li class="nav-item" role="presentation">
                 <a href="${path}/sales/order_list.html">我的订单</a>

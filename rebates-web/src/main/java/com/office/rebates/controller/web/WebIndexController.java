@@ -18,7 +18,6 @@ import java.util.List;
  * Created by liyongfeng on 2016/3/13.
  */
 @Controller
-@RequestMapping(RouteKey.WEB)
 public class WebIndexController {
 
     /**
@@ -42,11 +41,4 @@ public class WebIndexController {
         model.addAttribute("data",bonusModels);
     }
     
-    /**
-     * 固定工位下单
-     */
-    @RequestMapping(RouteKey.FIX_PRODUCT)
-    public void fix_product(){
-
-    }
 }
