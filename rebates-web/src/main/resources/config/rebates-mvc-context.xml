@@ -49,6 +49,8 @@
 	
     <context:annotation-config></context:annotation-config>
 
+	<view-controller path="/" view-name="index" />
+
 	<!-- freemarker 相关 -->
 	<beans:bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
 		<beans:property name="templateLoaderPath" value="/WEB-INF/views/"/>
@@ -79,7 +81,6 @@
 		<beans:property name="exposeSpringMacroHelpers" value="true"/>
 		<beans:property name="requestContextAttribute" value="request"/>
 	</beans:bean>
-
 
 
 
