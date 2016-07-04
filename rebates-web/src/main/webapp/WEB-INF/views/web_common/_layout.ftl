@@ -7,8 +7,8 @@
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="initial-scale=1,minimum-scale=1,maximum-scale=1,width=device-width,height=device-height,target-densitydpi=device-dpi,user-scalable=yes">
-
+    <meta name="Keywords" content="SOHO 3Q,work,SOHO 中国,3Q,轻松办公,办公室,返利">
+    <meta name="Description" content="3Q返利">
     <title>${title!""}</title>
 
 

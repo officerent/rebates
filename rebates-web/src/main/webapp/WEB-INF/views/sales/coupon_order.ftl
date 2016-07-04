@@ -18,12 +18,10 @@
                 <div class="panel fade in panel-default panel-fill" data-fill-color="true" data-init-panel="true">
                     <div class="panel-body">
                         <form class="form-inline">
-                            <div class="form-group col-md-1">
+                            <div class="form-group col-sm-2">
                                 <label>
                                     选择券种类：
                                 </label>
-                            </div>
-                            <div class="form-group  col-md-2">
                                 <label class="select">
                                     <select id="coupon" onchange="reacquireCoupon();">
                                     <#list couponList as c>
@@ -32,21 +30,28 @@
                                     </select>
                                 </label>
                             </div>
-                            <div class="form-group col-md-1">
-
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label>
-                                    <span onclick="plusCoupon();" class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                    <input id="number" name="number" style="width: 100px;" onblur="inputCoupon();" value="1"/>
-                                    <span onclick="minusCoupon();" class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-                                </label>
+                            <div class="form-group col-md-1"></div>
+                            <div class="form-group col-md-3">
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label">
+                                        选择数量：
+                                    </label>
+                                    <label >
+                                        <span onclick="plusCoupon();" class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                        <input id="number" name="number" style="width: 100px;" onblur="inputCoupon();" value="1"/>
+                                        <span onclick="minusCoupon();" class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+                                    </label>
+                                </div>
                             </div>
                             <!-- /form-group -->
-                            <div class="form-group col-md-1">
-                                <label>
-                                    价格:<span id="price"></span>/张
-                                </label>
+                            <div class="form-group col-md-3">
+                                <div class="form-group">
+                                    <label class="col-sm-10 control-label">
+                                        商品单价:
+                                    </label>
+                                    <label >
+                                        <span aria-hidden="true" id="price"></span>/张
+                                    </label>
                             </div>
 
                             <!-- /form-group -->

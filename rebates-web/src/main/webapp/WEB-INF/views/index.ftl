@@ -73,13 +73,12 @@
 
                     </div>
                     <div class="col-md-3">
-                        <h1>长期工位</h1>
-                        <p>友情提示:一次最少购买一周工位的使用权,唯一的遗憾购买后不能随意在3Q各大中心随意切换</p>
-                        <a class="btn btn-warning" href="${path}/sales/station_order.html" role="button">立即购买长期工位</a>
-                        <h1>一天工位</h1>
-                        <p>友情提示:在没有进入过3Q的各位客官,首先请先购买会员使用权哦,会获赠一天的工位券,或者一小时的会议室券,让您体验入住.
-                            如果感觉3Q环境适宜,妹子靓丽,那么可以购买一天工位券或者一个小时会议室券,继续享受在北京以及上海,体验着想去哪就去哪的灵活办公哦</p>
-                        <a class="btn btn-warning" href="${path}/sales/coupon_order.html" role="button">立即购买一天工位</a>
+                        <h1>固定长租</h1>
+                        <p>一周起租,选择心仪的3Q中心,直接拎包入驻</p>
+                        <a class="btn btn-warning" href="${path}/sales/station_order.html" role="button">立即购买固定长租</a>
+                        <h1>灵活短租</h1>
+                        <p>按天使用工位,按小时使用会议室,任意3Q中心,随到随用</p>
+                        <a class="btn btn-warning" href="${path}/sales/coupon_order.html" role="button">立即购买灵活短租</a>
 
                     </div>
                 </div>
