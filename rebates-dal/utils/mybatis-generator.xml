@@ -59,5 +59,9 @@
 			<generatedKey column="bonus_id" sqlStatement="MySql" identity="true" />       
         </table>
         
+        <table tableName="rebates_bonus_mock" domainObjectName="RebatesBonusMock">
+			<generatedKey column="bonus_mock_id" sqlStatement="MySql" identity="true" />       
+        </table>
+        
     </context>
 </generatorConfiguration>

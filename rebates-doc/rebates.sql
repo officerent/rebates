@@ -118,5 +118,18 @@ CREATE TABLE `rebates_bonus` (
   KEY `order_id` (`order_id`)
 ) AUTO_INCREMENT = 20000 ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='佣金表';
 
+CREATE TABLE `rebates_bonus_mock` (
+  `bonus_mock_id` bigint NOT NULL AUTO_INCREMENT COMMENT 'key ID',
+  `customer_name` varchar(50) COMMENT '客户名称',
+  `customer_mobile` varchar(50) COMMENT '客户手机',
+  `rebates_amount` decimal(10,2) COMMENT '金额',
+  `last_update_time` datetime comment '最后一次更新时间',
+  PRIMARY KEY (`bonus_mock_id`),
+  KEY `last_update_time` (`last_update_time`)
+) AUTO_INCREMENT = 20000 ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='佣金假数据表';
+
+insert into rebates_bonus_mock(customer_name,customer_mobile,rebates_amount,last_update_time) 
+values('李咏峰','18536984569',569,current_timestamp);
+
 
 

@@ -9,12 +9,22 @@
   </resultMap>
 
   <select id="getRecentBonusList" resultMap="BaseResultMap">
-    SELECT customer_mobile, customer_name,rebates_amount/100,DATE_FORMAT(b.last_update_time,'%Y-%m-%d %T') as last_update_time
+    SELECT customer_mobile, customer_name,rebates_amount, last_update_time 
+    from 
+    (
+    (SELECT customer_mobile, customer_name,rebates_amount/100 as rebates_amount,DATE_FORMAT(b.last_update_time,'%Y-%m-%d %T') as last_update_time
     FROM  rebates_bonus b,rebates_order o
     where b.order_id=o.order_id
     and b.status=4
     order by b.bonus_id desc
-    limit 10
+    limit 10)
+    union 
+    (SELECT customer_mobile, customer_name,rebates_amount,DATE_FORMAT(last_update_time,'%Y-%m-%d %T') as last_update_time
+    FROM  rebates_bonus_mock
+    order by bonus_mock_id desc
+    limit 10)
+    ) t
+	order by t.last_update_time desc
   </select>
 
 </mapper>
