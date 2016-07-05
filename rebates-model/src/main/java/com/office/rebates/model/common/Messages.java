@@ -67,5 +67,8 @@ public class Messages {
 	
 	public static int FAIL_TO_GET_COUPON_LIST_CODE = 119;
 	public static String FAIL_TO_GET_COUPON_LIST_MSG = "fail to get soho3q coupon list";
+	
+	public static int FAIL_TO_GET_MYORDER_LIST_CODE = 120;
+	public static String FAIL_TO_GET_MYORDER_LIST_MSG = "fail to get my order list";
 
 }

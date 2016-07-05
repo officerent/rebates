@@ -2,7 +2,9 @@ package com.office.rebates.service.impl;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,11 +15,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSON;
 import com.office.rebates.dal.cache.CacheClient;
+import com.office.rebates.dal.dao.NewRebatesOrderMapper;
 import com.office.rebates.dal.dao.NewSalesPeopleMapper;
 import com.office.rebates.dal.dao.RebatesOrderItemMapper;
 import com.office.rebates.dal.dao.RebatesOrderMapper;
 import com.office.rebates.dal.dao.SalesPeopleMapper;
 import com.office.rebates.dal.dataobj.RebatesOrder;
+import com.office.rebates.dal.dataobj.RebatesOrderExample;
 import com.office.rebates.dal.dataobj.RebatesOrderItem;
 import com.office.rebates.dal.dataobj.SalesPeople;
 import com.office.rebates.dal.dataobj.SalesPeopleExample;
@@ -26,6 +30,7 @@ import com.office.rebates.dal.rest.Soho3qCreateCouponOrderApi;
 import com.office.rebates.dal.rest.Soho3qCreateOrderApi;
 import com.office.rebates.model.CouponOrderItemModel;
 import com.office.rebates.model.OrderItem;
+import com.office.rebates.model.OrderModel;
 import com.office.rebates.model.Soho3qOrder;
 import com.office.rebates.model.UserInfo;
 import com.office.rebates.model.common.Messages;
@@ -60,6 +65,9 @@ public class RebatesOrderServiceImpl implements RebatesOrderService{
 	
 	@Autowired
 	private NewSalesPeopleMapper newSalesPeopleMapper;
+	
+    @Autowired
+    private NewRebatesOrderMapper newRebatesOrderMapper;
 	
 	@Override
 	public Long createRebatesOrder(CreateOrderRequest request, UserInfo userInfo) throws RebatesException {
@@ -226,6 +234,27 @@ public class RebatesOrderServiceImpl implements RebatesOrderService{
 			}
 		}
 		return rebatesOrder.getOrderId();
+	}
+
+	@Override
+	public Integer getMyOrderNum(Long userId) {
+		RebatesOrderExample rebatesOrderExample=new RebatesOrderExample();
+		rebatesOrderExample.createCriteria().andUserIdEqualTo(userId);
+		int count=rebatesOrderMapper.countByExample(rebatesOrderExample);
+		return count;
+	}
+
+	@Override
+	public List<OrderModel> getMyOrders(Long userId, Integer pageSize, Integer pageNum) {
+		Integer start=(pageNum-1)*pageSize;
+		Integer size=pageSize;
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+        map.put("start",start);
+        map.put("size",size);
+        map.put("userId",userId);
+        List<OrderModel> orders= newRebatesOrderMapper.getMyOrderList(map);
+		return orders;
 	}
 
 

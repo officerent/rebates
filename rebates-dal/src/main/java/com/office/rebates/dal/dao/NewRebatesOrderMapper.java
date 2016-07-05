@@ -2,6 +2,7 @@ package com.office.rebates.dal.dao;
 
 import com.office.rebates.dal.dataobj.RebatesOrder;
 import com.office.rebates.dal.dataobj.RebatesOrderExample;
+import com.office.rebates.model.OrderModel;
 import com.office.rebates.model.admin.RebatesOrderModel;
 import org.apache.ibatis.annotations.Param;
 
@@ -33,4 +34,11 @@ public interface NewRebatesOrderMapper {
      * @return
      */
     public RebatesOrderModel selectOrderOne(Map<String,Object> map);
+    
+    /**
+     * 查询订单列表
+     * @param map 条件
+     * @return
+     */
+    public List<OrderModel> getMyOrderList(Map<String,Object> map);
 }

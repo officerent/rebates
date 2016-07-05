@@ -2,8 +2,11 @@ package com.office.rebates.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import java.util.List;
+
 import javax.servlet.http.Cookie;
 
+import org.apache.commons.jxpath.ri.compiler.Constant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +17,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.mysql.jdbc.Constants;
+import com.office.rebates.model.OrderModel;
 import com.office.rebates.model.UserInfo;
+import com.office.rebates.model.common.ListResult;
 import com.office.rebates.model.common.Messages;
 import com.office.rebates.model.common.RebatesException;
 import com.office.rebates.model.common.ResultCode;
@@ -142,6 +148,48 @@ public class RebatesOrderController {
 		} catch (RebatesException e) {
 			result.setErrCode(e.getErrCode());
 			result.setErrMsg(e.getErrMsg());
+		}
+		return result;
+
+	}
+    
+    //获取我的订单列表
+    @ResponseBody
+	@RequestMapping(value = RouteKey.MY_LIST, method = RequestMethod.GET)
+	public ResultCode<ListResult<OrderModel>> getMyOrderList(Integer pageSize,Integer pageNum,HttpServletRequest httpServletRequest) {
+		ResultCode<ListResult<OrderModel>> result=new ResultCode<ListResult<OrderModel>>();		
+		//check params
+		if(pageSize==null||pageSize<=0){
+			pageSize=20;
+		}
+		if(pageNum==null||pageNum<=0){
+			pageNum=1;
+		}
+		
+		//check if the user is logon
+		Cookie[] cookies=httpServletRequest.getCookies();
+		UserInfo userInfo=userService.getUserInfo(cookies);
+		//logger.info("user info is:"+JSON.toJSONString(userInfo));
+		if(userInfo==null||userInfo.getUserId()==null){
+			result.setErrCode(Messages.USER_NOT_LOGON_CODE);
+			result.setErrMsg(Messages.USER_NOT_LOGON_MSG);
+			return result;
+		}
+		
+		//get the order list
+		try {
+			Integer totalNum=rebatesOrderService.getMyOrderNum(userInfo.getUserId());;
+			List<OrderModel> orders=rebatesOrderService.getMyOrders(userInfo.getUserId(),pageSize,pageNum);
+			ListResult<OrderModel> resultList=new ListResult<OrderModel>();
+			resultList.setListData(orders);
+			resultList.setPageNum(pageNum);
+			resultList.setPageSize(pageSize);
+			resultList.setTotalNum(totalNum);
+			result.setData(resultList);
+		} catch (Exception e) {
+			logger.info("fail to get my order list",e);
+			result.setErrCode(Messages.FAIL_TO_GET_MYORDER_LIST_CODE);
+			result.setErrMsg(Messages.FAIL_TO_GET_MYORDER_LIST_MSG);
 		}
 		return result;
 
