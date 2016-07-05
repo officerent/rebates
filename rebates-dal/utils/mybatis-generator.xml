@@ -63,5 +63,7 @@
 			<generatedKey column="bonus_mock_id" sqlStatement="MySql" identity="true" />       
         </table>
         
+        <table tableName="rebates_global_lock" domainObjectName="RebatesGlobalLock">
+        </table>
     </context>
 </generatorConfiguration>

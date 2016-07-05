@@ -10,11 +10,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import com.alibaba.fastjson.JSON;
+import com.office.rebates.dal.dao.NewRebatesGlobalLockMapper;
 import com.office.rebates.dal.dao.RebatesBonusMapper;
 import com.office.rebates.dal.dao.RebatesOrderMapper;
 import com.office.rebates.dal.dao.SalesPeopleMapper;
 import com.office.rebates.dal.dataobj.RebatesBonus;
 import com.office.rebates.dal.dataobj.RebatesBonusExample;
+import com.office.rebates.dal.dataobj.RebatesGlobalLock;
 import com.office.rebates.dal.dataobj.RebatesOrder;
 import com.office.rebates.dal.dataobj.RebatesOrderExample;
 import com.office.rebates.dal.dataobj.SalesPeople;
@@ -39,6 +41,9 @@ public class Soho3qOrderStatusCheckTask {
 	
 	@Autowired
 	private Soho3qCheckOrderApi soho3qCheckOrderApi;
+	
+	@Autowired
+	private NewRebatesGlobalLockMapper newRebatesGlobalLockMapper;
 		
 	
 	static Logger logger = LoggerFactory.getLogger(Soho3qOrderStatusCheckTask.class);
@@ -46,6 +51,14 @@ public class Soho3qOrderStatusCheckTask {
 	
 	public void doWork() {		
 		logger.info("start to check soho3q order status...");	
+		
+		RebatesGlobalLock globalLock=newRebatesGlobalLockMapper.lockResource(Constants.LOCK_PULL_SOHO3Q_ORDERS);
+		if(globalLock!=null){
+			logger.info("got the global lock for refreshing order status.");
+		}else{//没有拿到lock,说明其他实例已经hold lock并且正在执行该方法，则不执行该方法
+			logger.info("other instance is holding the lock and refreshing order status, quit the method.");
+			return;
+		}
 		
 		//获得所有的销售信息
 		SalesPeopleExample example=new SalesPeopleExample();
@@ -74,10 +87,10 @@ public class Soho3qOrderStatusCheckTask {
 			}else{
 				RebatesBonusExample example=new RebatesBonusExample();
 				Byte rebatesBonusStatus=getRebatesBonusStatus(soho3qOrder.getStatus(),soho3qOrder.getBonusStatus());
-				if(soho3qOrder.getOrderSubNum()!=null){
+				if(soho3qOrder.getOrderSubNum()!=null){//分期
 					example.createCriteria().andSoho3qOrderIdEqualTo(soho3qOrder.getSoho3qOrderId())
 					.andSoho3qOrderNumEqualTo(soho3qOrder.getOrderSubNum());
-				}else{
+				}else{//非分期
 					example.createCriteria().andSoho3qOrderIdEqualTo(soho3qOrder.getSoho3qOrderId())
 					.andSoho3qOrderNumIsNull();
 				}
@@ -140,8 +153,6 @@ public class Soho3qOrderStatusCheckTask {
 	}
 
 	private void insertRebatesBonus(Soho3qOrder soho3qOrder,Byte rebatesBonusStatus) {
-
-
 		RebatesOrderExample orderExample=new RebatesOrderExample();
 		orderExample.createCriteria().andSoho3qOrderIdEqualTo(soho3qOrder.getSoho3qOrderId());
 		List<RebatesOrder> rebatesOrders=rebatersOrderMapper.selectByExample(orderExample);

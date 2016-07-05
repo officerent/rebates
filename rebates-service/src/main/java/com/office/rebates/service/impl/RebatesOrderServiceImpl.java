@@ -254,6 +254,15 @@ public class RebatesOrderServiceImpl implements RebatesOrderService{
         map.put("size",size);
         map.put("userId",userId);
         List<OrderModel> orders= newRebatesOrderMapper.getMyOrderList(map);
+        for(OrderModel order:orders){
+        	if(order.getStatus()==null){
+        		order.setStatus((byte) 0);
+        	}
+        	
+        	if(order.getStatus()==0||order.getStatus()==1){
+        		order.setRebatesAmount(null);;
+        	}
+        }
 		return orders;
 	}
 

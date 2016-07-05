@@ -1,5 +1,7 @@
 package com.office.rebates.model.common;
 
+import java.math.BigDecimal;
+
 public class Constants {
 	public static String LANG_CN = "zh_CN";
 	public static String LANG_EN = "en_US";
@@ -49,4 +51,7 @@ public class Constants {
     public static String DESCRIPTION_OPEN_STATION = "全国所有SOHO3Q都提供以天为单位漫游开放工位服务；您购买权益以后，可以随时预约任意的SOHO3Q的工位，实现真正的全国漫游办公，非常适合需要移动办公的上班族和创业者。";
     public static String DESCRIPTION_ROOM = "开会，搞培训，商务会谈，电话会议临时找不到地方？来SOHO3Q吧！这里的会议室高端大气上档次，提供所有您可能需要的服务和设施。";
 
+	public static BigDecimal D0 = new BigDecimal(0);
+	
+	public static String LOCK_PULL_SOHO3Q_ORDERS = "PULL_SOHO3Q_ORDERS";//全局锁
 }

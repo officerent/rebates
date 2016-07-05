@@ -131,5 +131,10 @@ CREATE TABLE `rebates_bonus_mock` (
 insert into rebates_bonus_mock(customer_name,customer_mobile,rebates_amount,last_update_time) 
 values('李咏峰','18536984569',569,current_timestamp);
 
+CREATE TABLE `rebates_global_lock` (
+  `name` varchar(250) COMMENT '锁名称',
+   PRIMARY KEY (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='全局锁表';
 
+insert into rebates_global_lock values('PULL_SOHO3Q_ORDERS');
 

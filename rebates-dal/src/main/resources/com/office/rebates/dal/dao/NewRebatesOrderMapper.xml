@@ -96,7 +96,7 @@
   
   <select id="getMyOrderList" parameterType="java.util.Map" resultType="com.office.rebates.model.OrderModel">
     SELECT o.order_id as orderId, DATE_FORMAT(o.create_time,'%Y-%m-%d') as orderDate, b.soho3q_confirmed_order_num as soho3qOrderNum, 
-    o.status as status, b.rebates_amount/100 as rebatesAmount
+    b.status as status, b.rebates_amount/100 as rebatesAmount
     from rebates_order o
     left outer join rebates_bonus b
     on o.order_id = b.order_id
