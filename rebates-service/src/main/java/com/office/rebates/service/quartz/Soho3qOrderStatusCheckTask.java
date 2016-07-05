@@ -187,7 +187,7 @@ public class Soho3qOrderStatusCheckTask {
 			rebateBonus.setSoho3qConfirmedOrderNum(soho3qOrder.getOrderNum());
 			rebateBonus.setUpdater(Constants.SYSTEM);
 			rebatersBonusMapper.insert(rebateBonus);
-			logger.info("insert rebates bonus:"+JSON.toJSONString(rebateBonus));
+			logger.info("inserted rebates bonus:"+JSON.toJSONString(rebateBonus));
 		}
 	}
 
