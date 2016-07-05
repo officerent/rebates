@@ -18,6 +18,7 @@ import java.util.List;
  * Created by liyongfeng on 2016/3/13.
  */
 @Controller
+@RequestMapping(RouteKey.WEB)
 public class WebIndexController {
 
     /**
