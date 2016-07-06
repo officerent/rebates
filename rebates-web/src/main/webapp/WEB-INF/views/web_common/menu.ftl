@@ -6,7 +6,7 @@
 <aside class="sidebar sidebar-orange" role="complementary" data-init-sidebar="true">
     <!-- /navigation -->
     <div class="nav-wrapper">
-        <ul class="nav nav-left nav-tabs nav-contrast-teal" role="navigation">
+        <ul class="nav nav-stacked nav-left nav-tabs nav-contrast-light" role="navigation">
             <li class="nav-item" role="presentation">
                 <a href="${path}/index.html">首页</a>
             </li>
