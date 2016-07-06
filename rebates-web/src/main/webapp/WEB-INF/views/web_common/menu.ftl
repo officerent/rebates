@@ -6,20 +6,20 @@
 <aside class="sidebar sidebar-orange" role="complementary" data-init-sidebar="true">
     <!-- /navigation -->
     <div class="nav-wrapper">
-        <ul class="nav nav-stacked nav-left nav-tabs nav-contrast-light" role="navigation">
-            <li class="nav-item" role="presentation">
-                <a href="${path}/index.html">首页</a>
+        <ul class="nav nav-left nav-tabs nav-contrast-light" role="navigation">
+            <li class="nav-item ${index !''}" role="presentation">
+                <a href="${path}/web/index.html">首页</a>
             </li>
-            <li class="nav-item" role="presentation">
+            <li class="nav-item ${order !''}" role="presentation">
                 <a href="${path}/sales/order_list.html">我的订单</a>
             </li>
-            <li class="nav-item" role="presentation">
+            <li class="nav-item ${question !''}" role="presentation">
                 <a href="${path}/web/question.html">常见问题</a>
             </li>
-            <li class="nav-item" role="presentation">
+            <li class="nav-item ${station !''}" role="presentation">
                 <a href="${path}/sales/station_order.html">购买固定工位</a>
             </li>
-            <li class="nav-item" role="presentation">
+            <li class="nav-item ${coupon !''}" role="presentation">
                 <a href="${path}/sales/coupon_order.html">购买漫游券</a>
             </li>
         </ul>

@@ -2,10 +2,13 @@
 
 <@layoutHead>
 
+    <#assign coupon="active" />
 </@layoutHead>
 <@layoutBody classBody="wrapkit-sidebar-left wrapkit-sidebar-lg bg-grd-dark wrapkit-sidebar-horizontal" >
 
 </@layoutBody>
+
+
 <main class="wrapkit-wrapper" id="wrapper" data-init-layout="true">
 
     <!-- ============================================
