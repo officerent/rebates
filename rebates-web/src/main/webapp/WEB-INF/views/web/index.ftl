@@ -27,7 +27,7 @@
                         <ol>
                             <#if data ??>
                                 <#list data as d>
-                                    <#switch index>
+                                    <#switch d_index>
                                         <#case 0>
                                             <li class="bg-danger"><h4>${d.customerMobile !""} 返佣  ${d.rebatesAmount !""}元</h4></li>
                                             <#break>
