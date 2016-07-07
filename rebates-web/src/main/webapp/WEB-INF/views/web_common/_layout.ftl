@@ -25,6 +25,9 @@
     <link rel="stylesheet" href="${path}/wrap/validationengine/css/validationEngine.jquery.css">
     <link rel="stylesheet" href="${path}/wrap/styles/jquery.gritter.css">
 
+    <#--自定义样式-->
+    <link rel="stylesheet" href="${path}/wrap/styles/defined.css">
+
     <script src="${path}/wrap/web/js/jquery.js"></script>
     <script src="${path}/wrap/web/js/cookie.js"></script>
 
