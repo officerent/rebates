@@ -89,7 +89,7 @@
         </property>
     </bean> 
     
-    	<!-- 业务对象  机构返佣月结-->
+    	<!-- 业务对象-->
 	 <bean id="soho3qOrderStatusCheckTask" class="com.office.rebates.service.quartz.Soho3qOrderStatusCheckTask">
     </bean>
     
