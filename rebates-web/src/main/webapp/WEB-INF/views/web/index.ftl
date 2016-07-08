@@ -23,28 +23,35 @@
             <div class="content-body">
                 <div class="row">
                     <div class="col-md-3">
-                        <h1>返佣排行榜</h1>
-                        <ol>
-                            <#if data ??>
-                                <#list data as d>
-                                    <#switch d_index>
-                                        <#case 0>
-                                            <li class="bg-danger"><h4>${d.customerMobile !""} 返佣  ${d.rebatesAmount !""}元</h4></li>
-                                            <#break>
-                                        <#case 1>
-                                            <li class="bg-warning"><h4>${d.customerMobile !""} 返佣  ${d.rebatesAmount !""}元</h4></li>
-                                            <#break>
-                                        <#case 2>
-                                            <li class="bg-info"><h4>${d.customerMobile !""} 返佣  ${d.rebatesAmount !""}元</h4></li>
-                                            <#break>
-                                        <#default>
-                                            <li><h4>${d.customerMobile !""} 返佣  ${d.rebatesAmount !""}元</h4></li>
-                                    </#switch>
-                                <#else>
-                                    <p>天上掉钱的好事,居然没人来,Unbelievable</p>
-                                </#list>
-                            </#if>
-                        </ol>
+                        <h3>返佣排行榜</h3>
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>排行</th>
+                                    <th>手机号</th>
+                                    <th>返佣</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <#if data ??>
+                                    <#list data as d>
+                                        <#if d_index < 3>
+                                            <tr>
+                                                <td class="soho-red">${d_index + 1}</td>
+                                                <td>${d.customerMobile !""}</td>
+                                                <td>${d.rebatesAmount !""}元</td>
+                                            </tr>
+                                        <#else>
+                                            <tr>
+                                                <td class="soho-gray">${d_index + 1}</td>
+                                                <td>${d.customerMobile !""}</td>
+                                                <td>${d.rebatesAmount !""}元</td>
+                                            </tr>
+                                        </#if>
+                                    </#list>
+                                </#if>
+                            </tbody>
+                        </table>
                     </div>
                     <div class="col-md-6">
                         <div id="myCarousel" class="carousel slide">
@@ -85,11 +92,14 @@
                     <div class="col-md-3">
                         <h1>固定长租</h1>
                         <p>一周起租,选择心仪的3Q中心,直接拎包入驻</p>
-                        <a class="btn btn-warning" href="${path}/sales/station_order.html" role="button">立即购买固定长租</a>
+                        <span aria-hidden="true" class="arrow_carrot-2right"></span>
+                            <a class="btn btn-warning" href="${path}/sales/station_order.html" role="button">立即购买固定长租</a>
+                        <span aria-hidden="true" class="arrow_carrot-2left"></span>
                         <h1>灵活短租</h1>
                         <p>按天使用工位,按小时使用会议室,任意3Q中心,随到随用</p>
+                        <span aria-hidden="true" class="arrow_carrot-2right"></span>
                         <a class="btn btn-warning" href="${path}/sales/coupon_order.html" role="button">立即购买灵活短租</a>
-
+                        <span aria-hidden="true" class="arrow_carrot-2left"></span>
                     </div>
                 </div>
                 <div class="row">
