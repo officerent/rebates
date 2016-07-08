@@ -2,8 +2,12 @@
     <!-- ============================================
     SIDEBAR SECTION
     =============================================== -->
-
-<aside class="sidebar sidebar-orange" role="complementary" data-init-sidebar="true">
+<style>
+    .soho-orange{
+        background-color:#FF9011
+    }
+</style>
+<aside class="sidebar soho-orange" role="complementary" data-init-sidebar="true">
     <!-- /navigation -->
     <div class="nav-wrapper">
         <ul class="nav nav-left nav-tabs nav-contrast-light" role="navigation">

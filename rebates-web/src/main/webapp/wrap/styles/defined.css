@@ -5,3 +5,18 @@ h4 {letter-spacing:3px}
 h5 {letter-spacing:3px}
 h6 {letter-spacing:3px}
 p  {letter-spacing:2px}
+
+.soho-red{
+    width: 34px;
+    height: 48px;
+    text-align: center;
+    line-height: 24px;
+    background-color: rgba(237,85,101,.26);
+}
+.soho-gray{
+    width: 34px;
+    height: 48px;
+    text-align: center;
+    line-height: 24px;
+    background-color: lightgrey;
+}
