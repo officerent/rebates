@@ -11,10 +11,10 @@
             border-color: transparent;
         }
         .font-color {
-            color:red;
+            color:#FF9011;
         }
         .font-size {
-            font-size:200%;
+            font-size:150%;
         }
     </style>
     <#assign index='active' />
@@ -34,13 +34,13 @@
             <div class="content-body">
                 <div class="row">
                     <div class="col-md-3">
-                        <h3>返佣排行榜</h3>
+                        <h3>返利排行榜</h3>
                         <table class="table table-condensed">
                             <thead>
                                 <tr>
                                     <th>手机号</th>
-                                    <th>返佣</th>
-                                    <th>成交时间</th>
+                                    <th>返利</th>
+                                    <th>日期</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -94,12 +94,12 @@
                     </div>
                     <div class="col-md-3">
                         <div class="row">
-                            <h2>固定长租 <strong>返利<span><i class="font-size font-color">${ratio.ratio}</i></span></strong></h2>
+                            <h2>固定长租 <strong class="font-color">返利<span><i class="font-size">${ratio.ratio}</i></span></strong></h2>
                             <p>一周起租,选择心仪的3Q中心,直接拎包入驻</p>
                             <a class="btn btn-soho-danger" href="${path}/sales/station_order.html" role="button">去购买，拿返利</a>
                         </div>
                         <div class="row">
-                            <h2>灵活短租 <strong>返利<span><i class="font-size font-color">${ratio.ratio}</i></span></strong></h2>
+                            <h2>灵活短租 <strong class="font-color">返利<span><i class="font-size">${ratio.ratio}</i></span></strong></h2>
                             <p>按天使用工位,按小时使用会议室,任意3Q中心,随到随用</p>
                             <a class="btn btn-soho-danger" href="${path}/sales/coupon_order.html" role="button">去购买，拿返利</a>
                         </div>
