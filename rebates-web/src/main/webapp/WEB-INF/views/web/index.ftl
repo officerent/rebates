@@ -95,12 +95,17 @@
                     <div class="col-md-3">
                         <div class="row">
                             <h2>固定长租 <strong class="font-color">返利<span><i class="font-size">${ratio.ratio}</i></span></strong></h2>
-                            <p>一周起租,选择心仪的3Q中心,直接拎包入驻</p>
+                            <p>一周起租,选择心仪的3Q中心,直接拎包入驻吧!</p>
                             <a class="btn btn-soho-danger" href="${path}/sales/station_order.html" role="button">去购买，拿返利</a>
                         </div>
                         <div class="row">
+                            <br>
+                            <hr>
+                            <br>
+                        </div>
+                        <div class="row">
                             <h2>灵活短租 <strong class="font-color">返利<span><i class="font-size">${ratio.ratio}</i></span></strong></h2>
-                            <p>按天使用工位,按小时使用会议室,任意3Q中心,随到随用</p>
+                            <p>按天使用工位,按小时使用会议室,任意3Q中心,随到随用哦!</p>
                             <a class="btn btn-soho-danger" href="${path}/sales/coupon_order.html" role="button">去购买，拿返利</a>
                         </div>
                     </div>
