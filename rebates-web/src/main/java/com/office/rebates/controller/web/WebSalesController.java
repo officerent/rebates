@@ -52,4 +52,17 @@ public class WebSalesController {
         model.addAttribute("startTime", date);
         model.addAttribute("productList", webSalesService.getProductList(projectList.get(0).getProjectId(),date,DateUtil.addDayOfYear(date,30)));
     }
+    
+    /**
+     * 我的订单列表
+     * @param model 载体
+     */
+    @RequestMapping(RouteKey.ORDER_LIST)
+    public void myOrder(Model model){
+        String date = DateUtil.getFormatDate(new Date(),"yyyy-MM-dd");
+        List<Soho3qProjectModel> projectList=webSalesService.getProjectList();
+        model.addAttribute("project",projectList);
+        model.addAttribute("startTime", date);
+        model.addAttribute("productList", webSalesService.getProductList(projectList.get(0).getProjectId(),date,DateUtil.addDayOfYear(date,30)));
+    }
 }
