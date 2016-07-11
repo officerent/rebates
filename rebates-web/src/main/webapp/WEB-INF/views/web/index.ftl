@@ -5,6 +5,17 @@
         .wrapkit-wrapper-extend {
             min-height: 600px;
         }
+        .btn-soho-danger {
+            color: #ffffff;
+            background-color: #FF9011;
+            border-color: transparent;
+        }
+        .font-color {
+            color:red;
+        }
+        .font-size {
+            font-size:200%;
+        }
     </style>
     <#assign index='active' />
 </@layoutHead>
@@ -27,27 +38,19 @@
                         <table class="table table-condensed">
                             <thead>
                                 <tr>
-                                    <th>排行</th>
                                     <th>手机号</th>
                                     <th>返佣</th>
+                                    <th>成交时间</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <#if data ??>
                                     <#list data as d>
-                                        <#if d_index < 3>
-                                            <tr>
-                                                <td class="soho-red">${d_index + 1}</td>
-                                                <td>${d.customerMobile !""}</td>
-                                                <td>${d.rebatesAmount !""}元</td>
-                                            </tr>
-                                        <#else>
-                                            <tr>
-                                                <td class="soho-gray">${d_index + 1}</td>
-                                                <td>${d.customerMobile !""}</td>
-                                                <td>${d.rebatesAmount !""}元</td>
-                                            </tr>
-                                        </#if>
+                                        <tr>
+                                            <td>${d.customerMobile !""}</td>
+                                            <td>${d.rebatesAmount !""}元</td>
+                                            <td>${d.lastUpdateTime !""}</td>
+                                        </tr>
                                     </#list>
                                 </#if>
                             </tbody>
@@ -90,16 +93,16 @@
 
                     </div>
                     <div class="col-md-3">
-                        <h1>固定长租</h1>
-                        <p>一周起租,选择心仪的3Q中心,直接拎包入驻</p>
-                        <span aria-hidden="true" class="arrow_carrot-2right"></span>
-                            <a class="btn btn-warning" href="${path}/sales/station_order.html" role="button">立即购买固定长租</a>
-                        <span aria-hidden="true" class="arrow_carrot-2left"></span>
-                        <h1>灵活短租</h1>
-                        <p>按天使用工位,按小时使用会议室,任意3Q中心,随到随用</p>
-                        <span aria-hidden="true" class="arrow_carrot-2right"></span>
-                        <a class="btn btn-warning" href="${path}/sales/coupon_order.html" role="button">立即购买灵活短租</a>
-                        <span aria-hidden="true" class="arrow_carrot-2left"></span>
+                        <div class="row">
+                            <h2>固定长租 <strong>返利<span><i class="font-size font-color">${ratio.ratio}</i></span></strong></h2>
+                            <p>一周起租,选择心仪的3Q中心,直接拎包入驻</p>
+                            <a class="btn btn-soho-danger" href="${path}/sales/station_order.html" role="button">去购买，拿返利</a>
+                        </div>
+                        <div class="row">
+                            <h2>灵活短租 <strong>返利<span><i class="font-size font-color">${ratio.ratio}</i></span></strong></h2>
+                            <p>按天使用工位,按小时使用会议室,任意3Q中心,随到随用</p>
+                            <a class="btn btn-soho-danger" href="${path}/sales/coupon_order.html" role="button">去购买，拿返利</a>
+                        </div>
                     </div>
                 </div>
                 <div class="row">

@@ -2,6 +2,8 @@ package com.office.rebates.controller.web;
 
 import com.office.rebates.controller.RouteKey;
 import com.office.rebates.model.BonusModel;
+import com.office.rebates.model.RebatesRatio;
+import com.office.rebates.service.RebatesInfoService;
 import com.office.rebates.service.web.WebIndexService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +29,12 @@ public class WebIndexController {
     @Autowired
     private WebIndexService webIndexService;
 
+    /**
+     * 返佣服务
+     */
+    @Autowired
+    private RebatesInfoService rebatesInfoService;
+
     private static Logger logger = LoggerFactory.getLogger(WebIndexController.class);
     /**
      * web端首页
@@ -34,12 +42,15 @@ public class WebIndexController {
     @RequestMapping(RouteKey.WEB_INDEX)
     public void index(Model model){
         List<BonusModel> bonusModels = new ArrayList<>();
+        RebatesRatio ratio = new RebatesRatio();
         try {
+            ratio = rebatesInfoService.getRebatesRatio();
             bonusModels = webIndexService.getBonusList();
         } catch (Exception e) {
             logger.error("WebIndexController.index",e);
         }
         model.addAttribute("data",bonusModels);
+        model.addAttribute("ratio",ratio);
     }
     
 }
