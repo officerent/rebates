@@ -21,7 +21,6 @@
 </@layoutHead>
 <@layoutBody mainClass="wrapkit-wrapper-extend" classBody="wrapkit-sidebar-left wrapkit-sidebar-lg bg-grd-dark wrapkit-sidebar-horizontal" >
 
-</@layoutBody>
 
     <main class="wrapkit-wrapper wrapkit-wrapper-extend" id="wrapper" data-init-layout="true">
 
@@ -139,6 +138,8 @@
     </footer><!-- /.FOOTER -->
 
 </main>
+</@layoutBody>
+
 <@layoutFooter>
 <script>
     var date = new Date;

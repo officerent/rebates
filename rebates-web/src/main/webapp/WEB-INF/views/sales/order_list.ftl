@@ -2,7 +2,7 @@
 
 <@layoutHead>
 
-    <#assign station="active" />
+    <#assign order="active" />
 </@layoutHead>
 <@layoutBody classBody="wrapkit-sidebar-left wrapkit-sidebar-lg bg-grd-dark wrapkit-sidebar-horizontal" >
 
@@ -18,72 +18,16 @@
         <div class="content">
 
             <div class="content-body">
-                <div class="panel fade in panel-default panel-fill" data-fill-color="true" data-init-panel="true">
-                    <div class="panel-body">
-                        <form class="form-inline">
-                            选择项目：
-                            <div class="form-group">
-                                <label class="select">
-                                    <select id="projectId" onchange="reacquireRoom();">
-                                        <#list project as p>
-                                            <option value="${p.projectId!''}" >${p.projectName!''}</option>
-                                        </#list>
-                                    </select>
-                                </label>
-                            </div><!-- /form-group -->
-                            选择入驻时间：
-                            <div class="form-group" >
-                               <label class="select">
-                                   <input id="startTime" onclick="validatepicker(this)" onchange="reacquireRoom()" data-date-format="yyyy-MM-dd" class="form-control date form_date validate[required]" name="startTime" placeholder="开始时间" value="${startTime!''}"/>
-                               </label>
-                            </div><!-- /form-group -->
-                            入驻时长：
-                            <div class="form-group" style="width: 100px">
-                                <label class="select">
-                                    <select id="month" onchange="reacquireRoom()">
-                                        <option value="0">0</option>
-                                        <option value="1" selected="selected">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-                                        <option value="9">9</option>
-                                        <option value="10">10</option>
-                                        <option value="11">11</option>
-                                        <option value="12">12</option>
-                                    </select>
-                                </label>
-                            </div><!-- /form-group -->
-                            （月）
-                            <div class="form-group" style="width: 100px">
-                                <label class="select">
-                                    <select id="week" onchange="reacquireRoom()">
-                                        <option value="0" selected="selected">0</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                    </select>
-                                </label>
-                            </div><!-- /form-group -->
-                            （周）
-                        </form>
-                    </div><!-- /.panel-body -->
-                </div><!-- /.panel -->
-
-
                 <div class="table-responsive">
 
                     <table class="table table-hover">
                         <thead>
                         <tr>
-                            <th>选择</th>
-                            <th>产品名称</th>
-                            <th>产品剩余数量</th>
-                            <th>选择数量</th>
-                            <th>价格</th>
+                            <th>订单号</th>
+                            <th>下单日期</th>
+                            <th>shoh3q订单号</th>
+                            <th>状态</th>
+                            <th>返利金额(元)</th>
                         </tr>
                         </thead>
                         <tbody id ="productList">

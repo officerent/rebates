@@ -1,9 +1,14 @@
 package com.office.rebates.controller.web;
 
+import com.alibaba.fastjson.JSON;
 import com.office.rebates.controller.RouteKey;
 import com.office.rebates.model.Soho3qProjectModel;
+import com.office.rebates.model.UserInfo;
+import com.office.rebates.model.common.Messages;
+import com.office.rebates.model.common.Page;
 import com.office.rebates.model.common.RebatesException;
 import com.office.rebates.service.Soho3qAccessService;
+import com.office.rebates.service.UserService;
 import com.office.rebates.service.web.WebSalesService;
 import com.office.rebates.util.DateUtil;
 import org.slf4j.Logger;
@@ -18,6 +23,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * 下单控制器
  * Created by liyongfeng on 2016/3/20.
@@ -31,6 +39,9 @@ public class WebSalesController {
      */
     @Autowired
     private WebSalesService webSalesService;
+    
+    @Autowired
+    private UserService userService;
 
     /**
      * 下券订单
@@ -58,11 +69,15 @@ public class WebSalesController {
      * @param model 载体
      */
     @RequestMapping(RouteKey.ORDER_LIST)
-    public void myOrder(Model model){
-        String date = DateUtil.getFormatDate(new Date(),"yyyy-MM-dd");
-        List<Soho3qProjectModel> projectList=webSalesService.getProjectList();
-        model.addAttribute("project",projectList);
-        model.addAttribute("startTime", date);
-        model.addAttribute("productList", webSalesService.getProductList(projectList.get(0).getProjectId(),date,DateUtil.addDayOfYear(date,30)));
+    public String myOrder(HttpServletRequest httpServletRequest,Page page,Model model){
+		//check if the user is logon
+		Cookie[] cookies=httpServletRequest.getCookies();
+		UserInfo userInfo=userService.getUserInfo(cookies);
+		if(userInfo==null||userInfo.getUserId()==null){
+			return "redirect:/user/login.html";
+		}
+        //model.addAttribute("orderList",adminOrderService.selectRebatesOrderList(page,rebatesOrderModel));
+        //model.addAttribute("page",page);
+		return "sales/order_list";
     }
 }
