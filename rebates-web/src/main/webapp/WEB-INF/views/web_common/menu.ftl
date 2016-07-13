@@ -15,7 +15,7 @@
                 <a href="${path}/web/index.html"><h2><i class="fa fa-fw"></i>首页</h2></a>
             </li>
             <li class="nav-item ${order !''}" role="presentation">
-                <a href="${path}/sales/order_list.html"><h2><i class="fa fa-fw"></i>我的订单</h2></a>
+                <a href="${path}/sales/order_list.html?size=20&number=1"><h2><i class="fa fa-fw"></i>我的订单</h2></a>
             </li>
             <li class="nav-item ${question !''}" role="presentation">
                 <a href="${path}/web/question.html"><h2><i class="fa fa-fw"></i>常见问题</h2></a>

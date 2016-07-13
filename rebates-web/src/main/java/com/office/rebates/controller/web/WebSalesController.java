@@ -7,6 +7,7 @@ import com.office.rebates.model.UserInfo;
 import com.office.rebates.model.common.Messages;
 import com.office.rebates.model.common.Page;
 import com.office.rebates.model.common.RebatesException;
+import com.office.rebates.service.RebatesOrderService;
 import com.office.rebates.service.Soho3qAccessService;
 import com.office.rebates.service.UserService;
 import com.office.rebates.service.web.WebSalesService;
@@ -42,6 +43,9 @@ public class WebSalesController {
     
     @Autowired
     private UserService userService;
+        
+    @Autowired
+    private RebatesOrderService rebatesOrderService;
 
     /**
      * 下券订单
@@ -76,8 +80,9 @@ public class WebSalesController {
 		if(userInfo==null||userInfo.getUserId()==null){
 			return "redirect:/user/login.html";
 		}
-        //model.addAttribute("orderList",adminOrderService.selectRebatesOrderList(page,rebatesOrderModel));
-        //model.addAttribute("page",page);
+		page.setTotalElements(rebatesOrderService.getMyOrderNum(userInfo.getUserId()));
+        model.addAttribute("orderList",rebatesOrderService.getMyOrders(userInfo.getUserId(), page.getSize(), page.getNumber()));
+        model.addAttribute("page",page);
 		return "sales/order_list";
     }
 }

@@ -31,28 +31,14 @@
                         </tr>
                         </thead>
                         <tbody id ="productList">
-                            <#if productList??>
-                                <#list productList as product>
+                            <#if orderList??>
+                                <#list orderList as order>
                                     <tr>
-                                        <td name='roomId'>
-                                            <#if product.remainedNum  gt 0 >
-                                                <input type="checkbox" name="selectRoom" value="${product.price!""}-${product.finalPrice!""}-${product.deposit!""}-${product.productType!""}-${product.productSubtype!""}-${product.remainedNum!""}"/>
-                                            <#else >
-                                                <input type="checkbox" name="selectRoom" value="${product.price!""}-${product.finalPrice!""}-${product.deposit!""}-${product.productType!""}-${product.productSubtype!""}-${product.remainedNum!""}" disabled = disabled/>
-                                            </#if>
-                                        </td>
-                                        <td>${product.title!""}</td>
-                                        <td>${product.remainedNum!""}</td>
-                                        <td>
-                                            <#if product.remainedNum  gt 0 >
-                                                <span onclick="plus('${product.price!""}-${product.finalPrice!""}-${product.deposit!""}-${product.productType!""}-${product.productSubtype!""}-${product.remainedNum!""}')" class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                                <input id="number-${product.price!""}-${product.finalPrice!""}-${product.deposit!""}-${product.productType!""}-${product.productSubtype!""}-${product.remainedNum!""}" name="number" style="width: 100px;" onblur="input('number-${product.price!""}-${product.finalPrice!""}-${product.deposit!""}-${product.productType!""}-${product.productSubtype!""}-${product.remainedNum!""}');" value = "0"/>
-                                                <span onclick="minus('${product.price!""}-${product.finalPrice!""}-${product.deposit!""}-${product.productType!""}-${product.productSubtype!""}-${product.remainedNum!""}')" class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-                                            <#else >
-                                                暂无工位
-                                            </#if>
-                                        </td>
-                                        <td>￥${product.finalPrice!""}/${product.priceTypeStr!""}</td>
+                                        <td>${order.orderId!""}</td>
+                                        <td>${order.orderDate!""}</td>
+                                        <td>${order.soho3qOrderNum!""}</td>
+                                        <td>${order.status!""}</td>
+                                        <td>￥${order.rebatesAmount!""}</td>
                                     </tr>
                                 </#list>
                             </#if>
@@ -61,125 +47,8 @@
                 </div><!-- /.table-responsive -->
                 </div><!-- /.cols -->
 
-                <div class = "row">
-                    <div class="col-md-3">
-
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">
-                                手机号<span class="text-danger">*</span>
-                            </label>
-                            <div class="col-md-9">
-                                <input name="customerMobile" type="text"  class="form-control validate[required]"  />
-                                </br>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">
-                                姓名<span class="text-danger">*</span>
-                            </label>
-                            <div class="col-md-9">
-                                <input name="customerName" type="text"  class="form-control validate[required]"  />
-                                </br>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">
-                                公司名称<span class="text-danger">*</span>
-                            </label>
-                            <div class="col-md-9">
-                                <input name="customerCompany" type="text"  class="form-control "  />
-                                </br>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">
-                                支付宝账号(返利到该支付宝)<span class="text-danger">*</span>
-                            </label>
-                            <div class="col-md-9">
-                                <input name="customerAlipay" type="text"  class="form-control validate[required]"  />
-                                </br>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-12 control-label">
-                                预计押金金额: &nbsp;<span id="depositAmount" >0</span>
-                            </label>
-                            </br>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-12 control-label">
-                                预计租金金额:&nbsp;<span id="leaseAmount" >0</span>
-                            </label>
-                            </br>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-12 control-label">
-                                预计总金额:&nbsp;<span id="totalAmount" >0</span>
-                            </label>
-                            </br>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-
-                    </div>
-                </div>
-                </br>
-                <div class="col-md-offset-3 col-md-9">
-                    <a id="confirmButton" type="hidden"  data-toggle="modal" data-target="#customModal3">
-                    </a>
-                    <button onclick="confirmInformation()" class="btn btn-info" style="left: 35%;">
-                        确认信息
-                    </button>
-                    <button class="btn" type="reset" onclick="javascript:history.go(-1)">
-                        返回
-                    </button>
-                </div>
             </div><!-- /.content-body -->
 
-        <!-- customModal3 -->
-        <div class="modal" id="customModal3" data-transition="flipYIn" tabindex="-1" role="dialog" aria-labelledby="customModal3Label" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header bg-red">
-                        <h4 class="modal-title">
-                            <a href="#" data-dismiss="modal" class="pull-right" title="Continue shopping" data-toggle="tooltip" data-container="body">
-                                <i class="icon-basket-loaded"></i>
-                            </a>我的购物车
-                        </h4>
-                    </div>
-                    <div class="panel-body">
-                        <p class="fa-2x pull-right"><strong><sup>¥</sup><sup id="confirmDepositAmount"></sup></strong></p>
-                        <p class="lead">预计押金总额:</p>
-                        <p class="fa-2x pull-right"><strong><sup>¥</sup><sup id="confirmLeaseAmount"></sup></strong></p>
-                        <p class="lead">预计租金总额:</p>
-                        <p class="fa-2x pull-right"><strong><sup>¥</sup><sup id="confirmTotalAmount"></sup></strong></p>
-                        <p class="lead">预计总金额:</p>
-                        <p class="text-muted">请确认你的订单</p>
-                    </div>
-                    <table class="table no-margin">
-                        <tbody id="confirmList">
-
-                        </tbody>
-                    </table>
-                    <div class="modal-footer">
-                        <a href="#" onclick="submitOrder();" class="btn btn-danger btn-nofill">提交订单</a>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
-
-            <!-- Template Setups -->
-            <div class="modal fade" id="templateSetup">
-                <div class="modal-dialog">
-                    <!-- modal-content -->
-                    <div class="modal-content"></div>
-                </div><!-- /.modal-dialog -->
-            </div><!-- /.templateSetup -->
-
-        </div><!-- /.content -->
     </section><!-- /MAIN -->
 
 
