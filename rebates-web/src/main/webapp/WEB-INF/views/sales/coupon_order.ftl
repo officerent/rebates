@@ -339,7 +339,9 @@
             contentType: "application/json;charset=UTF-8",
             data: JSON.stringify(createOrder),
             success: function (data) {
-                alertMessage(data.errCode);
+                if(data.errCode == 0){
+                    window.location.href="${path}/question/tip.html?url=sales/coupon_order.html&manager=";
+                }
             },
             error: function (xhr, type, exception) {
                 alert(type, "Failed");

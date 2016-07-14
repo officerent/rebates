@@ -74,6 +74,10 @@ public class RouteKey {
     //返利相关
     public static final String BONUS= "/bonus";
     public static final String BONUS_RECENT10= "/most_recent_list";
+
+    // 提示问题
+    public static final String WEB_QUESTION = "/question";
+    public static final String TIP = "/tip.html";
     
 
 }

@@ -124,7 +124,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="col-sm-3 control-label">
-                                手机号<span class="text-danger">*</span>
+                                手机号(代您下单手机号)<span class="text-danger">*</span>
                             </label>
                             <div class="col-md-9">
                                 <input name="customerMobile" type="text"  class="form-control validate[required]"  />
@@ -392,7 +392,9 @@
             contentType:"application/json;charset=UTF-8",
             data:JSON.stringify(createOrder),
             success:function(data){
-                alertMessage(data.errCode);
+                if(data.errCode == 0){
+                    window.location.href="${path}/question/tip.html?url=sales/station_order.html&manager=";
+                }
             },
             error:function(xhr, type, exception){
                 alert(type, "Failed");

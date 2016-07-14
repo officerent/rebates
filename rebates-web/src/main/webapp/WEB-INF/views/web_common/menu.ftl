@@ -18,7 +18,7 @@
                 <a href="${path}/sales/order_list.html?size=20&number=0"><h2><i class="fa fa-fw"></i>我的订单</h2></a>
             </li>
             <li class="nav-item ${question !''}" role="presentation">
-                <a href="${path}/web/question.html"><h2><i class="fa fa-fw"></i>常见问题</h2></a>
+                <a href="${path}/question/question_list.html"><h2><i class="fa fa-fw"></i>常见问题</h2></a>
             </li>
             <li class="nav-item ${station !''}" role="presentation">
                 <a href="${path}/sales/station_order.html"><h2><i class="fa fa-fw"></i>购买固定工位</h2></a>
