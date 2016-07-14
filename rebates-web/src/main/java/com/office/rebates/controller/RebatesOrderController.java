@@ -162,8 +162,8 @@ public class RebatesOrderController {
 		if(pageSize==null||pageSize<=0){
 			pageSize=20;
 		}
-		if(pageNum==null||pageNum<=0){
-			pageNum=1;
+		if(pageNum==null||pageNum<0){
+			pageNum=0;
 		}
 		
 		//check if the user is logon

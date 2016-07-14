@@ -36,9 +36,32 @@
                                     <tr>
                                         <td>${order.orderId!""}</td>
                                         <td>${order.orderDate!""}</td>
-                                        <td>${order.soho3qOrderNum!""}</td>
-                                        <td>${order.status!""}</td>
-                                        <td>￥${order.rebatesAmount!""}</td>
+                                        <td>
+	                                        <#if order.soho3qOrderNum??>
+	    										${order.soho3qOrderNum!""}
+	    									<#else>
+	    										<span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="您需要用soho3q官方app或者手机网页m.soho3q.com完成订单确认才有订单号哦。"></span>
+											</#if>
+										</td>
+                                        <td>
+	                                        <#if order.status==0>
+		    										<a rel="tooltip"  title="" data-original-title="请用手机号登陆soho3q官方app或者手机版官网m.soho3q.com:个人中心->我的订单->查看众包订单">订单待确认</a>
+		    								<#elseif order.status==1>	    								
+		    									<a rel="tooltip"  title="" data-original-title="请用手机号登陆soho3q官方app或者手机版官网m.soho3q.com:个人中心->我的订单">订单待支付</a>		    										
+		    								<#elseif order.status==2>
+		    										返利待转帐
+		    								<#elseif order.status==3>
+		    										返利已转帐
+											</#if>
+                                        </td>
+                                        <td>
+                                        	<#if order.rebatesAmount??>
+                                        		￥${order.rebatesAmount!""}
+                                        	<#else>
+                                        		<span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="您需要用soho3q官方app或者手机网页m.soho3q.com完成支付才能看到返利金额哦。"></span>
+											</#if>
+                                        	
+                                        </td>
                                     </tr>
                                 </#list>
                             </#if>
@@ -46,7 +69,7 @@
                     </table>
                 </div><!-- /.table-responsive -->
                 </div><!-- /.cols -->
-
+				<#include "../web_common/page.ftl">
             </div><!-- /.content-body -->
 
     </section><!-- /MAIN -->

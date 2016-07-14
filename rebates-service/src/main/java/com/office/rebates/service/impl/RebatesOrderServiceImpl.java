@@ -246,7 +246,7 @@ public class RebatesOrderServiceImpl implements RebatesOrderService{
 
 	@Override
 	public List<OrderModel> getMyOrders(Long userId, Integer pageSize, Integer pageNum) {
-		Integer start=(pageNum-1)*pageSize;
+		Integer start=pageNum*pageSize;
 		Integer size=pageSize;
 		
 		Map<String,Object> map = new HashMap<String,Object>();
@@ -263,6 +263,7 @@ public class RebatesOrderServiceImpl implements RebatesOrderService{
         		order.setRebatesAmount(null);;
         	}
         }
+        logger.info("my orders is :"+JSON.toJSONString(orders));
 		return orders;
 	}
 
