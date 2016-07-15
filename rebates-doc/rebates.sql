@@ -17,6 +17,8 @@ CREATE TABLE `rebates_user` (
   UNIQUE KEY `name` (`name`)
 ) AUTO_INCREMENT = 20000 ENGINE=InnoDB DEFAULT CHARSET=utf8  COMMENT='用户表';
 
+
+
 CREATE TABLE `question_answer` (
   `qa_id` bigint NOT NULL AUTO_INCREMENT COMMENT 'QA ID',
   `user_id` bigint NOT NULL COMMENT '用户ID',
@@ -50,6 +52,8 @@ CREATE TABLE `sales_people` (
   PRIMARY KEY (`sales_id`),
   UNIQUE KEY `token` (`sales_num`)
 ) AUTO_INCREMENT = 20000 ENGINE=InnoDB DEFAULT CHARSET=utf8  COMMENT='soho3q销售表';
+
+ALTER TABLE sales_people ADD `name` varchar(50) comment '销售姓名';
 
 CREATE TABLE `rebates_order` (
   `order_id` bigint NOT NULL AUTO_INCREMENT COMMENT '订单ID',

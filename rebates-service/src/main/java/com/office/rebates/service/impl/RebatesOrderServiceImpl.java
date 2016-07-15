@@ -29,6 +29,7 @@ import com.office.rebates.dal.rest.Soho3qCheckOrderApi;
 import com.office.rebates.dal.rest.Soho3qCreateCouponOrderApi;
 import com.office.rebates.dal.rest.Soho3qCreateOrderApi;
 import com.office.rebates.model.CouponOrderItemModel;
+import com.office.rebates.model.CreateOrderResult;
 import com.office.rebates.model.OrderItem;
 import com.office.rebates.model.OrderModel;
 import com.office.rebates.model.Soho3qOrder;
@@ -70,17 +71,19 @@ public class RebatesOrderServiceImpl implements RebatesOrderService{
     private NewRebatesOrderMapper newRebatesOrderMapper;
 	
 	@Override
-	public Long createRebatesOrder(CreateOrderRequest request, UserInfo userInfo) throws RebatesException {
+	public CreateOrderResult createRebatesOrder(CreateOrderRequest request, UserInfo userInfo) throws RebatesException {
 		//select a sales people to place to soho3q order
+		CreateOrderResult createOrderResult=new CreateOrderResult();
 		Date now=new Date();
 		SalesPeople people=getSalesPeople();
 		logger.info("got sales people to place order:"+JSON.toJSONString(people));
 		
 		//lock the sales people,确保一个销售不能同时下两个订单
 		newSalesPeopleMapper.getAndLockSalesPeople(people.getSalesId());
-		
+		createOrderResult.setSalesName(people.getName());
 		//place order to soho3q
 		Long soho3qOrderId=soho3qCreateOrderApi.createSoho3qOrder(request,people);
+		createOrderResult.setSoho3qOrder(soho3qOrderId.toString());
 		logger.info("created soho3q order with id:"+soho3qOrderId);
 		if(soho3qOrderId==null){
 			logger.error("fail to create soho3q order");
@@ -111,6 +114,7 @@ public class RebatesOrderServiceImpl implements RebatesOrderService{
 		BigDecimal rebatesRatio=new BigDecimal(PropertiesUtils.prop.get("rebate_ratio"));
 		rebatesOrder.setRebatesRatio(rebatesRatio);
 		rebatesOrderMapper.insert(rebatesOrder);
+		createOrderResult.setOrderId(rebatesOrder.getOrderId());
 		logger.info("created soho3q order :"+JSON.toJSONString(rebatesOrder));
 		
 		//insert rebates order items
@@ -136,7 +140,7 @@ public class RebatesOrderServiceImpl implements RebatesOrderService{
 				logger.info("created soho3q order item :"+JSON.toJSONString(rebatesOrderItem));
 			}
 		}
-		return rebatesOrder.getOrderId();
+		return createOrderResult;
 
 	}
 
@@ -159,14 +163,16 @@ public class RebatesOrderServiceImpl implements RebatesOrderService{
 	}
 
 	@Override
-	public Long createRebatesCouponOrder(CreateCouponOrderRequest request, UserInfo userInfo) throws RebatesException {
+	public CreateOrderResult createRebatesCouponOrder(CreateCouponOrderRequest request, UserInfo userInfo) throws RebatesException {
 		//select a sales people to place to soho3q order
 		Date now=new Date();
+		CreateOrderResult createOrderResult=new CreateOrderResult();
 		SalesPeople people=getSalesPeople();
 		logger.info("got sales people to place order:"+JSON.toJSONString(people));
 		
 		//lock the sales people,确保一个销售不能同时下两个订单
 		newSalesPeopleMapper.getAndLockSalesPeople(people.getSalesId());
+		createOrderResult.setSalesName(people.getName());
 		
 		//place order to soho3q
 		Long soho3qOrderId=soho3qCreateCouponOrderApi.createSoho3qCouponOrder(request,people);
@@ -175,6 +181,7 @@ public class RebatesOrderServiceImpl implements RebatesOrderService{
 			logger.error("fail to create soho3q order");
 			throw new RebatesException(Messages.FAIL_TO_CREATE_SOHO3Q_ORDER_CODE,Messages.FAIL_TO_CREATE_SOHO3Q_ORDER_MSG);
 		}
+		createOrderResult.setSoho3qOrder(soho3qOrderId.toString());
 		
 		//insert rebates order
 		RebatesOrder rebatesOrder=new RebatesOrder();
@@ -233,7 +240,8 @@ public class RebatesOrderServiceImpl implements RebatesOrderService{
 				logger.info("created soho3q order item :"+JSON.toJSONString(rebatesOrderItem));
 			}
 		}
-		return rebatesOrder.getOrderId();
+		createOrderResult.setOrderId(rebatesOrder.getOrderId());
+		return createOrderResult;
 	}
 
 	@Override

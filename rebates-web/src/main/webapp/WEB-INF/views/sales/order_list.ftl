@@ -25,7 +25,7 @@
                         <tr>
                             <th>订单号</th>
                             <th>下单日期</th>
-                            <th>shoh3q订单号</th>
+                            <th>shoh3q官网订单号</th>
                             <th>状态</th>
                             <th>返利金额(元)</th>
                         </tr>

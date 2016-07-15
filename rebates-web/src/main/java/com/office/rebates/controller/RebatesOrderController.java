@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.mysql.jdbc.Constants;
+import com.office.rebates.model.CreateOrderResult;
 import com.office.rebates.model.OrderModel;
 import com.office.rebates.model.UserInfo;
 import com.office.rebates.model.common.ListResult;
@@ -47,8 +48,8 @@ public class RebatesOrderController {
     //创建一个新的订单
     @ResponseBody
 	@RequestMapping(value = RouteKey.CREATE_ORDER, method = RequestMethod.POST)
-	public ResultCode<Long> createRebatesOrder(@RequestBody CreateOrderRequest request,HttpServletRequest httpServletRequest) {
-		ResultCode<Long> result=new ResultCode<Long>();		
+	public ResultCode<CreateOrderResult> createRebatesOrder(@RequestBody CreateOrderRequest request,HttpServletRequest httpServletRequest) {
+		ResultCode<CreateOrderResult> result=new ResultCode<CreateOrderResult>();		
 		//check params
 		if(request==null){
 			result.setErrCode(Messages.REQUEST_NULL_CODE);
@@ -91,8 +92,8 @@ public class RebatesOrderController {
 		
 		//create the order
 		try {
-			Long orderId=rebatesOrderService.createRebatesOrder(request,userInfo);
-			result.setData(orderId);
+			CreateOrderResult createOrderResult=rebatesOrderService.createRebatesOrder(request,userInfo);
+			result.setData(createOrderResult);
 		} catch (RebatesException e) {
 			result.setErrCode(e.getErrCode());
 			result.setErrMsg(e.getErrMsg());
@@ -104,8 +105,8 @@ public class RebatesOrderController {
     //创建一个新的买券订单
     @ResponseBody
 	@RequestMapping(value = RouteKey.CREATE_COUPON_ORDER, method = RequestMethod.POST)
-	public ResultCode<Long> createRebatesCouponOrder(@RequestBody CreateCouponOrderRequest request,HttpServletRequest httpServletRequest) {
-		ResultCode<Long> result=new ResultCode<Long>();		
+	public ResultCode<CreateOrderResult> createRebatesCouponOrder(@RequestBody CreateCouponOrderRequest request,HttpServletRequest httpServletRequest) {
+		ResultCode<CreateOrderResult> result=new ResultCode<CreateOrderResult>();		
 		//check params
 		if(request==null){
 			result.setErrCode(Messages.REQUEST_NULL_CODE);
@@ -143,8 +144,8 @@ public class RebatesOrderController {
 		
 		//create the order
 		try {
-			Long orderId=rebatesCouponOrderService.createRebatesCouponOrder(request,userInfo);
-			result.setData(orderId);
+			CreateOrderResult createOrderResult=rebatesCouponOrderService.createRebatesCouponOrder(request,userInfo);
+			result.setData(createOrderResult);
 		} catch (RebatesException e) {
 			result.setErrCode(e.getErrCode());
 			result.setErrMsg(e.getErrMsg());
