@@ -24,7 +24,7 @@
                             选择项目：
                             <div class="form-group">
                                 <label class="select">
-                                    <select id="projectId" onchange="reacquireRoom();">
+                                    <select class="form-control" style="width: 120px" id="projectId" onchange="reacquireRoom();">
                                         <#list project as p>
                                             <option value="${p.projectId!''}" >${p.projectName!''}</option>
                                         </#list>
@@ -124,7 +124,9 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="col-sm-3 control-label">
-                                手机号(代您下单手机号)<span class="text-danger">*</span>
+                                手机号
+                                <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="代下单手机号"></span>
+                                <span class="text-danger">*</span>
                             </label>
                             <div class="col-md-9">
                                 <input name="customerMobile" type="text"  class="form-control validate[required]"  />
@@ -142,7 +144,7 @@
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">
-                                公司名称<span class="text-danger">*</span>
+                                公司名称
                             </label>
                             <div class="col-md-9">
                                 <input name="customerCompany" type="text"  class="form-control "  />
@@ -151,7 +153,9 @@
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">
-                                支付宝账号(返利到该支付宝)<span class="text-danger">*</span>
+                                支付宝账号
+                                <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利金额至该支付宝"></span>
+                                <span class="text-danger">*</span>
                             </label>
                             <div class="col-md-9">
                                 <input name="customerAlipay" type="text"  class="form-control validate[required]"  />
