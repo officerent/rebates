@@ -34,23 +34,19 @@
 
     <section class="content-wrapper wrapkit-wrapper-extend" role="main" data-init-content="true">
         <div class="content">
-
-            <div class="content-body">
-                <div class="row">
-                    <section class="cd-horizontal-timeline">
-                        <div class="timeline">
-                            <div class="events-wrapper">
-                                <div class="events">
-                                    <ol>
+            <div class="content-body" >
+                <!-- <div class="row" > -->
+                    <section class="cd-horizontal-timeline"  style="height:50px">
+                        <div class="timeline" style="width:100%;max-width:1500px;padding:0px;height:60px">
+                            <div class="events-wrapper" >
+                                <div class="events" >
+                                    <ol style="font-size:24px">
                                         <li><a href="#0" data-date="16/01/2014" class="selected">注册登陆</a></li>
                                         <li><a href="#0" data-date="28/02/2014">选择产品</a></li>
                                         <li><a href="#0" data-date="20/04/2014">提交订单</a></li>
                                         <li><a href="#0" data-date="20/05/2014">确认订单</a></li>
                                         <li><a href="#0" data-date="09/07/2014">完成支付</a></li>
                                         <li><a href="#0" data-date="30/08/2014">返利到帐</a></li>
-
-
-
                                     </ol>
 
                                     <span class="filling-line" aria-hidden="true"></span>
@@ -63,7 +59,7 @@
                             </ul> <!-- .cd-timeline-navigation -->
                         </div> <!-- .timeline -->
 
-                        <div class="events-content">
+                        <div class="events-content"  style="margin:0px">
                             <ol>
                                 <li class="selected" data-date="16/01/2014">
                                     <p>
@@ -105,7 +101,7 @@
                         </div> <!-- .events-content -->
                     </section>
                     <hr>
-                </div>
+              <!--   </div> -->
 
                 <div class="row">
                     <div class="col-md-3">
