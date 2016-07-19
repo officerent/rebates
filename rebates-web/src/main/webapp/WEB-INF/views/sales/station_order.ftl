@@ -163,24 +163,45 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-12 control-label">
-                                预计押金金额: &nbsp;<span id="depositAmount" >0</span>
+                            <label class="col-sm-3 control-label">
+                                预计押金金额: &nbsp;
+                                <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="工位数 * 1000元/位"></span>
                             </label>
-                            </br>
+                            <div class="col-md-3">
+                                <span id="depositAmount" >0</span>
+                            </div>
                         </div>
-
+                        </br>
                         <div class="form-group">
-                            <label class="col-sm-12 control-label">
-                                预计租金金额:&nbsp;<span id="leaseAmount" >0</span>
+                            <label class="col-sm-3 control-label">
+                                预计租金金额:&nbsp;
+                                <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利基数"></span>
                             </label>
-                            </br>
+                            <div class="col-md-3">
+                                <span id="leaseAmount" >0</span>
+                            </div>
                         </div>
+                        </br>
                         <div class="form-group">
-                            <label class="col-sm-12 control-label">
-                                预计总金额:&nbsp;<span id="totalAmount" >0</span>
+                            <label class="col-sm-3 control-label">
+                                预计总金额:&nbsp;
+                                <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="该总金额 = 租金 + 押金,实际情况可能包含税费,当前总价格与实际支付总价格会有不符"></span>
                             </label>
-                            </br>
+                            <div class="col-md-3">
+                                <span id="totalAmount" >0</span>
+                            </div>
                         </div>
+                        </br>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">
+                                预计返利:&nbsp;
+                                <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利基数 * 返利百分比"></span>
+                            </label>
+                            <div class="col-md-3">
+                                <span id="totalAmount" >0</span>
+                            </div>
+                        </div>
+                        </br>
                     </div>
                     <div class="col-md-3">
 
