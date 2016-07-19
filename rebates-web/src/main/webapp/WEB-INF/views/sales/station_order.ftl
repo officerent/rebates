@@ -162,46 +162,51 @@
                                 </br>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">
-                                预计押金金额: &nbsp;
-                                <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="工位数 * 1000元/位"></span>
-                            </label>
-                            <div class="col-md-3">
-                                <span id="depositAmount" >0</span>
-                            </div>
-                        </div>
-                        </br>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">
-                                预计租金金额:&nbsp;
-                                <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利基数"></span>
-                            </label>
-                            <div class="col-md-3">
-                                <span id="leaseAmount" >0</span>
-                            </div>
-                        </div>
-                        </br>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">
-                                预计总金额:&nbsp;
-                                <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="该总金额 = 租金 + 押金,实际情况可能包含税费,当前总价格与实际支付总价格会有不符"></span>
-                            </label>
-                            <div class="col-md-3">
-                                <span id="totalAmount" >0</span>
-                            </div>
-                        </div>
-                        </br>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">
-                                预计返利:&nbsp;
-                                <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利基数 * 返利百分比"></span>
-                            </label>
-                            <div class="col-md-3">
-                                <span id="totalAmount" >0</span>
-                            </div>
-                        </div>
-                        </br>
+                        <div class="panel-body">
+                            <div class="tab-content">
+                                <div id="top-pages" class="tab-pane active fade in">
+                                    <hr class="mt-2x">
+                                    <ul class="media-list">
+                                        <li class="media">
+                                            <div class="media-body">
+                                                <p class="pull-right" id="depositAmount">0</p>
+                                                <p class="media-heading">
+                                                    预计押金金额: &nbsp;
+                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="工位数 * 1000元/位"></span>
+                                                </p>
+                                            </div>
+                                        </li>
+                                        <li class="media">
+                                            <div class="media-body">
+                                                <p class="pull-right" id="leaseAmount">0</p>
+                                                <p class="media-heading">
+                                                    预计租金金额:&nbsp;
+                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利基数"></span>
+                                                </p>
+                                            </div>
+                                        </li>
+                                        <li class="media">
+                                            <div class="media-body">
+                                                <p class="pull-right" id="totalAmount">0</p>
+                                                <p class="media-heading">
+                                                    预计总金额:&nbsp;
+                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="该总金额 = 租金 + 押金,实际情况可能包含税费,当前总价格与实际支付总价格会有不符"></span>
+                                                </p>
+                                            </div>
+                                        </li>
+                                        <li class="media">
+                                            <div class="media-body">
+                                                <p class="pull-right" id="totalRebates">0</p>
+                                                <p class="media-heading">
+                                                    预计返利:&nbsp;
+                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利基数 * 返利百分比"></span>
+                                                </p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div><!-- /.tab-pane -->
+                            </div><!-- /.tab-content -->
+                        </div><!-- /.panel-body -->
                     </div>
                     <div class="col-md-3">
 
@@ -280,6 +285,26 @@
 <script>
     var date = new Date;
     $("#currentYear").append(date.getFullYear());
+
+    var rebates = "";
+    window.onload=function(){
+        $.ajax({
+            url:"${path}/ajax/info/rebates_ratio",
+            type:"get",
+            dataType:'json',
+            success:function(data){
+                if(data.errCode==0){
+                    rebates = data.data.ratio;
+
+                }else{
+                    alertMessage(data.errCode);
+                }
+            },
+            error:function (xhr, type, exception) {
+                alert(type, "Failed");
+            }
+        });
+    }
 
     //订单实体
     var createOrder = {
@@ -438,6 +463,7 @@
         setAmountValue("leaseAmount",0);
         setAmountValue("depositAmount",0);
         setAmountValue("totalAmount",0);
+        setAmountValue("totalRebates",0);
         var formDate = {
             projectId:projectId,
             checkInDate:checkInDate,
@@ -485,6 +511,12 @@
             }
         });
     }
+
+    function getRebates(){
+        var number = (parseFloat(rebates.replace("%",""))/100).toFixed(3);
+        return number;
+    }
+
 
     /**
      * 错误提示
@@ -618,6 +650,7 @@
         var sumLeaseAmount = 0;
         var sumDepositAmount = 0;
         var sumTotalAmount = 0;
+        var totalRebates = 0;
         var periodMonth = getValueById("month");
         var periodWeek = getValueById("week");
         $("input[type='checkbox'][name='selectRoom']:checked").each(
@@ -630,9 +663,12 @@
                 }
         );
         sumTotalAmount = sumLeaseAmount + sumDepositAmount;
+        totalRebates = (sumLeaseAmount * getRebates()).toFixed(2);
         setAmountValue("leaseAmount",sumLeaseAmount);
         setAmountValue("depositAmount",sumDepositAmount);
         setAmountValue("totalAmount",sumTotalAmount);
+        setAmountValue("totalRebates",totalRebates);
+
     }
 
     function checkedItem(value,status){
