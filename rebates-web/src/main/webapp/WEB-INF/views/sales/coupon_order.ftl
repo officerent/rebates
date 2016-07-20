@@ -153,12 +153,12 @@
                  aria-labelledby="customModal3Label" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-header bg-red">
+                        <div class="modal-header soho-orange">
                             <h4 class="modal-title">
                                 <a href="#" data-dismiss="modal" class="pull-right" title="Continue shopping"
                                    data-toggle="tooltip" data-container="body">
                                     <i class="icon-basket-loaded"></i>
-                                </a>我的购物车
+                                </a>我的返利
                             </h4>
                         </div>
                         <div class="panel-body">
@@ -191,7 +191,7 @@
                             </tbody>
                         </table>
                         <div class="modal-footer">
-                            <a href="#" onclick="submitOrder();" class="btn btn-danger btn-nofill">提交订单</a>
+                            <a href="#" onclick="submitOrder();" class="btn soho-orange btn-nofill">提交订单</a>
                         </div>
                     </div>
                     <!-- /.modal-content -->

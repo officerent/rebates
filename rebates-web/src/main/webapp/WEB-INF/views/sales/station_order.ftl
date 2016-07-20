@@ -216,7 +216,7 @@
                 <div class="col-md-offset-3 col-md-9">
                     <a id="confirmButton" type="hidden"  data-toggle="modal" data-target="#customModal3">
                     </a>
-                    <button onclick="confirmInformation()" class="btn btn-info" style="left: 35%;">
+                    <button onclick="confirmInformation()" class="btn soho-orange" style="left: 35%;">
                         确认信息
                     </button>
                     <button class="btn" type="reset" onclick="javascript:history.go(-1)">
@@ -229,21 +229,57 @@
         <div class="modal" id="customModal3" data-transition="flipYIn" tabindex="-1" role="dialog" aria-labelledby="customModal3Label" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header bg-red">
+                    <div class="modal-header soho-orange">
                         <h4 class="modal-title">
                             <a href="#" data-dismiss="modal" class="pull-right" title="Continue shopping" data-toggle="tooltip" data-container="body">
                                 <i class="icon-basket-loaded"></i>
-                            </a>我的购物车
+                            </a>我的返利
                         </h4>
                     </div>
                     <div class="panel-body">
-                        <p class="fa-2x pull-right"><strong><sup>¥</sup><sup id="confirmDepositAmount"></sup></strong></p>
-                        <p class="lead">预计押金总额:</p>
-                        <p class="fa-2x pull-right"><strong><sup>¥</sup><sup id="confirmLeaseAmount"></sup></strong></p>
-                        <p class="lead">预计租金总额:</p>
-                        <p class="fa-2x pull-right"><strong><sup>¥</sup><sup id="confirmTotalAmount"></sup></strong></p>
-                        <p class="lead">预计总金额:</p>
-                        <p class="text-muted">请确认你的订单</p>
+                        <div class="tab-content">
+                            <div id="top-pages" class="tab-pane active fade in">
+                                <hr class="mt-2x">
+                                <ul class="media-list">
+                                    <li class="media">
+                                        <div class="media-body">
+                                            <p class="pull-right" id="confirmDepositAmount"></p>
+                                            <p class="media-heading">
+                                                预计押金金额: &nbsp;
+                                                <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="工位数 * 1000元/位"></span>
+                                            </p>
+                                        </div>
+                                    </li>
+                                    <li class="media">
+                                        <div class="media-body">
+                                            <p class="pull-right" id="confirmLeaseAmount"></p>
+                                            <p class="media-heading">
+                                                预计租金金额:&nbsp;
+                                                <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利基数"></span>
+                                            </p>
+                                        </div>
+                                    </li>
+                                    <li class="media">
+                                        <div class="media-body">
+                                            <p class="pull-right" id="confirmTotalAmount"></p>
+                                            <p class="media-heading">
+                                                预计总金额:&nbsp;
+                                                <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="该总金额 = 租金 + 押金,实际情况可能包含税费,当前总价格与实际支付总价格会有不符"></span>
+                                            </p>
+                                        </div>
+                                    </li>
+                                    <li class="media">
+                                        <div class="media-body">
+                                            <p class="pull-right" id="confirmTotalRebates"></p>
+                                            <p class="media-heading">
+                                                预计返利:&nbsp;
+                                                <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利基数 * 返利百分比"></span>
+                                            </p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div><!-- /.tab-pane -->
+                        </div><!-- /.tab-content -->
                     </div>
                     <table class="table no-margin">
                         <tbody id="confirmList">
@@ -251,7 +287,7 @@
                         </tbody>
                     </table>
                     <div class="modal-footer">
-                        <a href="#" onclick="submitOrder();" class="btn btn-danger btn-nofill">提交订单</a>
+                        <a href="#" onclick="submitOrder();" class="btn soho-orange btn-nofill">确认返利</a>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -425,6 +461,7 @@
             setAmountValue("confirmLeaseAmount",createOrder.leaseAmount);
             setAmountValue("confirmDepositAmount",createOrder.depositAmount);
             setAmountValue("confirmTotalAmount",parseInt(createOrder.leaseAmount)+parseInt(createOrder.depositAmount));
+            setAmountValue("confirmTotalRebates",(createOrder.leaseAmount * getRebates()).toFixed(2));
             $("#confirmList").empty();
             $("#confirmList").append(str);
         }

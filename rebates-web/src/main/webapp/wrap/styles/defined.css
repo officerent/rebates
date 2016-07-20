@@ -20,3 +20,8 @@ p  {letter-spacing:2px}
     line-height: 24px;
     background-color: lightgrey;
 }
+.soho-orange{
+    color: rgba(22,24,27,.87);
+    background-color: #FF9011;;
+    border-color: transparent
+}
