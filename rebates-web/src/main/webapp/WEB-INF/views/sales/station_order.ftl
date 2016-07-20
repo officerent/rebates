@@ -280,6 +280,7 @@
                                 </ul>
                             </div><!-- /.tab-pane -->
                         </div><!-- /.tab-content -->
+                        <p class="text-muted">请确认你的返利</p>
                     </div>
                     <table class="table no-margin">
                         <tbody id="confirmList">

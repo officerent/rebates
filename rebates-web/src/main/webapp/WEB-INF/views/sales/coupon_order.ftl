@@ -183,7 +183,7 @@
 
                             <p class="lead">预计总金额:</p>
 
-                            <p class="text-muted">请确认你的订单</p>
+                            <p class="text-muted">请确认你的返利</p>
                         </div>
                         <table class="table no-margin">
                             <tbody id="confirmList">
