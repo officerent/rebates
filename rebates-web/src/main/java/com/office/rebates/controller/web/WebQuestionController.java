@@ -29,4 +29,13 @@ public class WebQuestionController {
         model.addAttribute("url",url);
         model.addAttribute("manager",manager);
     }
+    
+
+    /**
+     * 帮助中心页
+     */
+    @RequestMapping(RouteKey.QUESTION_LIST)
+    public void help(){
+
+    }
 }

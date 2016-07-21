@@ -21,10 +21,10 @@
                 <a href="${path}/question/question_list.html"><h2><i class="fa fa-fw"></i>常见问题</h2></a>
             </li>
             <li class="nav-item ${station !''}" role="presentation">
-                <a href="${path}/sales/station_order.html"><h2><i class="fa fa-fw"></i>购买固定工位</h2></a>
+                <a href="${path}/sales/station_order.html"><h2><i class="fa fa-fw"></i>固定长租</h2></a>
             </li>
             <li class="nav-item ${coupon !''}" role="presentation">
-                <a href="${path}/sales/coupon_order.html"><h2><i class="fa fa-fw"></i>购买漫游券</h2></a>
+                <a href="${path}/sales/coupon_order.html"><h2><i class="fa fa-fw"></i>灵活短租</h2></a>
             </li>
         </ul>
         <div class="nav-ctrl btn-group hide">
