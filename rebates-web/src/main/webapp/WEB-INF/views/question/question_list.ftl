@@ -90,7 +90,7 @@
     =============================================== -->
     <footer class="footer-wrapper footer-default" role="contentinfo" data-init-footer="true">
         <div class="footer">
-            <div class="pull-right text-muted"><small>Currently v1.0</small></div>
+            <div class="pull-right text-muted"><small>京ICP备16037216号</small></div>
             <div>&copy;<em id="currentYear"></em>  XL</div>
         </div>
     </footer><!-- /.FOOTER -->
