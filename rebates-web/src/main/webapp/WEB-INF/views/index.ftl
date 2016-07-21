@@ -20,6 +20,7 @@
     <script src="${path}/soho/js/main.js"></script>
     <link rel="stylesheet" href="${path}/soho/css/reset.css">
 	<link rel="stylesheet" href="${path}/soho/css/style.css"> 
+	<meta name="baidu_union_verify" content="2bd6bd60d76411e1f6e531d0e9da0e4f">
     <#assign index='active' />
 </@layoutHead>
 <@layoutBody mainClass="wrapkit-wrapper-extend" classBody="wrapkit-sidebar-left wrapkit-sidebar-lg bg-grd-dark wrapkit-sidebar-horizontal" >
