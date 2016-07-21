@@ -1,4 +1,4 @@
-<#include "../web_common/_layout.ftl" />
+<#include "./web_common/_layout.ftl" />
 
 <@layoutHead>
     <style>
@@ -116,16 +116,16 @@
                                     <th>日期</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <#if data ??>
-                                    <#list data as d>
-                                        <tr>
-                                            <td>${d.customerMobile !""}</td>
-                                            <td>${d.rebatesAmount !""}元</td>
-                                            <td>${d.lastUpdateTime !""}</td>
-                                        </tr>
-                                    </#list>
-                                </#if>
+                            <tbody id="dataList">
+                                <#--<#if data ??>-->
+                                    <#--<#list data as d>-->
+                                <#--<tr>-->
+                                    <#--<td>${d.customerMobile !""}</td>-->
+                                    <#--<td>${d.rebatesAmount !""}元</td>-->
+                                    <#--<td>${d.lastUpdateTime !""}</td>-->
+                                <#--</tr>-->
+                                    <#--</#list>-->
+                                <#--</#if>-->
                             </tbody>
                         </table>
                     </div>
@@ -167,7 +167,7 @@
                     </div>
                     <div class="col-md-3">
                         <div class="row">
-                            <h2>固定长租 <strong class="font-color">返利<span><i class="font-size">${ratio.ratio}</i></span></strong></h2>
+                            <h2>固定长租 <strong class="font-color">返利<span><i id="station_order_radio" class="font-size"></i></span></strong></h2>
                             <p>一周起租,选择心仪的3Q中心,直接拎包入驻吧!</p>
                             <a class="btn btn-soho-danger" href="${path}/sales/station_order.html" role="button">去购买，拿返利</a>
                         </div>
@@ -177,7 +177,7 @@
                             <br>
                         </div>
                         <div class="row">
-                            <h2>灵活短租 <strong class="font-color">返利<span><i class="font-size">${ratio.ratio}</i></span></strong></h2>
+                            <h2>灵活短租 <strong class="font-color">返利<span><i id="coupon_order_radio" class="font-size"></i></span></strong></h2>
                             <p>按天使用工位,按小时使用会议室,任意3Q中心,随到随用哦!</p>
                             <a class="btn btn-soho-danger" href="${path}/sales/coupon_order.html" role="button">去购买，拿返利</a>
                         </div>
@@ -219,5 +219,51 @@
     $('.carousel').carousel({
         interval: 3000
     });
+
+    window.onload=function(){
+        $.ajax({
+            url:"${path}/ajax/info/rebates_ratio",
+            type:"get",
+            dataType:'json',
+            success:function(data){
+                if(data.errCode==0){
+                   var ratio = data.data.ratio;
+                    $("#station_order_radio").append(ratio);
+                    $("#coupon_order_radio").append(ratio);
+                }else{
+                    alertMessage(data.errCode);
+                }
+            },
+            error:function (xhr, type, exception) {
+                alert(type, "Failed");
+            }
+        });
+        $.ajax({
+            url:"${path}/ajax/bonus/most_recent_list",
+            type:"get",
+            dataType:'json',
+            success:function(data){
+                if(data.errCode==0){
+                var str = "";
+                    if(data.data!=null){
+                        var list = data.data;
+                        for(var i=0; i<list.length;i++){
+                            str +='<tr>'+
+                                    '<td>'+ list[i].customerMobile +'</td>'+
+                                    '<td>'+ list[i].rebatesAmount +'元</td>'+
+                                    '<td>'+ list[i].lastUpdateTime +'</td>'+
+                                    '</tr>';
+                        }
+                    }
+                    $("#dataList").append(ratio);
+                }else{
+                    alertMessage(data.errCode);
+                }
+            },
+            error:function (xhr, type, exception) {
+                alert(type, "Failed");
+            }
+        });
+    }
 </script>
 </@layoutFooter>

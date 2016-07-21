@@ -40,17 +40,8 @@ public class WebIndexController {
      * web端首页
      */
     @RequestMapping(RouteKey.WEB_INDEX)
-    public void index(Model model){
-        List<BonusModel> bonusModels = new ArrayList<>();
-        RebatesRatio ratio = new RebatesRatio();
-        try {
-            ratio = rebatesInfoService.getRebatesRatio();
-            bonusModels = webIndexService.getBonusList();
-        } catch (Exception e) {
-            logger.error("WebIndexController.index",e);
-        }
-        model.addAttribute("data",bonusModels);
-        model.addAttribute("ratio",ratio);
+    public void index(){
+
     }
     
 }
