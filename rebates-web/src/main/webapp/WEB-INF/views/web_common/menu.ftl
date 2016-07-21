@@ -12,7 +12,7 @@
     <div class="nav-wrapper">
         <ul class="nav nav-left nav-tabs nav-contrast-light" role="navigation">
             <li class="nav-item ${index !''}" role="presentation">
-                <a href="${path}/web/index.html"><h2><i class="fa fa-fw"></i>首页</h2></a>
+                <a href="${path}/index.html"><h2><i class="fa fa-fw"></i>首页</h2></a>
             </li>
             <li class="nav-item ${order !''}" role="presentation">
                 <a href="${path}/sales/order_list.html?size=20&number=0"><h2><i class="fa fa-fw"></i>我的订单</h2></a>

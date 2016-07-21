@@ -70,18 +70,6 @@
 
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group" id="selectCouponList" style="display: none">
-                            <label class="col-sm-3 control-label">
-                                选择赠送工位券<span class="text-danger">*</span>
-                            </label>
-
-                            <div class="col-md-9">
-                                <div class="row" id="selectCoupon">
-
-                                </div>
-                                </br>
-                            </div>
-                        </div>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">
@@ -89,7 +77,7 @@
                             </label>
 
                             <div class="col-md-9">
-                                <input name="customerMobile" type="text" class="form-control validate[required]"/>
+                                <input name="customerMobile" onblur="" type="text" class="form-control validate[required]"/>
                                 </br>
                             </div>
                         </div>
@@ -123,6 +111,19 @@
                                 </br>
                             </div>
                         </div>
+                        <div class="form-group" id="selectCouponList" style="display: none">
+                            <label class="col-sm-3 control-label">
+                                选择赠送工位券<span class="text-danger">*</span>
+                            </label>
+
+                            <div class="col-md-9">
+                                <div class="row" id="selectCoupon">
+
+                                </div>
+                                </br>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label class="col-sm-12 control-label">
                                 预计支付金额: &nbsp;<span id="payAmount">0</span>
@@ -162,29 +163,60 @@
                             </h4>
                         </div>
                         <div class="panel-body">
-                            <p class="fa-2x pull-right"><strong><sup id="confirmName"></sup></strong>
-                            </p>
-
-                            <p class="lead">用户名:</p>
-                            <p class="fa-2x pull-right"><strong><sup id="confirmMobile"></sup></strong>
-                            </p>
-
-                            <p class="lead">手机号:</p>
-                            <p class="fa-2x pull-right"><strong><sup id="confirmCompanyName"></sup></strong>
-                            </p>
-
-                            <p class="lead">公司名称:</p>
-                            <p class="fa-2x pull-right"><strong><sup id="confirmAlipay"></sup></strong>
-                            </p>
-
-                            <p class="lead">支付宝账号:</p>
-                            <p class="fa-2x pull-right"><strong><sup>¥</sup><sup id="confirmTotalAmount"></sup></strong>
-                            </p>
-
-                            <p class="lead">预计总金额:</p>
-
+                            <div class="tab-content">
+                                <div id="top-pages" class="tab-pane active fade in">
+                                    <hr class="mt-2x">
+                                    <ul class="media-list">
+                                        <li class="media">
+                                            <div class="media-body">
+                                                <p class="pull-right" id="confirmName"></p>
+                                                <p class="media-heading">
+                                                    用户名: &nbsp;
+                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="工位数 * 1000元/位"></span>
+                                                </p>
+                                            </div>
+                                        </li>
+                                        <li class="media">
+                                            <div class="media-body">
+                                                <p class="pull-right" id="confirmMobile"></p>
+                                                <p class="media-heading">
+                                                    手机号:&nbsp;
+                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利基数"></span>
+                                                </p>
+                                            </div>
+                                        </li>
+                                        <li class="media">
+                                            <div class="media-body">
+                                                <p class="pull-right" id="confirmCompanyName"></p>
+                                                <p class="media-heading">
+                                                    公司名称:&nbsp;
+                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="该总金额 = 租金 + 押金,实际情况可能包含税费,当前总价格与实际支付总价格会有不符"></span>
+                                                </p>
+                                            </div>
+                                        </li>
+                                        <li class="media">
+                                            <div class="media-body">
+                                                <p class="pull-right" id="confirmAlipay"></p>
+                                                <p class="media-heading">
+                                                    支付宝账号:&nbsp;
+                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利基数 * 返利百分比"></span>
+                                                </p>
+                                            </div>
+                                        </li><li class="media">
+                                            <div class="media-body">
+                                                <p class="pull-right" id="confirmTotalAmount"></p>
+                                                <p class="media-heading">
+                                                    预计总金额:&nbsp;
+                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利基数 * 返利百分比"></span>
+                                                </p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div><!-- /.tab-pane -->
+                            </div><!-- /.tab-content -->
                             <p class="text-muted">请确认你的返利</p>
                         </div>
+
                         <table class="table no-margin">
                             <tbody id="confirmList">
 
