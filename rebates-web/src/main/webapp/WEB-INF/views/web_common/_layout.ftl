@@ -1,14 +1,13 @@
-<#macro layoutHead title="">
-    <#include "base.ftl">
+<#macro layoutHead title="SOHO3Q返利网" meta_keywords="SOHO3Q返利网 SOHO3Q SOHO中国 租办公室 联合办公 灵活办公 众创空间 办公空间租赁"
+   meta_description="SOHO3Q返利网是帮助用户快捷高效地下单购买SOHO3Q办公室，开放工位，会议室等灵活办公空间产品的平台，通过SOHO3Q返利网下单，用户还能获得一定比例的租金返利。">
+<#include "base.ftl">
 <!DOCTYPE html>
 <html class="no-js">
 <head>
-
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="Keywords" content="SOHO3Q,work,SOHO 中国,3Q,轻松办公,租办公室,返利，联合办公">
-    <meta name="Description" content="3Q返利">
+    <meta name="Keywords" content="${meta_keywords!""}">
+    <meta name="Description" content="${meta_keywords!""}">
     <title>${title!""}</title>
 
 
