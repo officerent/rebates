@@ -25,3 +25,14 @@ p  {letter-spacing:2px}
     background-color: #FF9011;;
     border-color: transparent
 }
+.bg-grd-orange {
+    background: linear-gradient(45deg, #ffce54 0, rgba(109, 207, 2, 0) 70%), linear-gradient(135deg, #FF9011 10%, rgba(6, 133, 224, 0) 80%), linear-gradient(225deg, #FF9011 10%, rgba(4, 166, 220, 0) 80%), linear-gradient(315deg, #FF9011 100%, rgba(18, 2, 237, 0) 70%) !important;
+}
+.bg-grd-white {
+    background: linear-gradient(45deg, #fdf7e8 0, rgba(109, 207, 2, 0) 70%), linear-gradient(135deg, #f9f9f9 10%, rgba(6, 133, 224, 0) 80%), linear-gradient(225deg, #e0ddd9 10%, rgba(4, 166, 220, 0) 80%), linear-gradient(315deg, #fbfbfb 100%, rgba(18, 2, 237, 0) 70%) !important;
+}
+.btn-soho-danger {
+    color: #ffffff;
+    background-color: #FF9011;
+    border-color: transparent;
+}
