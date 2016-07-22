@@ -23,7 +23,7 @@
                     <table class="table table-hover">
                         <thead>
                         <tr>
-                            <th>订单号</th>
+                            <th>返利单号</th>
                             <th>下单日期</th>
                             <th>shoh3q官网订单号</th>
                             <th>状态</th>
