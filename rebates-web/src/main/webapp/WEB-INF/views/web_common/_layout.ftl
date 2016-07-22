@@ -40,7 +40,7 @@
 		  s.parentNode.insertBefore(hm, s);
 		})();
 	</script>
-
+	<meta name="baidu-site-verification" content="5gYmMrJhHv" />
     <#nested>
 </head>
 </#macro>
