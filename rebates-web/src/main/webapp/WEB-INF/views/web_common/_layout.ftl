@@ -31,6 +31,15 @@
 
     <script src="${path}/wrap/web/js/jquery.js"></script>
     <script src="${path}/wrap/web/js/cookie.js"></script>
+    <script>
+		var _hmt = _hmt || [];
+		(function() {
+		  var hm = document.createElement("script");
+		  hm.src = "//hm.baidu.com/hm.js?37e25ae551c86e2205de1ad83026cc0e";
+		  var s = document.getElementsByTagName("script")[0]; 
+		  s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
 
     <#nested>
 </head>
