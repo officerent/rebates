@@ -101,6 +101,7 @@
     left outer join rebates_bonus b
     on o.order_id = b.order_id
     where o.user_id=#{userId,jdbcType=BIGINT}
+    order by o.create_time desc
     limit #{start},#{size}
   </select>
   
