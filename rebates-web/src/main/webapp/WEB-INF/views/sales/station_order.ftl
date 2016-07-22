@@ -25,17 +25,17 @@
                             <div class="form-group">
                                 <label class="select">
                                     <select class="form-control" style="width: 120px" id="projectId" onchange="reacquireRoom();">
-                                        <#list project as p>
-                                            <option value="${p.projectId!''}" >${p.projectName!''}</option>
-                                        </#list>
+                                    <#list project as p>
+                                        <option value="${p.projectId!''}" >${p.projectName!''}</option>
+                                    </#list>
                                     </select>
                                 </label>
                             </div><!-- /form-group -->
                             选择入驻时间：
                             <div class="form-group" >
-                               <label class="select">
-                                   <input id="startTime" onclick="validatepicker(this)" onchange="reacquireRoom()" data-date-format="yyyy-MM-dd" class="form-control date form_date validate[required]" name="startTime" placeholder="开始时间" value="${startTime!''}"/>
-                               </label>
+                                <label class="select">
+                                    <input id="startTime" onclick="validatepicker(this)" onchange="reacquireRoom()" data-date-format="yyyy-MM-dd" class="form-control date form_date validate[required]" name="startTime" placeholder="开始时间" value="${startTime!''}"/>
+                                </label>
                             </div><!-- /form-group -->
                             入驻时长：
                             <div class="form-group" style="width: 100px">
@@ -73,22 +73,24 @@
                     </div><!-- /.panel-body -->
                 </div><!-- /.panel -->
 
+                <div class = "row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <div class="table-responsive">
 
-                <div class="table-responsive">
-
-                    <table class="table table-hover">
-                        <thead>
-                        <tr>
-                            <th>选择</th>
-                            <th>产品名称</th>
-                            <th>产品剩余数量</th>
-                            <th>选择数量</th>
-                            <th>价格</th>
-                        </tr>
-                        </thead>
-                        <tbody id ="productList">
-                            <#if productList??>
-                                <#list productList as product>
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>选择</th>
+                                    <th>产品名称</th>
+                                    <th>产品剩余数量</th>
+                                    <th>选择数量</th>
+                                    <th>价格</th>
+                                </tr>
+                                </thead>
+                                <tbody id ="productList">
+                                <#if productList??>
+                                    <#list productList as product>
                                     <tr>
                                         <td name='roomId'>
                                             <#if product.remainedNum  gt 0 >
@@ -110,17 +112,18 @@
                                         </td>
                                         <td>￥${product.finalPrice!""}/${product.priceTypeStr!""}</td>
                                     </tr>
-                                </#list>
-                            </#if>
-                        </tbody>
-                    </table>
-                </div><!-- /.table-responsive -->
-                </div><!-- /.cols -->
+                                    </#list>
+                                </#if>
+                                </tbody>
+                            </table>
+                        </div></div><!-- /.cols -->
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+                </br>
 
                 <div class = "row">
-                    <div class="col-md-3">
-
-                    </div>
+                    <div class="col-md-3"></div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="col-sm-3 control-label">

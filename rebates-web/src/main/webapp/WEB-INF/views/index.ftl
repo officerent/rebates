@@ -5,11 +5,7 @@
         .wrapkit-wrapper-extend {
             min-height: 600px;
         }
-        .btn-soho-danger {
-            color: #ffffff;
-            background-color: #FF9011;
-            border-color: transparent;
-        }
+
         .font-color {
             color:#FF9011;
         }
@@ -243,7 +239,7 @@
             dataType:'json',
             success:function(data){
                 if(data.errCode==0){
-                var str = "";
+                    var str = "";
                     if(data.data!=null){
                         var list = data.data;
                         for(var i=0; i<list.length;i++){
@@ -254,9 +250,7 @@
                                     '</tr>';
                         }
                     }
-                    $("#dataList").append(ratio);
-                }else{
-                    alertMessage(data.errCode);
+                    $("#dataList").append(str);
                 }
             },
             error:function (xhr, type, exception) {

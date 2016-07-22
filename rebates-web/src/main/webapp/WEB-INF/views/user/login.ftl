@@ -24,8 +24,11 @@
     <link rel="stylesheet" href="${path}/wrap/styles/wrapkit.css">
 
     <link rel="stylesheet" href="${path}/wrap/styles/pages.css">
+
+    <#--自定义样式-->
+    <link rel="stylesheet" href="${path}/wrap/styles/defined.css">
 </head>
-<body class="bg-grd-blue">
+<body class="bg-grd-white">
 <!--[if lt IE 9]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
@@ -51,7 +54,7 @@
                 </div><!-- /.form-group -->
                 <div class="form-group clearfix">
                     <div class="animated-hue pull-right">
-                        <a id="doSubmit"  type="submit" class="btn btn-primary">登录</a>
+                        <a id="doSubmit"  type="submit" class="btn btn-soho-danger">登录</a>
                     </div>
                 <#--<div class="nice-checkbox nice-checkbox-inline">-->
                 <#--<input type="checkbox" name="keepSignin" id="keepSignin" checked="checked">-->
@@ -104,7 +107,7 @@
                 </div><!-- /.form-group -->
                 <div class="form-group animated-hue clearfix">
                     <div class="pull-right">
-                        <a id="doRegister" class="btn btn-primary">创建账户</a>
+                        <a id="doRegister" class="btn btn-soho-danger">创建账户</a>
                     </div>
                     <div class="pull-left">
                         <a id="signinButton" href="#signin" class="btn btn-default" data-toggle="tab">登录</a>
