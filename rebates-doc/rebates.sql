@@ -142,3 +142,17 @@ CREATE TABLE `rebates_global_lock` (
 
 insert into rebates_global_lock values('PULL_SOHO3Q_ORDERS');
 
+CREATE TABLE `rebates_article` (
+  `article_id` bigint NOT NULL AUTO_INCREMENT COMMENT '文章ID',
+  `type` varchar(50) COMMENT '文章类型: SOHO3Q=3Q动态，OFFICE=联合办公，OTHER=其他',
+  `is_deleted` TINYINT(1) NULL COMMENT '是否删除：0=未删除，1=已删除',
+  `title` varchar(250) COMMENT '文章html title',
+  `keywords` varchar(250) COMMENT '文章html meta keywords',
+  `description` varchar(500) COMMENT '文章html meta description',
+  `content` text COMMENT '文章图文介绍',
+  `create_time` datetime comment '创建时间',
+  `last_update_time` datetime comment '最后一次更新时间',
+  PRIMARY KEY (`article_id`),
+  KEY `type` (`type`,`create_time` desc)
+) AUTO_INCREMENT = 50000 ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='文章表';
+
