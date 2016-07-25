@@ -128,6 +128,10 @@
 		<property name="url" value="#{apiConfig['SOHO3Q_CHECK_ORDER_URL']}" />
 		<property name="timeOut" value="#{apiConfig['LONG_TIMEOUT']}" />
 	</bean>
+	<bean id="soho3qMemberApi" class="com.office.rebates.dal.rest.Soho3qMemberApi">
+		<property name="url" value="#{apiConfig['SOHO3Q_IS_MEMBER_URL']}" />
+		<property name="timeOut" value="#{apiConfig['LONG_TIMEOUT']}" />
+	</bean>
 	
 	<bean id="soho3qCreateOrderApi" class="com.office.rebates.dal.rest.Soho3qCreateOrderApi">
 		<property name="url" value="#{apiConfig['SOHO3Q_CREATE_ORDER_URL']}" />
