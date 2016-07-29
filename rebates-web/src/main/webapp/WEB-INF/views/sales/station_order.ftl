@@ -211,9 +211,7 @@
                             </div><!-- /.tab-content -->
                         </div><!-- /.panel-body -->
                     </div>
-                    <div class="col-md-3">
-
-                    </div>
+                    <div class="col-md-3"></div>
                 </div>
                 </br>
                 <div class="col-md-offset-3 col-md-9">

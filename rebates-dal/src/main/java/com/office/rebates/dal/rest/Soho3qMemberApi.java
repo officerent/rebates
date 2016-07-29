@@ -62,12 +62,8 @@ public class Soho3qMemberApi {
                 String httpResult = EntityUtils.toString(response.getEntity());
                 if (httpResult != null) {
                     JSONObject json = JSON.parseObject(httpResult);
-                    logger.info("http response for getting member info is" + json);
-                    if ("N".equals(json.getString("status"))) {
-                        logger.error("soho3q return bad response");
-                    } else {
-                        member = (SohoMemberInfo)json.get("result");
-                    }
+//                    logger.info("http response for getting member info is" + json);
+                    member = JSONObject.parseObject(json.getString("result"), SohoMemberInfo.class);
                 } else {
                     logger.error("http response body is null!");
                 }

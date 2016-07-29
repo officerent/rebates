@@ -1,5 +1,7 @@
 package com.office.rebates.controller;
 
+import com.office.rebates.model.RebatesRatio;
+import com.office.rebates.model.common.ResultCode;
 import com.office.rebates.model.request.SohoMemberInfo;
 import com.office.rebates.service.RebatesMemberService;
 import org.slf4j.Logger;
@@ -33,15 +35,16 @@ public class RebatesMemberController {
      * 查询用户信息
      * @param mobile 手机号
      */
-    public Map<String,SohoMemberInfo> isMember(String mobile){
+    @RequestMapping(RouteKey.REBATES_MEMBER_INFO)
+    public ResultCode<SohoMemberInfo> isMember(String mobile){
+        ResultCode<SohoMemberInfo> result = new ResultCode<SohoMemberInfo>();
         logger.info("customer mobile" + mobile);
-        Map<String,SohoMemberInfo> map = new HashMap<>();
         try {
             SohoMemberInfo sohoMemberInfo = rebatesMemberService.isMember(mobile);
-            map.put("result",sohoMemberInfo);
+            result.setData(sohoMemberInfo);
         } catch (Exception e) {
             logger.error("RebatesMemberController.isMember",e);
         }
-        return map;
+        return result;
     }
 }
