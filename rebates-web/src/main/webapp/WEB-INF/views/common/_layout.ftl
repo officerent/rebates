@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="${path}/wrap/styles/bootstrap-datetimepicker.min.css" />
     <!-- 表单验证css样式 -->
     <link rel="stylesheet" href="${path}/wrap/validationengine/css/validationEngine.jquery.css">
+    <link rel="stylesheet" href="${path}/wrap/styles/components.css">
 </head>
 </#macro>
 

@@ -33,6 +33,15 @@ public class RouteKey {
 
     public static final String ANSWER_QUESTION = "/answer_question.html";
 
+    public static final String ARTICLE = "/admin/article";
+    
+    public static final String ARTICLE_LIST = "/article_list.html";
+    
+    public static final String ADD_ARTICLE = "/add_article.html";
+    
+    public static final String INSERT_ARTICLE = "/insert_article.html";
+    
+    public static final String MODIFY_ARTICLE = "/modify_article.html";
 
     public static final String WEB = "/web";
 

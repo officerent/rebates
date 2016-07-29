@@ -16,6 +16,14 @@
           	</a>
           </li>
           <li class="divider"></li>
+          
+          <li class="nav-item" role="presentation" id="feedback">
+          	<a href="${path}/admin/article/article_list.html">
+          		<span class="nav-icon"><i class="fa fa-dashcube"></i></span>
+              	<span class="nav-text">文章管理</span>
+          	</a>
+          </li>
+          <li class="divider"></li>
 
           <!--
           <li class="divider"></li>

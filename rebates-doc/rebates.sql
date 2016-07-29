@@ -144,7 +144,7 @@ insert into rebates_global_lock values('PULL_SOHO3Q_ORDERS');
 
 CREATE TABLE `rebates_article` (
   `article_id` bigint NOT NULL AUTO_INCREMENT COMMENT '文章ID',
-  `type` varchar(50) COMMENT '文章类型: SOHO3Q=3Q动态，OFFICE=联合办公，OTHER=其他',
+  `type` varchar(50) COMMENT '文章类型: PROJ=项目介绍，SOHO3Q=3Q动态，OFFICE=联合办公，OTHER=其他',
   `is_deleted` TINYINT(1) NULL COMMENT '是否删除：0=未删除，1=已删除',
   `title` varchar(250) COMMENT '文章html title',
   `keywords` varchar(250) COMMENT '文章html meta keywords',
