@@ -51,8 +51,10 @@ public class WebSalesController {
      * 下券订单
      */
     @RequestMapping(RouteKey.COUPON_ORDER)
-    public void couponOrder(Model model){
-        model.addAttribute("couponList",webSalesService.getCouponList());
+    public void couponOrder(Model model,String source){
+        model.addAttribute("couponList",webSalesService.getCouponList(source));
+        model.addAttribute("member",webSalesService.getMemberCoupon());
+        model.addAttribute("source",source);
     }
 
     /**

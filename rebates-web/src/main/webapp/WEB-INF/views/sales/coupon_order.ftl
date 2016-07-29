@@ -1,14 +1,13 @@
 <#include "../web_common/_layout.ftl" />
 
 <@layoutHead>
-
-    <#assign coupon="active" />
+    <#if source == 'ROOM'>
+        <#assign meeting="active" />
+    <#else>
+        <#assign coupon="active" />
+    </#if>
 </@layoutHead>
 <@layoutBody classBody="wrapkit-sidebar-left wrapkit-sidebar-lg bg-grd-dark wrapkit-sidebar-horizontal" >
-
-</@layoutBody>
-
-
 <main class="wrapkit-wrapper" id="wrapper" data-init-layout="true">
 
     <!-- ============================================
@@ -18,74 +17,30 @@
         <div class="content">
 
             <div class="content-body">
-                <div class="panel fade in panel-default panel-fill" data-fill-color="true" data-init-panel="true">
-                    <div class="panel-body">
-                        <form class="form-inline">
-                            <div class="form-group col-sm-2">
-                                <label>
-                                    选择券种类：
-                                </label>
-                                <label class="select">
-                                    <select id="coupon" onchange="reacquireCoupon();">
-                                    <#list couponList as c>
-                                        <option value="${c.couponId!''}-${c.price!''}-${c.productType!''}">${c.name!''}</option>
-                                    </#list>
-                                    </select>
-                                </label>
-                            </div>
-                            <div class="form-group col-md-1"></div>
-                            <div class="form-group col-md-3">
-                                <div class="form-group">
-                                    <label class="col-sm-6 control-label">
-                                        选择数量：
-                                    </label>
-                                    <label >
-                                        <span onclick="plusCoupon();" class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                        <input id="number" name="number" style="width: 100px;" onblur="inputCoupon();" value="1"/>
-                                        <span onclick="minusCoupon();" class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-                                    </label>
-                                </div>
-                            </div>
-                            <!-- /form-group -->
-                            <div class="form-group col-md-3">
-                                <div class="form-group">
-                                    <label class="col-sm-10 control-label">
-                                        商品单价:
-                                    </label>
-                                    <label >
-                                        <span aria-hidden="true" id="price"></span>/张
-                                    </label>
-                            </div>
-
-                            <!-- /form-group -->
-                        </form>
-                    </div>
-                    <!-- /.panel-body -->
-                </div>
-                <!-- /.panel -->
-
+                <input type="hidden" id="memberId" value="${member.couponId!""}">
+                <input type="hidden" id="memberPrice" value="${member.price!""}">
 
                 <div class="row">
                     <div class="col-md-3">
 
                     </div>
                     <div class="col-md-6">
-
                         <div class="form-group">
                             <label class="col-sm-3 control-label">
-                                手机号<span class="text-danger">*</span>
+                                手机号:
+                                <span class="text-danger">*</span>
+                                <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="代下单手机号"></span>
                             </label>
-
                             <div class="col-md-9">
-                                <input name="customerMobile" onblur="" type="text" class="form-control validate[required]"/>
+                                <input name="customerMobile" onblur="checkUser();" type="text" class="form-control validate[required]"/>
                                 </br>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">
-                                姓名<span class="text-danger">*</span>
+                                姓名:
+                                <span class="text-danger">*</span>
                             </label>
-
                             <div class="col-md-9">
                                 <input name="customerName" type="text" class="form-control validate[required]"/>
                                 </br>
@@ -93,9 +48,8 @@
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">
-                                公司名称<span class="text-danger">*</span>
+                                公司名称:
                             </label>
-
                             <div class="col-md-9">
                                 <input name="customerCompany" type="text" class="form-control "/>
                                 </br>
@@ -103,43 +57,91 @@
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">
-                                支付宝账号(返利到该支付宝)<span class="text-danger">*</span>
+                                支付宝账号:
+                                <span class="text-danger">*</span>
+                                <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利金额至该支付宝"></span>
                             </label>
-
                             <div class="col-md-9">
                                 <input name="customerAlipay" type="text" class="form-control validate[required]"/>
                                 </br>
                             </div>
                         </div>
-                        <div class="form-group" id="selectCouponList" style="display: none">
-                            <label class="col-sm-3 control-label">
-                                选择赠送工位券<span class="text-danger">*</span>
-                            </label>
-
-                            <div class="col-md-9">
-                                <div class="row" id="selectCoupon">
-
-                                </div>
-                                </br>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-12 control-label">
-                                预计支付金额: &nbsp;<span id="payAmount">0</span>
-                            </label>
-                            </br>
-                        </div>
                     </div>
-                    <div class="col-md-3">
-
-                    </div>
+                    <div class="col-md-3"></div>
                 </div>
+
                 </br>
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>产品名称</th>
+                                    <th>选择数量</th>
+                                    <th>价格</th>
+                                </tr>
+                                </thead>
+                                <tbody >
+                                    <#if couponList??>
+                                        <#list couponList as coupon>
+                                        <tr>
+                                            <td class="col-md-2" id="coupon">${coupon.name!""}</td>
+                                            <td class="col-md-2">
+                                                <span id="spanPlus" onclick="plusCoupon();" class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                                <input class="input-center" id="number" name="number" style="width: 100px;" onblur="inputCoupon();" value="1"/>
+                                                <span id="spanMinus" onclick="minusCoupon();" class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+                                            </td>
+                                            <td class="col-md-2">
+                                                <span id="displayPrice">￥${coupon.price!""}</span>
+                                                <span id="discountPrice"></span>/张
+                                                <span id="alertTip" class="icon-info display-none" aria-hidden="true" rel="tooltip" title="" data-original-title="第一次购买,享有99优惠"></span>
+                                                <input type="hidden" id="couponId" value="${coupon.couponId!""}">
+                                                <input type="hidden" id="price" value="${coupon.price!""}">
+                                            </td>
+                                        </tr>
+                                        </#list>
+                                    </#if>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="panel-body">
+                            <div class="tab-content">
+                                <div id="top-pages" class="tab-pane active fade in">
+                                    <hr class="mt-2x">
+                                    <ul class="media-list">
+                                        <li class="media">
+                                            <div class="media-body">
+                                                <p class="pull-right" id="payAmount">0</p>
+                                                <p class="media-heading">
+                                                    预计支付金额: &nbsp;
+                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利基数"></span>
+                                                </p>
+                                            </div>
+                                        </li>
+
+                                        <li class="media">
+                                            <div class="media-body">
+                                                <p class="pull-right" id="totalRebates">0</p>
+                                                <p class="media-heading">
+                                                    预计返利:&nbsp;
+                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利基数 * 返利百分比"></span>
+                                                </p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div><!-- /.tab-pane -->
+                            </div><!-- /.tab-content -->
+                        </div><!-- /.panel-body -->
+                    </div>
+
+                    <div class="col-md-3"></div>
+                </div>
                 <div class="col-md-offset-3 col-md-9">
                     <a id="confirmButton" type="hidden" data-toggle="modal" data-target="#customModal3">
                     </a>
-                    <button onclick="confirmInformation()" class="btn btn-info" style="left: 35%;">
+                    <button onclick="confirmInformation()" class="btn soho-orange" style="left: 35%;">
                         确认信息
                     </button>
                     <button class="btn" type="reset" onclick="javascript:history.go(-1)">
@@ -172,7 +174,6 @@
                                                 <p class="pull-right" id="confirmName"></p>
                                                 <p class="media-heading">
                                                     用户名: &nbsp;
-                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="工位数 * 1000元/位"></span>
                                                 </p>
                                             </div>
                                         </li>
@@ -181,7 +182,7 @@
                                                 <p class="pull-right" id="confirmMobile"></p>
                                                 <p class="media-heading">
                                                     手机号:&nbsp;
-                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利基数"></span>
+                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="代下单手机号"></span>
                                                 </p>
                                             </div>
                                         </li>
@@ -190,7 +191,6 @@
                                                 <p class="pull-right" id="confirmCompanyName"></p>
                                                 <p class="media-heading">
                                                     公司名称:&nbsp;
-                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="该总金额 = 租金 + 押金,实际情况可能包含税费,当前总价格与实际支付总价格会有不符"></span>
                                                 </p>
                                             </div>
                                         </li>
@@ -199,15 +199,16 @@
                                                 <p class="pull-right" id="confirmAlipay"></p>
                                                 <p class="media-heading">
                                                     支付宝账号:&nbsp;
-                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利基数 * 返利百分比"></span>
+                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利金额至该支付宝"></span>
                                                 </p>
                                             </div>
-                                        </li><li class="media">
+                                        </li>
+                                        <li class="media">
                                             <div class="media-body">
                                                 <p class="pull-right" id="confirmTotalAmount"></p>
                                                 <p class="media-heading">
                                                     预计总金额:&nbsp;
-                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利基数 * 返利百分比"></span>
+                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利基数"></span>
                                                 </p>
                                             </div>
                                         </li>
@@ -262,27 +263,81 @@
     <!-- /.FOOTER -->
 
 </main>
+</@layoutBody>
 <@layoutFooter>
-<script id="couponRadio" type="text/html">
-    <div class="col-md-3">
 
-    </div>
-    <div class="col-md-6">
-        <div class="form-group">
-            {{each couponList as c}}
-            <div class="radio">
-                <label><input type="radio" name="giftCouponId" value="{{c.couponId}}">{{c.name}}</label>
-            </div>
-            {{/each}}
-        </div>
-    </div>
-    <div class="col-md-3">
-
-    </div>
-</script>
 <script>
     var date = new Date;
     $("#currentYear").append(date.getFullYear());
+    var isMember = false;
+    var ratio = "";
+    var displayPrice = "";
+    window.onload=function(){
+        $.ajax({
+            url:"${path}/ajax/info/rebates_ratio",
+            type:"get",
+            dataType:'json',
+            success:function(data){
+                if(data.errCode==0){
+                    ratio = data.data.ratio;
+                    sumTotal();
+                }else{
+                    alertMessage(data.errCode);
+                }
+            },
+            error:function (xhr, type, exception) {
+                alert(type, "Failed");
+            }
+        });
+
+    }
+
+    function checkUser(){
+        var customerMobile = getValueByName("customerMobile");
+        $.ajax({
+            url:"${path}/ajax/member/is_member",
+            type:"post",
+            dataType:'json',
+            data:{
+                mobile:customerMobile
+            },
+            success:function(data){
+                if(data.errCode==0){
+                    var member = data.data;
+                    isMember = member.memberStatus;
+                    if(!isMember){
+                        displayPrice = replaceStr(getTextValueById("displayPrice"),"￥","");
+                        var memberPrice = getValueById("memberPrice");
+                        setValueById("price",memberPrice);
+                        setAmountValue("discountPrice","￥"+memberPrice);
+                        setAmountValue("displayPrice","<s>￥"+displayPrice+"</s>");
+                        $("#spanPlus").addClass("display-none");
+                        $("#spanMinus").addClass("display-none");
+                        $("#alertTip").removeClass("display-none");
+                        $('#number').attr("disabled",true);
+                        setValueById('number',1);
+                    }else{
+                        if(!displayPrice == ""){
+                            setValueById("price",displayPrice);
+                            setAmountValue("displayPrice","￥"+displayPrice);
+                            setTextValueById("discountPrice","");
+                            $("#spanPlus").removeClass("display-none");
+                            $("#spanMinus").removeClass("display-none");
+                            $("#alertTip").addClass("display-none");
+                            $('#number').attr("disabled",false);
+
+                        }
+                    }
+                    sumTotal();
+                }else{
+                    alertMessage(data.errCode);
+                }
+            },
+            error:function (xhr, type, exception) {
+                alert(type, "Failed");
+            }
+        });
+    }
 
     //订单实体
     var createCouponOrder = {
@@ -301,37 +356,52 @@
     }
 
     /**
+     * 获取数值型返利率
+     */
+    function getRebates(){
+        var number = (parseFloat(ratio.replace("%",""))/100).toFixed(3);
+        return number;
+    }
+
+
+    /**
      * 确认信息页,对象装载
      */
     function confirmInformation() {
-        var title = $("#coupon").find("option:selected").text();
+        var title = $("#coupon").text();
         var totalAmount = getAmountValue("payAmount");
         var customerMobile = getValueByName("customerMobile");
         var customerName = getValueByName("customerName");
         var customerCompany = getValueByName("customerCompany");
         var customerAlipay = getValueByName("customerAlipay");
-        var giftCoupon = "";
         createCouponOrder.customerAlipay = customerAlipay;
         createCouponOrder.customerCompany = customerCompany;
         createCouponOrder.customerMobile = customerMobile;
         createCouponOrder.customerName = customerName;
         createCouponOrder.couponOrderItems.splice(0,createCouponOrder.couponOrderItems.length);
-        var coupon = getValueById("coupon");
-        var couponArray = coupon.split("-");
-        var number = getValueById("number");
-        if(couponArray[2] != ""){
-            couponOrderItems.couponId = couponArray[0];
-            couponOrderItems.price = couponArray[1];
+        if(!isMember){
+            couponOrderItems.couponId = getValueById("memberId");
+            couponOrderItems.giftCouponId = getValueById("couponId");
         }else{
-            giftCoupon = $('input[name="giftCouponId"][checked]');
-            if(giftCoupon.length == 0){
-                messageBox("提示信息","请至少选择一种赠品");
-                return;
-            }
-            couponOrderItems.couponId = couponArray[0];
-            couponOrderItems.price = couponArray[1];
-            couponOrderItems.giftCouponId = giftCoupon.val();
+            couponOrderItems.couponId = getValueById("couponId");
         }
+        couponOrderItems.price = getValueById("price");
+//        var coupon = getValueById("coupon");
+//        var couponArray = coupon.split("-");
+        var number = getValueById("number");
+//        if(couponArray[2] != ""){
+//            couponOrderItems.couponId = couponArray[0];
+//            couponOrderItems.price = couponArray[1];
+//        }else{
+//            giftCoupon = $('input[name="giftCouponId"][checked]');
+//            if(giftCoupon.length == 0){
+//                messageBox("提示信息","请至少选择一种赠品");
+//                return;
+//            }
+//            couponOrderItems.couponId = couponArray[0];
+//            couponOrderItems.price = couponArray[1];
+//            couponOrderItems.giftCouponId = giftCoupon.val();
+//        }
         couponOrderItems.amount = number;
         createCouponOrder.couponOrderItems.push(couponOrderItems);
 
@@ -347,18 +417,11 @@
                     '<td class="text-muted"><strong>¥' + price + '</strong></td>' +
                     '</tr>';
         }
-        if(couponArray[2] == ""){
-            str += '<tr>' +
-                    '<td>赠送</td>' +
-                    '<td>' + giftCoupon.text() + '</td>' +
-                    '<td class="text-muted"><strong>1张</strong></td>' +
-                    '</tr>';
-        }
         setAmountValue("confirmTotalAmount", parseInt(totalAmount));
-        setAmountValue("confirmName", createCouponOrder.customerName);
-        setAmountValue("confirmMobile", createCouponOrder.customerMobile);
-        setAmountValue("confirmCompanyName", createCouponOrder.customerCompany);
-        setAmountValue("confirmAlipay", createCouponOrder.customerAlipay);
+        setTextValueById("confirmName", createCouponOrder.customerName);
+        setTextValueById("confirmMobile", createCouponOrder.customerMobile);
+        setTextValueById("confirmCompanyName", createCouponOrder.customerCompany);
+        setTextValueById("confirmAlipay", createCouponOrder.customerAlipay);
         $("#confirmList").empty();
         $("#confirmList").append(str);
     }
@@ -369,10 +432,12 @@
             type: "post",
             dataType: 'json',
             contentType: "application/json;charset=UTF-8",
-            data: JSON.stringify(createOrder),
+            data: JSON.stringify(createCouponOrder),
             success: function (data) {
                 if(data.errCode == 0){
                     window.location.href="${path}/question/tip.html?url=sales/coupon_order.html&manager=";
+                }else{
+                    alertMessage(code);
                 }
             },
             error: function (xhr, type, exception) {
@@ -400,26 +465,26 @@
         }
     }
 
-    $(function(){
-        reacquireCoupon();
-    });
-
-    /**
-     * 选择工位券
-     */
-    function reacquireCoupon() {
-        var couponArray = $("#coupon").val().split("-");
-        setValueById("number", 1);
-        setAmountValue("payAmount", couponArray[1]);
-        setAmountValue("price", couponArray[1]);
-        if(couponArray[2] == null || couponArray[2] ==""){
-            $("#selectCouponList").prop("style","");
-            $("#selectCoupon").empty();
-            getCouponList();
-        }else{
-            $("#selectCouponList").prop("style","display: none");
-        }
-    }
+    //    $(function(){
+    //        reacquireCoupon();
+    //    });
+    //
+    //    /**
+    //     * 选择工位券
+    //     */
+    //    function reacquireCoupon() {
+    //        var couponArray = $("#coupon").val().split("-");
+    //        setValueById("number", 1);
+    //        setAmountValue("payAmount", couponArray[1]);
+    //        setAmountValue("price", couponArray[1]);
+    //        if(couponArray[2] == null || couponArray[2] ==""){
+    //            $("#selectCouponList").prop("style","");
+    //            $("#selectCoupon").empty();
+    //            getCouponList();
+    //        }else{
+    //            $("#selectCouponList").prop("style","display: none");
+    //        }
+    //    }
 
     /**
      *  获取数值
@@ -432,6 +497,8 @@
             return 0;
         }
     }
+
+
 
     /**
      * 设置数值
@@ -457,10 +524,10 @@
     //    点击减号
     function minusCoupon() {
         var number = parseInt($("#number").val());
-        if (number > 0) {
+        if (number > 1) {
             number--;
         } else {
-            alert("工位数不能小于零");
+            messageBox("提示信息","工位数不能小于等于零");
         }
         $("#number").val(number);
         sumTotal();
@@ -478,42 +545,45 @@
         sumTotal();
     }
 
-    function getCouponList() {
-        $.ajax({
-            url: "${path}/ajax/soho3q/coupon_list",
-            type: "get",
-            dataType: 'json',
-            contentType: "application/json;charset=UTF-8",
-            success: function (data) {
-                if (data.errCode == 0) {
-                    var couponArray = {
-                        couponList:[],
-                    };
-                    var arrayCoupon = data.data;
-                    for (var i = 0; i < arrayCoupon.length; i++) {
-                        var coupon = arrayCoupon[i];
-                        if(coupon.productType == "ROOM" || coupon.productType == "OPEN_STATION"){
-                            couponArray.couponList.push(coupon);
-                        }
-                    }
-                    var html = template('couponRadio', couponArray);
-                    $("#selectCoupon").append(html);
-                } else {
-                    alertMessage(data.errCode);
-                }
-            },
-            error: function (xhr, type, exception) {
-                alert(type, "Failed");
-            }
-        })
-    }
+    <#--function getCouponList() {-->
+    <#--$.ajax({-->
+    <#--url: "${path}/ajax/soho3q/coupon_list",-->
+    <#--type: "get",-->
+    <#--dataType: 'json',-->
+    <#--contentType: "application/json;charset=UTF-8",-->
+    <#--success: function (data) {-->
+    <#--if (data.errCode == 0) {-->
+    <#--var couponArray = {-->
+    <#--couponList:[],-->
+    <#--};-->
+    <#--var arrayCoupon = data.data;-->
+    <#--for (var i = 0; i < arrayCoupon.length; i++) {-->
+    <#--var coupon = arrayCoupon[i];-->
+    <#--if(coupon.productType == "ROOM" || coupon.productType == "OPEN_STATION"){-->
+    <#--couponArray.couponList.push(coupon);-->
+    <#--}-->
+    <#--}-->
+    <#--var html = template('couponRadio', couponArray);-->
+    <#--$("#selectCoupon").append(html);-->
+    <#--} else {-->
+    <#--alertMessage(data.errCode);-->
+    <#--}-->
+    <#--},-->
+    <#--error: function (xhr, type, exception) {-->
+    <#--alert(type, "Failed");-->
+    <#--}-->
+    <#--})-->
+    <#--}-->
 
     function sumTotal() {
         var sumTotalAmount = 0;
-        var price = parseFloat(getAmountValue("price"));
+        var price = parseFloat(getValueById("price"));
         var number = parseInt(getValueById("number"));
         sumTotalAmount = (price * number).toFixed(2);
+        var ratioValue = getRebates();
+        var rebates = sumTotalAmount * ratioValue;
         setAmountValue("payAmount", sumTotalAmount);
+        setAmountValue("totalRebates",rebates);
     }
 
     function checkedItem(value, status) {

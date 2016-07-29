@@ -82,20 +82,40 @@ public class WebSalesServiceImpl implements WebSalesService {
      * @return
      */
     @Override
-    public List<CouponModel> getCouponList() {
+    public List<CouponModel> getCouponList(String source) {
         List<CouponModel> couponModels = new ArrayList<>();
         try {
             List<CouponModel> couponModelList = soho3qCouponService.getCouponList();
             for (CouponModel couponModel : couponModelList) {
-                if (Constants.PRODUCT_TYPE_OPEN_STATION.equals(couponModel.getProductType()) ||
-                        Constants.PRODUCT_TYPE_ROOM.equals(couponModel.getProductType()) ||
-                        couponModel.getProductType() == null) {
-                   couponModels.add(couponModel);
+                if(source.equals(couponModel.getProductType())){
+                    //ROOM OPEN_STATION
+                    couponModels.add(couponModel);
                 }
             }
         } catch (Exception e) {
             logger.error("WebSalesServiceImpl.getCouponList", e);
         }
         return couponModels;
+    }
+
+    /**
+     * 获取会员券信息
+     * @return
+     */
+    @Override
+    public CouponModel getMemberCoupon() {
+        CouponModel member = new CouponModel();
+        try{
+            List<CouponModel> couponModelList = soho3qCouponService.getCouponList();
+            for (CouponModel couponModel : couponModelList) {
+                if(couponModel.getProductType() == null){
+                    //member
+                    member = couponModel;
+                }
+            }
+        }catch (Exception e){
+            logger.error("WebSalesServiceImpl.getMemberCoupon", e);
+        }
+        return member;
     }
 }

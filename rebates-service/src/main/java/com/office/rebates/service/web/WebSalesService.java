@@ -28,6 +28,12 @@ public interface WebSalesService {
      * 获取工位券列表
      * @return
      */
-    public List<CouponModel> getCouponList();
+    public List<CouponModel> getCouponList(String source);
+
+    /**
+     * 获取会员券信息
+     * @return
+     */
+    public CouponModel getMemberCoupon();
 
 }

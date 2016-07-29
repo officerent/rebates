@@ -36,3 +36,10 @@ p  {letter-spacing:2px}
     background-color: #FF9011;
     border-color: transparent;
 }
+.input-center {
+    text-align:center;
+    vertical-align:middle;
+}
+.display-none {
+    display: none;
+}

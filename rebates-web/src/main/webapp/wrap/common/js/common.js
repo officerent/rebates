@@ -23,11 +23,19 @@ function getValueById(id){
  * 通过名字
  */
 function getValueByName(name){
-    var value = $("input[name='"+name+"']").val()
+    var value = $("input[name='"+name+"']").val();
     if(value != undefined && value != null && value != ""){
         return value;
     }else{
         return "";
+    }
+}
+/**
+ * 通过名字设置值
+ */
+function setValueByName(name,value){
+    if(value != undefined && value != null && value != ""){
+        $("input[name='"+name+"']").val(value);
     }
 }
 //消息提示
@@ -37,4 +45,60 @@ function messageBox(messageTitle,messageText){
         text: messageText,
         class_name: 'gritter-info gritter-center',
     });
+}
+
+/**
+ * 替换字符串
+ */
+function replaceStr(targe,original,final){
+    return targe.replace(original,final);
+}
+
+/**
+ * 通过id获取内容
+ */
+function getTextValueById(id){
+    var value = $("#" + id).text();
+    if (value != null && value != "") {
+        return value;
+    } else {
+        return "";
+    }
+}
+
+/**
+ * 通过id设置内容
+ * @param id
+ * @param text
+ */
+function setTextValueById(id,value){
+    var amount = $("#" + id);
+    amount.empty();
+    if (value != undefined && value != null && value != "") {
+        amount.append(value);
+    } else {
+        amount.append("");
+    }
+}
+
+/**
+ * 通过id获取class
+ * @param id
+ */
+function getClassById(id){
+    if(id!= null && id != ""){
+        return $("#"+id).prop("class");
+    }
+    return "";
+}
+
+/**
+ * 通过id设置class
+ * @param id
+ * @param attClass
+ */
+function setClassById(id,atrClass){
+    if(id!= null && id != ""){
+        $("#"+id).prop("class",atrClass);
+    }
 }
