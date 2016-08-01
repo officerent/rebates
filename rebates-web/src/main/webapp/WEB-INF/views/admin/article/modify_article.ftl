@@ -5,7 +5,7 @@
 <!-- END COMPONENTS -->
 </@layoutHead>
 <@layoutBody>
-    <form id="form1" method="post" action="${path}/admin/article/save_article.html" role="form" class="form-horizontal form-bordered">
+    <form id="form1" method="post" action="${path}/admin/article/update_article.html" role="form" class="form-horizontal form-bordered">
         <section class="content-wrapper" role="main">
             <div class="content">
                 <div class="content-bar">
@@ -61,6 +61,7 @@
                     </div><!-- /.panel-body -->
                 </div><!-- /.panel -->                
                 <input id="content" name="content" hidden></input>
+                <input id="articleId" name="articleId" hidden></input>
                 
                 <div class="col-md-offset-3 col-md-9">
                    <button class="btn btn-info" onclick="saveArticle()" style="left: 35%;">
@@ -118,7 +119,8 @@
     
        window.saveArticle = function () {
                 var content = $("#commodity-detail-description-summernote").code();
-                $("#content").val(content);    
+                $("#content").val(content);
+                $("#articleId").val(${data.articleId});
                 $("#form1").submit();
             
 

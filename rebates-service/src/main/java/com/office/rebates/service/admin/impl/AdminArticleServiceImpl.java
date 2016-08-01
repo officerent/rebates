@@ -77,6 +77,39 @@ public class AdminArticleServiceImpl implements AdminArticleService {
 		article.setIsDeleted(false);
 		article.setLastUpdateTime(now);
 		rebatesArticleMapper.insert(article);
-		logger.info("new article was updated:"+JSON.toJSONString(article));
+		logger.info("new article was created:"+JSON.toJSONString(article));
+	}
+
+
+	@Override
+	public void updateArticle(RebatesArticle article) {
+		Date now=new Date();
+		article.setLastUpdateTime(now);
+		rebatesArticleMapper.updateByPrimaryKeySelective(article);
+		logger.info("article was updated:"+JSON.toJSONString(article));
+		//logger.info("article was updated2:"+JSON.toJSONString(rebatesArticleMapper.selectByPrimaryKey(article.getArticleId())));
+	}
+
+
+	@Override
+	public void deleteArticle(Long articleId) {
+		Date now=new Date();
+		RebatesArticle article=rebatesArticleMapper.selectByPrimaryKey(articleId);
+		article.setLastUpdateTime(now);
+		article.setIsDeleted(true);
+		rebatesArticleMapper.updateByPrimaryKeySelective(article);
+		logger.info("article was deleted:"+JSON.toJSONString(article));
+	}
+
+
+	@Override
+	public void reopenArticle(Long articleId) {
+		Date now=new Date();
+		RebatesArticle article=rebatesArticleMapper.selectByPrimaryKey(articleId);
+		article.setLastUpdateTime(now);
+		article.setIsDeleted(false);
+		rebatesArticleMapper.updateByPrimaryKeySelective(article);
+		logger.info("article was re-opened:"+JSON.toJSONString(article));
+		
 	}
 }

@@ -42,6 +42,12 @@ public class RouteKey {
     public static final String INSERT_ARTICLE = "/insert_article.html";
     
     public static final String MODIFY_ARTICLE = "/modify_article.html";
+    
+    public static final String UPDATE_ARTICLE = "/update_article.html";
+    
+    public static final String DELETE_ARTICLE = "/delete_article.html";
+    
+    public static final String REOPEN_ARTICLE = "/reopen_article.html";
 
     public static final String WEB = "/web";
 

@@ -74,5 +74,40 @@ public class AdminArticleController {
         return "redirect:article_list.html";
     }
 
+    /**
+     * 修改文章信息至数据库
+     * @return
+     */
+    @RequestMapping(RouteKey.UPDATE_ARTICLE)
+    public String update_article(RebatesArticle article) {
+    	logger.info("updating article with:"+JSON.toJSONString(article));
+    	adminArticleService.updateArticle(article);
+        //adminUserService.insert(rebatesUser);
+        return "redirect:article_list.html";
+    }
+    
+    /**
+     * 删除文章信息至数据库
+     * @return
+     */
+    @RequestMapping(RouteKey.DELETE_ARTICLE)
+    public String delete_article(Long articleId) {
+    	logger.info("deleteing article with articleId:"+articleId);
+    	adminArticleService.deleteArticle(articleId);
+        //adminUserService.insert(rebatesUser);
+        return "redirect:article_list.html";
+    }
+    
+    /**
+     * 重新上架
+     * @return
+     */
+    @RequestMapping(RouteKey.REOPEN_ARTICLE)
+    public String reopen_article(Long articleId) {
+    	logger.info("re-opening article with articleId:"+articleId);
+    	adminArticleService.reopenArticle(articleId);
+        //adminUserService.insert(rebatesUser);
+        return "redirect:article_list.html";
+    }
 
 }

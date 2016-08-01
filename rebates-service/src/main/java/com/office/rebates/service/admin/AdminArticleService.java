@@ -25,4 +25,10 @@ public interface AdminArticleService {
      * @return
      */
     public void createArticle(RebatesArticle article);
+
+	public void updateArticle(RebatesArticle article);
+
+	public void deleteArticle(Long articleId);
+
+	public void reopenArticle(Long articleId);
 }
