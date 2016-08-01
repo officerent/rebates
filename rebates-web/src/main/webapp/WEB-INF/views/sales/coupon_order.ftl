@@ -120,7 +120,24 @@
                                                 </p>
                                             </div>
                                         </li>
-
+                                        <li class="media">
+                                            <div class="media-body">
+                                                <p class="pull-right" id="taxAmount">0</p>
+                                                <p class="media-heading">
+                                                    预计税金: &nbsp;
+                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利基数*税金比率"></span>
+                                                </p>
+                                            </div>
+                                        </li>
+                                        <li class="media">
+                                            <div class="media-body">
+                                                <p class="pull-right" id="payTotalAmount">0</p>
+                                                <p class="media-heading">
+                                                    预计支付总金额: &nbsp;
+                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利基数+税金"></span>
+                                                </p>
+                                            </div>
+                                        </li>
                                         <li class="media">
                                             <div class="media-body">
                                                 <p class="pull-right" id="totalRebates">0</p>
@@ -205,6 +222,24 @@
                                         </li>
                                         <li class="media">
                                             <div class="media-body">
+                                                <p class="pull-right" id="confirmPayAmount"></p>
+                                                <p class="media-heading">
+                                                    返利基数:&nbsp;
+                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利基数"></span>
+                                                </p>
+                                            </div>
+                                        </li>
+                                        <li class="media">
+                                            <div class="media-body">
+                                                <p class="pull-right" id="confirmTaxAmount"></p>
+                                                <p class="media-heading">
+                                                    预计税金:&nbsp;
+                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利基数 * 税金比率"></span>
+                                                </p>
+                                            </div>
+                                        </li>
+                                        <li class="media">
+                                            <div class="media-body">
                                                 <p class="pull-right" id="confirmTotalAmount"></p>
                                                 <p class="media-heading">
                                                     预计总金额:&nbsp;
@@ -212,10 +247,18 @@
                                                 </p>
                                             </div>
                                         </li>
+                                        <li class="media">
+                                            <div class="media-body">
+                                                <p class="pull-right" id="confirmRebatesAmount"></p>
+                                                <p class="media-heading">
+                                                    预计返利:&nbsp;
+                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利基数*返利比率"></span>
+                                                </p>
+                                            </div>
+                                        </li>
                                     </ul>
                                 </div><!-- /.tab-pane -->
                             </div><!-- /.tab-content -->
-                            <p class="text-muted">请确认你的返利</p>
                         </div>
 
                         <table class="table no-margin">
@@ -224,7 +267,7 @@
                             </tbody>
                         </table>
                         <div class="modal-footer">
-                            <a href="#" onclick="submitOrder();" class="btn soho-orange btn-nofill">提交订单</a>
+                            <a href="#" onclick="submitOrder();" class="btn soho-orange btn-nofill">提交返利</a>
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -272,6 +315,8 @@
     var isMember = false;
     var ratio = "";
     var displayPrice = "";
+    var tax = ${tax!""};
+
     window.onload=function(){
         $.ajax({
             url:"${path}/ajax/info/rebates_ratio",
@@ -369,7 +414,7 @@
      */
     function confirmInformation() {
         var title = $("#coupon").text();
-        var totalAmount = getAmountValue("payAmount");
+        var payAmount = getAmountValue("payAmount");
         var customerMobile = getValueByName("customerMobile");
         var customerName = getValueByName("customerName");
         var customerCompany = getValueByName("customerCompany");
@@ -417,7 +462,15 @@
                     '<td class="text-muted"><strong>¥' + price + '</strong></td>' +
                     '</tr>';
         }
-        setAmountValue("confirmTotalAmount", parseInt(totalAmount));
+        var payAmount = parseInt(payAmount);
+        var rebatesAmount = (parseInt(payAmount) * getRebates()).toFixed(2);
+        var taxAmount = (parseInt(payAmount) * tax).toFixed(2);
+        var totalAmount = parseInt(payAmount) + parseFloat(taxAmount);
+
+        setAmountValue("confirmPayAmount", payAmount);
+        setAmountValue("confirmTaxAmount",taxAmount);
+        setAmountValue("confirmRebatesAmount",rebatesAmount);
+        setAmountValue("confirmTotalAmount",totalAmount);
         setTextValueById("confirmName", createCouponOrder.customerName);
         setTextValueById("confirmMobile", createCouponOrder.customerMobile);
         setTextValueById("confirmCompanyName", createCouponOrder.customerCompany);
@@ -576,13 +629,17 @@
     <#--}-->
 
     function sumTotal() {
-        var sumTotalAmount = 0;
+        var payAmount = 0;
         var price = parseFloat(getValueById("price"));
         var number = parseInt(getValueById("number"));
-        sumTotalAmount = (price * number).toFixed(2);
+        payAmount = (price * number).toFixed(2);
         var ratioValue = getRebates();
-        var rebates = sumTotalAmount * ratioValue;
-        setAmountValue("payAmount", sumTotalAmount);
+        var rebates = payAmount * ratioValue;
+        var taxAmount = (payAmount * tax).toFixed(2);
+        var sumTotalAmount = parseFloat(payAmount) + parseFloat(taxAmount);
+        setAmountValue("payAmount", payAmount);
+        setAmountValue("taxAmount", taxAmount);
+        setAmountValue("payTotalAmount", sumTotalAmount);
         setAmountValue("totalRebates",rebates);
     }
 
