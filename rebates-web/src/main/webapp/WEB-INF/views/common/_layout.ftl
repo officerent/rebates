@@ -96,6 +96,7 @@
 
         <!-- pageSubmit -->
         <script src="${path}/wrap/scripts/submitSelect.js"></script>
+        
 
         <script src="${path}/wrap/scripts/date-time/bootstrap-datepicker.min.js"></script>
         <script src="${path}/wrap/scripts/date-time/bootstrap-timepicker.min.js"></script>

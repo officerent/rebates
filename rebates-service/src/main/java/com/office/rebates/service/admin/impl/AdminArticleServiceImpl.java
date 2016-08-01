@@ -73,7 +73,7 @@ public class AdminArticleServiceImpl implements AdminArticleService {
 	@Override
 	public void createArticle(RebatesArticle article) {
 		Date now=new Date();
-		article.setCreateTime(now);
+		//article.setCreateTime(now);
 		article.setIsDeleted(false);
 		article.setLastUpdateTime(now);
 		rebatesArticleMapper.insert(article);

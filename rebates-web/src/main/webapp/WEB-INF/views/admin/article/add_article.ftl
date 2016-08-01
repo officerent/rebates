@@ -53,6 +53,16 @@
                        <option value="OTHER">其他</option>
                    </select>
                </label>
+               
+                                               
+               <label class="control-label">创建日期</label>
+               <div class="input-group input-group-in">
+                   <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                   <input id="createDate" name="createDate" data-input="daterangepicker"
+                          data-single-date-picker="true"
+                          data-show-dropdowns="true" class="form-control form_date" name="basicText">
+               </div>
+                                            
                                     
 				<label for="commodity-detail-description-summernote">文章正文</label>
                 <div id="summernote-panel" class="panel" data-fill-color="true">
@@ -116,7 +126,10 @@
 
        window.saveArticle = function () {
                 var content = $("#commodity-detail-description-summernote").code();
-                $("#content").val(content);    
+                $("#content").val(content);  
+                //alert($("#createTime").val());
+                //$("#createTime").val($("#createTime").val()+" 00:00:00");  
+               // alert($("#createTime").val());
                 $("#form1").submit();
             
 

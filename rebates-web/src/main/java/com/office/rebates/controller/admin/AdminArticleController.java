@@ -6,6 +6,9 @@ import com.office.rebates.dal.dao.RebatesArticleMapper;
 import com.office.rebates.dal.dataobj.RebatesArticle;
 import com.office.rebates.model.common.Page;
 import com.office.rebates.service.admin.AdminArticleService;
+import com.office.rebates.util.DateUtil;
+
+import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,8 +70,12 @@ public class AdminArticleController {
      * @return
      */
     @RequestMapping(RouteKey.INSERT_ARTICLE)
-    public String insert_article(RebatesArticle article) {
+    public String insert_article(RebatesArticle article,String createDate) {
     	logger.info("inserting article with:"+JSON.toJSONString(article));
+    	
+    	Date createTime=DateUtil.parseDate(createDate,DateUtil.FORMAT_DEFAULT);
+    	article.setCreateTime(createTime);
+    	//DateUtil.formatDate();
     	adminArticleService.createArticle(article);
         //adminUserService.insert(rebatesUser);
         return "redirect:article_list.html";
