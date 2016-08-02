@@ -48,13 +48,25 @@ public class WebSalesController {
     private RebatesOrderService rebatesOrderService;
 
     /**
+     * 税率
+     */
+    private static final double tax = 0.06d;
+
+    /**
      * 下券订单
      */
     @RequestMapping(RouteKey.COUPON_ORDER)
-    public void couponOrder(Model model,String source){
+    public String couponOrder(HttpServletRequest httpServletRequest,Model model,String source){
+        Cookie[] cookies=httpServletRequest.getCookies();
+        UserInfo userInfo=userService.getUserInfo(cookies);
+        if(userInfo==null||userInfo.getUserId()==null){
+            return "redirect:/user/login.html";
+        }
         model.addAttribute("couponList",webSalesService.getCouponList(source));
         model.addAttribute("member",webSalesService.getMemberCoupon());
         model.addAttribute("source",source);
+        model.addAttribute("tax",tax);
+        return "sales/coupon_order";
     }
 
     /**
@@ -62,12 +74,19 @@ public class WebSalesController {
      * @param model 载体
      */
     @RequestMapping(RouteKey.STATION_ORDER)
-    public void stationOrder(Model model){
+    public String stationOrder(HttpServletRequest httpServletRequest,Model model){
+        Cookie[] cookies=httpServletRequest.getCookies();
+        UserInfo userInfo=userService.getUserInfo(cookies);
+        if(userInfo==null||userInfo.getUserId()==null){
+            return "redirect:/user/login.html";
+        }
         String date = DateUtil.getFormatDate(new Date(),"yyyy-MM-dd");
         List<Soho3qProjectModel> projectList=webSalesService.getProjectList();
         model.addAttribute("project",projectList);
         model.addAttribute("startTime", date);
+        model.addAttribute("tax",tax);
         model.addAttribute("productList", webSalesService.getProductList(projectList.get(0).getProjectId(),date,DateUtil.addDayOfYear(date,30)));
+        return "sales/station_order";
     }
     
     /**

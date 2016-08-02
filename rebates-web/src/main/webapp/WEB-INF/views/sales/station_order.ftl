@@ -104,7 +104,7 @@
                                         <td>
                                             <#if product.remainedNum  gt 0 >
                                                 <span onclick="plus('${product.price!""}-${product.finalPrice!""}-${product.deposit!""}-${product.productType!""}-${product.productSubtype!""}-${product.remainedNum!""}')" class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                                <input id="number-${product.price!""}-${product.finalPrice!""}-${product.deposit!""}-${product.productType!""}-${product.productSubtype!""}-${product.remainedNum!""}" name="number" style="width: 100px;" onblur="input('number-${product.price!""}-${product.finalPrice!""}-${product.deposit!""}-${product.productType!""}-${product.productSubtype!""}-${product.remainedNum!""}');" value = "0"/>
+                                                <input class="input-center" id="number-${product.price!""}-${product.finalPrice!""}-${product.deposit!""}-${product.productType!""}-${product.productSubtype!""}-${product.remainedNum!""}" name="number" style="width: 100px;" onblur="input('number-${product.price!""}-${product.finalPrice!""}-${product.deposit!""}-${product.productType!""}-${product.productSubtype!""}-${product.remainedNum!""}');" value = "0"/>
                                                 <span onclick="minus('${product.price!""}-${product.finalPrice!""}-${product.deposit!""}-${product.productType!""}-${product.productSubtype!""}-${product.remainedNum!""}')" class="glyphicon glyphicon-minus" aria-hidden="true"></span>
                                             <#else >
                                                 暂无工位
@@ -190,6 +190,15 @@
                                         </li>
                                         <li class="media">
                                             <div class="media-body">
+                                                <p class="pull-right" id="totalTax">0</p>
+                                                <p class="media-heading">
+                                                    预计税金:&nbsp;
+                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利基数 * 税金百分比"></span>
+                                                </p>
+                                            </div>
+                                        </li>
+                                        <li class="media">
+                                            <div class="media-body">
                                                 <p class="pull-right" id="totalAmount">0</p>
                                                 <p class="media-heading">
                                                     预计总金额:&nbsp;
@@ -260,6 +269,16 @@
                                             </p>
                                         </div>
                                     </li>
+
+                                    <li class="media">
+                                        <div class="media-body">
+                                            <p class="pull-right" id="confirmTotalTax"></p>
+                                            <p class="media-heading">
+                                                预计税费:&nbsp;
+                                                <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利基数 * 税率百分比"></span>
+                                            </p>
+                                        </div>
+                                    </li>
                                     <li class="media">
                                         <div class="media-body">
                                             <p class="pull-right" id="confirmTotalAmount"></p>
@@ -281,7 +300,6 @@
                                 </ul>
                             </div><!-- /.tab-pane -->
                         </div><!-- /.tab-content -->
-                        <p class="text-muted">请确认你的返利</p>
                     </div>
                     <table class="table no-margin">
                         <tbody id="confirmList">
@@ -325,6 +343,7 @@
     $("#currentYear").append(date.getFullYear());
 
     var rebates = "";
+    var tax = ${tax!""};
     window.onload=function(){
         $.ajax({
             url:"${path}/ajax/info/rebates_ratio",
@@ -382,6 +401,7 @@
         var checkOutDate = changeDate(checkInDate,periodMonth,periodWeek);
         var leaseAmount= getAmountValue("leaseAmount");
         var depositAmount = getAmountValue("depositAmount");
+
         createOrder.customerMobile = customerMobile;
         createOrder.customerName = customerName;
         createOrder.customerCompany = customerCompany;
@@ -462,8 +482,10 @@
                     '</tr>';
             setAmountValue("confirmLeaseAmount",createOrder.leaseAmount);
             setAmountValue("confirmDepositAmount",createOrder.depositAmount);
-            setAmountValue("confirmTotalAmount",parseInt(createOrder.leaseAmount)+parseInt(createOrder.depositAmount));
             setAmountValue("confirmTotalRebates",(createOrder.leaseAmount * getRebates()).toFixed(2));
+            var taxTotal = (createOrder.leaseAmount * tax).toFixed(2);
+            setAmountValue("confirmTotalTax",taxTotal);
+            setAmountValue("confirmTotalAmount",parseInt(createOrder.leaseAmount)+parseInt(createOrder.depositAmount)+parseFloat(taxTotal));
             $("#confirmList").empty();
             $("#confirmList").append(str);
         }
@@ -503,6 +525,8 @@
         setAmountValue("depositAmount",0);
         setAmountValue("totalAmount",0);
         setAmountValue("totalRebates",0);
+        setAmountValue("totalTax",0);
+
         var formDate = {
             projectId:projectId,
             checkInDate:checkInDate,
@@ -690,6 +714,7 @@
         var sumDepositAmount = 0;
         var sumTotalAmount = 0;
         var totalRebates = 0;
+        var totalTax = 0;
         var periodMonth = getValueById("month");
         var periodWeek = getValueById("week");
         $("input[type='checkbox'][name='selectRoom']:checked").each(
@@ -701,12 +726,14 @@
                     sumDepositAmount += roomValueArray[4] * roomValueArray[2] * checkedNumber;
                 }
         );
-        sumTotalAmount = sumLeaseAmount + sumDepositAmount;
         totalRebates = (sumLeaseAmount * getRebates()).toFixed(2);
+        totalTax = (sumLeaseAmount * tax).toFixed(2);
+        sumTotalAmount = sumLeaseAmount + sumDepositAmount + parseFloat(totalTax);
         setAmountValue("leaseAmount",sumLeaseAmount);
         setAmountValue("depositAmount",sumDepositAmount);
         setAmountValue("totalAmount",sumTotalAmount);
         setAmountValue("totalRebates",totalRebates);
+        setAmountValue("totalTax",totalTax);
 
     }
 
