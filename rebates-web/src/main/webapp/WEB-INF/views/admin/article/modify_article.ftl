@@ -20,7 +20,7 @@
                 <label class="control-label" for="title">文章标题</label>
                 <div class="input-group input-group-in">
                     <span class="input-group-addon"><i class="icon-paper-plane"></i></span>
-                    <input class="form-control" name="title" id="title" value=${data.title}>
+                    <input class="form-control" name="title" id="title" value="${data.title}">
                     <span class="form-control-feedback"></span>
                 </div>
                 
@@ -29,7 +29,7 @@
                 <div class="input-group input-group-in">
                     <span class="input-group-addon"><i class="icon-paper-plane"></i></span>
                     <input class="form-control" name="keywords" id="keywords"
-                           value=${data.keywords}>
+                           value="${data.keywords}">
                     <span class="form-control-feedback"></span>
                 </div>
                 
@@ -38,7 +38,7 @@
                 <div class="input-group input-group-in">
                     <span class="input-group-addon"><i class="icon-paper-plane"></i></span>
                     <input class="form-control" name="description" id="description"
-                           value=${data.description}>
+                           value="${data.description}">
                     <span class="form-control-feedback"></span>
                 </div>
                 
@@ -92,7 +92,7 @@
 	<script src="${path}/wrap/scripts/summernote.js"></script>
 	<script>
     $(window).load(function () {
-
+		//alert(${data.title});
         //富文本编辑器
         var $summernote = $("#commodity-detail-description-summernote");
         $summernote.summernote({
