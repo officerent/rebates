@@ -1,6 +1,7 @@
 <#include "../web_common/_layout.ftl" />
 
-<@layoutHead>
+<@layoutHead title=data.title meta_keywords=data.keywords
+   meta_description=data.description>
     <style>
         .btn-soho-danger {
             color: #ffffff;
