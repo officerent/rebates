@@ -9,7 +9,7 @@
     <meta name="Keywords" content="${meta_keywords!""}">
     <meta name="Description" content="${meta_description!""}">
     <title>${title!""}</title>
-
+	<link rel="shortcut icon" type="image/x-icon" href="${path}/soho/img/title.ico" media="screen" />
 
     <link rel="stylesheet" href="${path}/wrap/styles/bootstrap.css">
 
