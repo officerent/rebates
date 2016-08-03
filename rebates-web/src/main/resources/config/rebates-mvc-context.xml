@@ -18,26 +18,12 @@
 	<annotation-driven />
 
 
-	 <!--<interceptors>-->
-		 <!--<interceptor>-->
-			 <!--<mapping path="/admin/club/**"/>-->
-			 <!--<mapping path="/admin/check/**"/>-->
-			 <!--<mapping path="/admin/analytics/**"/>-->
-			 <!--<beans:bean class="com.soho3q.sales.admin.interceptor.AdminInterceptor" />-->
-		 <!--</interceptor>-->
-		 <!-- 
-		 <interceptor>
-			 <mapping path="/*.html" />
-			 <mapping path="/*/*.html" />
-			 <mapping path="/ajax/*" />
-			 <mapping path="/" />
-			 <beans:bean class="com.soho3q.web.mvc.interceptor.JavaScriptInjectionInterceptor" />
-		 </interceptor>
-		 <interceptor>
-			 <mapping path="/ajax/**"/>
-			 <beans:bean class="com.soho3q.web.mvc.interceptor.LoginInterceptor" />
-		 </interceptor> -->
-	<!--</interceptors>-->
+	<interceptors>
+		<interceptor>
+			<mapping path="/admin/**"/>
+			<beans:bean class="com.office.rebates.interceptor.LoginInterceptor" />
+		</interceptor>
+	</interceptors>
 
 	<resources mapping="/wrap/**" location="/wrap/" />
 
