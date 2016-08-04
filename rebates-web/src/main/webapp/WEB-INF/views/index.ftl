@@ -172,7 +172,7 @@
                             <br>
                         </div>
                         <div class="row">
-                            <h2>工位短租 <strong class="font-color">返利<span><i id="coupon_order_radio" class="font-size"></i></span></strong></h2>
+                            <h2>工位短租 <strong class="font-color">返利<span><i id="coupon_order_radio1" class="font-size"></i></span></strong></h2>
                             <p>按天使用工位,任意3Q中心,随到随用哦!</p>
                             <a class="btn btn-soho-danger" href="${path}/sales/coupon_order.html?source=OPEN_STATION" role="button">去购买，拿返利</a>
                         </div>
@@ -182,7 +182,7 @@
                             <br>
                         </div>
                         <div class="row">
-                            <h2>会议室短租 <strong class="font-color">返利<span><i id="coupon_order_radio" class="font-size"></i></span></strong></h2>
+                            <h2>会议室短租 <strong class="font-color">返利<span><i id="coupon_order_radio2" class="font-size"></i></span></strong></h2>
                             <p>按小时使用会议室,任意3Q中心,随到随用哦!</p>
                             <a class="btn btn-soho-danger" href="${path}/sales/coupon_order.html?source=ROOM" role="button">去购买，拿返利</a>
                         </div>
@@ -234,7 +234,8 @@
                 if(data.errCode==0){
                    var ratio = data.data.ratio;
                     $("#station_order_radio").append(ratio);
-                    $("#coupon_order_radio").append(ratio);
+                    $("#coupon_order_radio1").append(ratio);
+                    $("#coupon_order_radio2").append(ratio);
                 }else{
                     alertMessage(data.errCode);
                 }
