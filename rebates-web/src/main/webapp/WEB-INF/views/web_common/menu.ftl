@@ -14,12 +14,7 @@
             <li class="nav-item ${index !''}" role="presentation">
                 <a href="${path}/index.html"><h2><i class="fa fa-fw"></i>首页</h2></a>
             </li>
-            <li class="nav-item ${order !''}" role="presentation">
-                <a href="${path}/sales/order_list.html?size=20&number=0"><h2><i class="fa fa-fw"></i>我的订单</h2></a>
-            </li>
-            <li class="nav-item ${question !''}" role="presentation">
-                <a href="${path}/question/question_list.html"><h2><i class="fa fa-fw"></i>常见问题</h2></a>
-            </li>
+ 
             <li class="nav-item ${station !''}" role="presentation">
                 <a href="${path}/sales/station_order.html"><h2><i class="fa fa-fw"></i>固定长租</h2></a>
             </li>
@@ -29,7 +24,15 @@
             <li class="nav-item ${meeting !''}" role="presentation">
                 <a href="${path}/sales/coupon_order.html?source=ROOM"><h2><span class="icon-people" aria-hidden="true"></span>会议室短租</h2></a>
             </li>
-
+            <li class="nav-item ${order !''}" role="presentation">
+                <a href="${path}/sales/order_list.html?size=20&number=0"><h2><i class="fa fa-fw"></i>我的返利</h2></a>
+            </li>
+            <li class="nav-item ${question !''}" role="presentation">
+                <a href="${path}/question/question_list.html"><h2><i class="fa fa-fw"></i>常见问题</h2></a>
+            </li>
+            <li class="nav-item ${soho3q_news !''}" role="presentation">
+                <a href="${path}/article/soho3q_news.html"><h2><i class="fa fa-fw"></i>3Q动态</h2></a>
+            </li>
         </ul>
         <div class="nav-ctrl btn-group hide">
             <a class="btn hover-teal btn-icon btn-xs">

@@ -100,6 +100,7 @@ public class RouteKey {
     //文章
     public static final String WEB_ARTICLE = "/article";
     public static final String ARTICLE_DETAIL = "/article_detail.html";
+    public static final String SOHO3Q_NEWS = "/soho3q_news.html";
     
 
 }

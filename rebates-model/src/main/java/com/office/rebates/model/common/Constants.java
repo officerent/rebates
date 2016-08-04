@@ -54,4 +54,10 @@ public class Constants {
 	public static BigDecimal D0 = new BigDecimal(0);
 	
 	public static String LOCK_PULL_SOHO3Q_ORDERS = "PULL_SOHO3Q_ORDERS";//全局锁
+	
+    public static String ARTICLE_TYPE_PROJ = "PROJ";//项目介绍
+    public static String ARTICLE_TYPE_SOHO3Q = "SOHO3Q";//3q动态
+    public static String ARTICLE_TYPE_OFFICE = "OFFICE";//联合办公
+    public static String ARTICLE_TYPE_OTHER = "OTHER";//其他
+
 }
