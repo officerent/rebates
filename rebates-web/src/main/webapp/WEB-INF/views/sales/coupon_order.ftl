@@ -29,7 +29,7 @@
                             <label class="col-sm-3 control-label">
                                 手机号:
                                 <span class="text-danger">*</span>
-                                <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="代下单手机号"></span>
+                                <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="需用该手机号登陆官网完成支付"></span>
                             </label>
                             <div class="col-md-9">
                                 <input name="customerMobile" onblur="checkUser();" type="text" class="form-control validate[required]"/>
@@ -59,7 +59,7 @@
                             <label class="col-sm-3 control-label">
                                 支付宝账号:
                                 <span class="text-danger">*</span>
-                                <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利金额至该支付宝"></span>
+                                <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利金额直接转入该支付宝"></span>
                             </label>
                             <div class="col-md-9">
                                 <input name="customerAlipay" type="text" class="form-control validate[required]"/>
@@ -115,7 +115,7 @@
                                             <div class="media-body">
                                                 <p class="pull-right" id="payAmount">0</p>
                                                 <p class="media-heading">
-                                                    预计支付金额: &nbsp;
+                                                    预计产品金额: &nbsp;
                                                     <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利基数"></span>
                                                 </p>
                                             </div>
@@ -134,7 +134,7 @@
                                                 <p class="pull-right" id="payTotalAmount">0</p>
                                                 <p class="media-heading">
                                                     预计支付总金额: &nbsp;
-                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利基数+税金"></span>
+                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="产品金额+税金"></span>
                                                 </p>
                                             </div>
                                         </li>
@@ -267,7 +267,7 @@
                             </tbody>
                         </table>
                         <div class="modal-footer">
-                            <a href="#" onclick="submitOrder();" class="btn soho-orange btn-nofill">提交返利</a>
+                            <a href="#" onclick="submitOrder();" class="btn soho-orange btn-nofill">申请返利</a>
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -459,7 +459,7 @@
             str += '<tr>' +
                     '<td>' + title + '</td>' +
                     '<td>¥' + content + '</td>' +
-                    '<td class="text-muted"><strong>¥' + price + '</strong></td>' +
+                   // '<td class="text-muted"><strong>¥' + price + '</strong></td>' +
                     '</tr>';
         }
         var payAmount = parseInt(payAmount);
@@ -512,7 +512,7 @@
         if (key[code]) message = key[code];
         else message = key.unknow;
         if (code == 0) {
-            alert("恭喜您已成功下单");
+            alert("恭喜您已成功申请返利");
         } else {
             alert(message);
         }

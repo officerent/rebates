@@ -128,7 +128,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">
                                 手机号
-                                <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="代下单手机号"></span>
+                                <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="需用该手机号登陆官网完成支付"></span>
                                 <span class="text-danger">*</span>
                             </label>
                             <div class="col-md-9">
@@ -157,7 +157,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">
                                 支付宝账号
-                                <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利金额至该支付宝"></span>
+                                <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利金额直接转入该支付宝"></span>
                                 <span class="text-danger">*</span>
                             </label>
                             <div class="col-md-9">
@@ -193,7 +193,7 @@
                                                 <p class="pull-right" id="totalTax">0</p>
                                                 <p class="media-heading">
                                                     预计税金:&nbsp;
-                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利基数 * 税金百分比"></span>
+                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="租金 * 税金率6%"></span>
                                                 </p>
                                             </div>
                                         </li>
@@ -202,7 +202,7 @@
                                                 <p class="pull-right" id="totalAmount">0</p>
                                                 <p class="media-heading">
                                                     预计总金额:&nbsp;
-                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="该总金额 = 租金 + 押金,实际情况可能包含税费,当前总价格与实际支付总价格会有不符"></span>
+                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="该总金额 = 租金 + 押金 + 税金"></span>
                                                 </p>
                                             </div>
                                         </li>
@@ -274,8 +274,8 @@
                                         <div class="media-body">
                                             <p class="pull-right" id="confirmTotalTax"></p>
                                             <p class="media-heading">
-                                                预计税费:&nbsp;
-                                                <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利基数 * 税率百分比"></span>
+                                                预计税金:&nbsp;
+                                                <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="租金 * 税率6%"></span>
                                             </p>
                                         </div>
                                     </li>
@@ -284,7 +284,7 @@
                                             <p class="pull-right" id="confirmTotalAmount"></p>
                                             <p class="media-heading">
                                                 预计总金额:&nbsp;
-                                                <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="该总金额 = 租金 + 押金,实际情况可能包含税费,当前总价格与实际支付总价格会有不符"></span>
+                                                <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="该总金额 = 租金 + 押金 + 税金"></span>
                                             </p>
                                         </div>
                                     </li>
@@ -307,7 +307,7 @@
                         </tbody>
                     </table>
                     <div class="modal-footer">
-                        <a href="#" onclick="submitOrder();" class="btn soho-orange btn-nofill">确认返利</a>
+                        <a href="#" onclick="submitOrder();" class="btn soho-orange btn-nofill">申请返利</a>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -472,13 +472,13 @@
                 str +='<tr>'+
                         '<td>'+title+'</td>'+
                         '<td>¥'+content+'</td>'+
-                        '<td class="text-muted"><strong>¥'+price+'</strong></td>'+
+                       // '<td class="text-muted"><strong>¥'+price+'</strong></td>'+
                         '</tr>';
             }
             str +='<tr>'+
                     '<td>押金</td>'+
                     '<td><sup>¥</sup>'+depositPrice+'/位*'+stationNumber+'</td>'+
-                    '<td class="text-muted"><strong>¥'+parseInt(depositPrice) * parseInt(stationNumber)+'</strong></td>'+
+                    //'<td class="text-muted"><strong>¥'+parseInt(depositPrice) * parseInt(stationNumber)+'</strong></td>'+
                     '</tr>';
             setAmountValue("confirmLeaseAmount",createOrder.leaseAmount);
             setAmountValue("confirmDepositAmount",createOrder.depositAmount);

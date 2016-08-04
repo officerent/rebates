@@ -167,9 +167,9 @@
                             <a class="btn btn-soho-danger" href="${path}/sales/station_order.html" role="button">去购买，拿返利</a>
                         </div>
                         <div class="row">
-                            <br>
+                            
                             <hr>
-                            <br>
+                           
                         </div>
                         <div class="row">
                             <h2>工位短租 <strong class="font-color">返利<span><i id="coupon_order_radio1" class="font-size"></i></span></strong></h2>
@@ -177,9 +177,9 @@
                             <a class="btn btn-soho-danger" href="${path}/sales/coupon_order.html?source=OPEN_STATION" role="button">去购买，拿返利</a>
                         </div>
                         <div class="row">
-                            <br>
+                           
                             <hr>
-                            <br>
+                            
                         </div>
                         <div class="row">
                             <h2>会议室短租 <strong class="font-color">返利<span><i id="coupon_order_radio2" class="font-size"></i></span></strong></h2>
