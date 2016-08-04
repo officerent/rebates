@@ -36,5 +36,12 @@ public interface AdminOrderService {
      */
     public List<RebatesOrderItem> selectOrderItemList(long orderId);
 
+    /**
+     * 更新订单状态
+     * @param orderId 订单id
+     * @return
+     */
+    public int updateOrderStatus(long orderId) throws Exception;
+
 
 }

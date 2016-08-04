@@ -4,40 +4,47 @@
 
 </@layoutHead>
 <@layoutBody>
-<form id="form1" method="post" action="${path}/admin/user/update_user.html" role="form" class="form-horizontal form-bordered">
-    <input name="userId"  type="hidden"  class="form-control validate[required]" value="${data.userId!''}" />
+<form id="form1" method="post" action="" role="form" class="form-horizontal form-bordered">
     <section class="content-wrapper" role="main">
         <div class="content">
             <div class="content-bar">
                 <ul class="breadcrumb breadcrumb-angle">
                     <li><a href="#" aria-label="home"><i class="fa fa-home"></i></a></li>
-                    <li class="active">用户管理</li>
-                    <li class="active">添加用户</li>
+                    <li class="active">订单管理</li>
+                    <li class="active">查看订单</li>
                 </ul>
             </div><!-- /.content-bar -->
 
             <div class="col-md-12">
                 <div class="panel" data-fill-color="true">
                     <div class="panel-heading">
-                        <h3 class="panel-title">用户基本信息</h3>
+                        <h3 class="panel-title">订单信息</h3>
                     </div>
                     <div class="panel-body">
                         <!--正文内容 开始-->
                         <div class="form-group">
                             <label class="col-sm-3 control-label">
-                                用户昵称<span class="text-danger">*</span>
+                                3Q订单id
                             </label>
                             <div class="col-md-5">
-                                <input name="name" id="name" type="text"  class="form-control validate[required]" value="${data.name!''}" />
+                                <input type="text"  class="form-control validate[required]" value="${order.soho3qOrderId!''}" disabled="disabled" />
                                 </br>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">
-                                用户密码<span class="text-danger">*</span>
+                                客户名称
                             </label>
                             <div class="col-md-5">
-                                <input name="password"  type="password" class="form-control validate[required]" value="${data.password!''}" />
+                                <input type="text" class="form-control validate[required]" value="${order.customerName!''}" disabled="disabled"/>
+                                </br>
+                            </div>
+                        </div><div class="form-group">
+                            <label class="col-sm-3 control-label">
+                                客户手机号
+                            </label>
+                            <div class="col-md-5">
+                                <input type="text" class="form-control validate[required]" value="${order.customerMobile!''}" disabled="disabled"/>
                                 </br>
                             </div>
                         </div>
