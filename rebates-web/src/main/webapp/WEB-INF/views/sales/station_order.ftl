@@ -202,7 +202,7 @@
                                                 <p class="pull-right" id="totalAmount">0</p>
                                                 <p class="media-heading">
                                                     预计总金额:&nbsp;
-                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="该总金额 = 租金 + 押金 + 税金"></span>
+                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="总金额 = 租金 + 押金 + 税金"></span>
                                                 </p>
                                             </div>
                                         </li>
@@ -211,14 +211,16 @@
                                                 <p class="pull-right" id="totalRebates">0</p>
                                                 <p class="media-heading">
                                                     预计返利:&nbsp;
-                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利基数 * 返利百分比"></span>
+                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利基数 * 返利比率"></span>
                                                 </p>
                                             </div>
                                         </li>
                                         <li class="media">
                                             <div class="media-body">
-                                                <p class="media-heading">
-                                                   	 说明:以上所有金额都是预计值，最终付款金额以SOHO3Q官网订单价格为准；最终返利金额以实际支付<strong>租金</strong>作为返利基数。
+                                                <p class="media-heading" style="color:red">
+                                                   	 说明:<br>
+                                                   	 1,以上所有金额都是预计值，最终付款金额以SOHO3Q官网订单价格为准；<br>                          
+                                                   	 2,最终返利金额以实际支付<strong style="font-size:20px"">租金</strong>作为返利基数。
                                                 </p>
                                             </div>
                                         </li>
@@ -304,10 +306,12 @@
                                             </p>
                                         </div>
                                     </li>
-                                        <li class="media">
+                                       <li class="media">
                                             <div class="media-body">
-                                                <p class="media-heading">
-                                                   	 说明:以上所有金额都是预计值，最终付款金额以SOHO3Q官网订单价格为准；最终返利金额以实际支付<strong>租金</strong>作为返利基数。
+                                                <p class="media-heading" style="color:red">
+                                                   	 说明:<br>
+                                                   	 1,以上所有金额都是预计值，最终付款金额以SOHO3Q官网订单价格为准；<br>                          
+                                                   	 2,最终返利金额以实际支付<strong style="font-size:20px"">租金</strong>作为返利基数。
                                                 </p>
                                             </div>
                                         </li>
