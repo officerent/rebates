@@ -27,6 +27,7 @@
     <!-- ============================================
     MAIN CONTENT SECTION
     =============================================== -->
+  <form id="form1" method="post">
     <section class="content-wrapper wrapkit-wrapper-extend" role="main" data-init-content="true">
         <div class="content">
 
@@ -59,7 +60,7 @@
             </div><!-- /.content-body -->
         </div><!-- /.content -->
     </section><!-- /MAIN -->
-
+<form>
 
 
     <!-- ============================================
