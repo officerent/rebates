@@ -215,6 +215,13 @@
                                                 </p>
                                             </div>
                                         </li>
+                                        <li class="media">
+                                            <div class="media-body">
+                                                <p class="media-heading">
+                                                   	 说明:以上所有金额都是预计值，最终付款金额以SOHO3Q官网订单价格为准；最终返利金额以实际支付<strong>租金</strong>作为返利基数。
+                                                </p>
+                                            </div>
+                                        </li>
                                     </ul>
                                 </div><!-- /.tab-pane -->
                             </div><!-- /.tab-content -->
@@ -297,6 +304,13 @@
                                             </p>
                                         </div>
                                     </li>
+                                        <li class="media">
+                                            <div class="media-body">
+                                                <p class="media-heading">
+                                                   	 说明:以上所有金额都是预计值，最终付款金额以SOHO3Q官网订单价格为准；最终返利金额以实际支付<strong>租金</strong>作为返利基数。
+                                                </p>
+                                            </div>
+                                        </li>
                                 </ul>
                             </div><!-- /.tab-pane -->
                         </div><!-- /.tab-content -->

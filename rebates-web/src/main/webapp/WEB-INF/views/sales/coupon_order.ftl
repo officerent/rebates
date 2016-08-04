@@ -115,7 +115,7 @@
                                             <div class="media-body">
                                                 <p class="pull-right" id="payAmount">0</p>
                                                 <p class="media-heading">
-                                                    预计产品金额: &nbsp;
+                                                    预计商品金额: &nbsp;
                                                     <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利基数"></span>
                                                 </p>
                                             </div>
@@ -125,7 +125,7 @@
                                                 <p class="pull-right" id="taxAmount">0</p>
                                                 <p class="media-heading">
                                                     预计税金: &nbsp;
-                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利基数*税金比率"></span>
+                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="商品金额*税率6%"></span>
                                                 </p>
                                             </div>
                                         </li>
@@ -134,7 +134,7 @@
                                                 <p class="pull-right" id="payTotalAmount">0</p>
                                                 <p class="media-heading">
                                                     预计支付总金额: &nbsp;
-                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="产品金额+税金"></span>
+                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="商品金额+税金"></span>
                                                 </p>
                                             </div>
                                         </li>
@@ -144,6 +144,13 @@
                                                 <p class="media-heading">
                                                     预计返利:&nbsp;
                                                     <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利基数 * 返利百分比"></span>
+                                                </p>
+                                            </div>
+                                        </li>
+                                        <li class="media">
+                                            <div class="media-body">
+                                                <p class="media-heading">
+                                                   	 说明:以上所有金额都是预计值，最终付款金额以SOHO3Q官网订单价格为准；最终返利金额以实际支付<strong>商品金额</strong>作为返利基数。
                                                 </p>
                                             </div>
                                         </li>
@@ -224,7 +231,7 @@
                                             <div class="media-body">
                                                 <p class="pull-right" id="confirmPayAmount"></p>
                                                 <p class="media-heading">
-                                                    返利基数:&nbsp;
+                                                    预计商品金额:&nbsp;
                                                     <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利基数"></span>
                                                 </p>
                                             </div>
@@ -234,7 +241,7 @@
                                                 <p class="pull-right" id="confirmTaxAmount"></p>
                                                 <p class="media-heading">
                                                     预计税金:&nbsp;
-                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利基数 * 税金比率"></span>
+                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="商品金额 * 税率6%"></span>
                                                 </p>
                                             </div>
                                         </li>
@@ -243,7 +250,7 @@
                                                 <p class="pull-right" id="confirmTotalAmount"></p>
                                                 <p class="media-heading">
                                                     预计总金额:&nbsp;
-                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利基数"></span>
+                                                    <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="商品金额+税金"></span>
                                                 </p>
                                             </div>
                                         </li>
@@ -253,6 +260,13 @@
                                                 <p class="media-heading">
                                                     预计返利:&nbsp;
                                                     <span class="icon-info" aria-hidden="true" rel="tooltip" title="" data-original-title="返利基数*返利比率"></span>
+                                                </p>
+                                            </div>
+                                        </li>
+                                        <li class="media">
+                                            <div class="media-body">
+                                                <p class="media-heading">
+                                                   	 说明:以上所有金额都是预计值，最终付款金额以SOHO3Q官网订单价格为准；最终返利金额以实际支付<strong>商品金额</strong>作为返利基数。
                                                 </p>
                                             </div>
                                         </li>
