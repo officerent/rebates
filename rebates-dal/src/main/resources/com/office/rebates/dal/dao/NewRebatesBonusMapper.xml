@@ -19,7 +19,7 @@
     order by b.bonus_id desc
     limit 10)
     union 
-    (SELECT customer_mobile, customer_name,rebates_amount,DATE_FORMAT(last_update_time,'%Y-%m-%d %T') as last_update_time
+    (SELECT customer_mobile, customer_name,rebates_amount,DATE_FORMAT(last_update_time,'%Y-%m-%d') as last_update_time
     FROM  rebates_bonus_mock
     order by bonus_mock_id desc
     limit 10)

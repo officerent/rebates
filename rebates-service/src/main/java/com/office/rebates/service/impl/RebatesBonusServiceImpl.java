@@ -28,6 +28,7 @@ public class RebatesBonusServiceImpl implements RebatesBonusService{
 				String mobile=bonus.getCustomerMobile().substring(0, 3)+"****"+bonus.getCustomerMobile().substring(7);
 				bonus.setCustomerMobile(mobile);
 			}
+			//bonus.setLastUpdateTime(lastUpdateTime);
 		}
 		return topList;
 	}
