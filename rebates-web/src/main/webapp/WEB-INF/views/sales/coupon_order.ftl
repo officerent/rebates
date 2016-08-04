@@ -490,7 +490,7 @@
                 if(data.errCode == 0){
                     window.location.href="${path}/question/tip.html?url=sales/coupon_order.html&manager=";
                 }else{
-                    alertMessage(code);
+                    alertMessage(data.errCode);
                 }
             },
             error: function (xhr, type, exception) {

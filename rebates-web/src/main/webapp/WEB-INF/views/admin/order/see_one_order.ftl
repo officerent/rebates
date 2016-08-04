@@ -24,19 +24,27 @@
                         <!--正文内容 开始-->
                         <div class="form-group">
                             <label class="col-sm-3 control-label">
-                                用户昵称<span class="text-danger">*</span>
+                                3Q订单id
                             </label>
                             <div class="col-md-5">
-                                <input name="name" id="name" type="text"  class="form-control validate[required]" value="${data.name!''}" />
+                                <input type="text"  class="form-control validate[required]" value="${order.soho3qOrderId!''}" disabled="disabled" />
                                 </br>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">
-                                用户密码<span class="text-danger">*</span>
+                                客户名称
                             </label>
                             <div class="col-md-5">
-                                <input name="password"  type="password" class="form-control validate[required]" value="${data.password!''}" />
+                                <input type="text" class="form-control validate[required]" value="${order.customerName!''}" disabled="disabled"/>
+                                </br>
+                            </div>
+                        </div><div class="form-group">
+                            <label class="col-sm-3 control-label">
+                                客户手机号
+                            </label>
+                            <div class="col-md-5">
+                                <input type="text" class="form-control validate[required]" value="${order.customerMobile!''}" disabled="disabled"/>
                                 </br>
                             </div>
                         </div>
