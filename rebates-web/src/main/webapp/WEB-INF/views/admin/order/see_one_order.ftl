@@ -39,7 +39,8 @@
                                 <input type="text" class="form-control validate[required]" value="${order.customerName!''}" disabled="disabled"/>
                                 </br>
                             </div>
-                        </div><div class="form-group">
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-3 control-label">
                                 客户手机号
                             </label>
@@ -50,18 +51,64 @@
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">
-                                是否是管理员<span class="text-danger">*</span>
+                                客户支付宝账号
                             </label>
                             <div class="col-md-5">
-                                <input type="checkbox" class="js-switch" data-class-name="switchery switchery-alt" <#if data.isAdmin==1> checked="checked"</#if> >
+                                <input type="text" class="form-control validate[required]" value="${order.customerAlipay!''}" disabled="disabled"/>
+                                </br>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">
+                                项目名称
+                            </label>
+                            <div class="col-md-5">
+                                <input type="text" class="form-control validate[required]" value="${order.porjectName!''}" disabled="disabled"/>
+                                </br>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">
+                                入驻时间
+                            </label>
+                            <div class="col-md-5">
+                                <input type="text" class="form-control validate[required]" value='<fmt:formatDate pattern="yyyy-MM-dd" type="date" value="${order.checkinDate?date}" />' disabled="disabled"/>
+                                </br>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">
+                                离场时间
+                            </label>
+                            <div class="col-md-5">
+                                <input type="text" class="form-control validate[required]" value='<fmt:formatDate pattern="yyyy-MM-dd" type="date" value="${order.checkoutDate?date}" />' disabled="disabled"/>
+                                </br>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">
+                                租赁时长
+                            </label>
+                            <div class="col-md-5">
+                                <#if order.periodMonth != 0>
+                                    <input type="text" class="form-control validate[required]" value='${order.periodMonth!""}月${order.periodWeek!""}周' disabled="disabled"/>
+                                <#else>
+                                    <input type="text" class="form-control validate[required]" value='${order.periodWeek!""}周' disabled="disabled"/>
+                                </#if>
+                                </br>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">
+                                项目名称
+                            </label>
+                            <div class="col-md-5">
+                                <input type="text" class="form-control validate[required]" value="${order.porjectName!''}" disabled="disabled"/>
                                 </br>
                             </div>
                         </div>
                         <br/>
                         <div class="col-md-offset-3 col-md-9">
-                            <button class="btn btn-info" type="submit" style="left: 35%;">
-                                修改
-                            </button>
                             <button class="btn" type="reset" onclick="javascript:history.go(-1)">
                                 返回
                             </button>

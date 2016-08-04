@@ -741,7 +741,7 @@
                     var roomValueArray =  checkBoxValue.split("-");
                     var checkedNumber =  $("#number-"+checkBoxValue).val();
                     sumLeaseAmount += roomValueArray[1] * checkedNumber *(parseInt(periodMonth) * 4 + parseInt(periodWeek));
-                    sumDepositAmount += roomValueArray[4] * roomValueArray[2] * checkedNumber;
+                    sumDepositAmount += roomValueArray[2] * checkedNumber;
                 }
         );
         totalRebates = (sumLeaseAmount * getRebates()).toFixed(2);
