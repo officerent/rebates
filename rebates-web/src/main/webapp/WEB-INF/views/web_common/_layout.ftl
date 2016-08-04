@@ -30,6 +30,7 @@
 
     <script src="${path}/wrap/web/js/jquery.js"></script>
     <script src="${path}/wrap/web/js/cookie.js"></script>
+    <!-- 百度统计 -->
     <script>
 		var _hmt = _hmt || [];
 		(function() {
@@ -38,6 +39,22 @@
 		  var s = document.getElementsByTagName("script")[0]; 
 		  s.parentNode.insertBefore(hm, s);
 		})();
+	</script>
+	
+	<!-- 百度自动推送 -->
+	<script>
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
 	</script>
 	<meta name="baidu-site-verification" content="5gYmMrJhHv" />
     <#nested>
@@ -101,14 +118,14 @@
         <script src="/wrap/scripts/demo/table-datatables-demo.js"></script>
         -->
         <!-- Google Analytics: change UA-48454066-1 to be your site's ID. -->
-        <script>
+<!--         <script>
             (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
                     function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
                 e=o.createElement(i);r=o.getElementsByTagName(i)[0];
                 e.src='//www.google-analytics.com/analytics.js';
                 r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
             ga('create','UA-48454066-1');ga('send','pageview');
-        </script>
+        </script> -->
 
         <!-- pageSubmit -->
         <script src="${path}/wrap/scripts/submitSelect.js"></script>
