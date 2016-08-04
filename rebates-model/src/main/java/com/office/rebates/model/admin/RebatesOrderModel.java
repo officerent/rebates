@@ -107,6 +107,45 @@ public class RebatesOrderModel {
     private String name;
 
     /**
+     * 订单状态
+     */
+    private Byte status;
+
+    /**
+     * 税后佣金
+     */
+    private Integer bonusAfterTax;
+
+    /**
+     * 返利金额
+     */
+    private Integer rebatesAmount;
+
+    public Integer getBonusAfterTax() {
+        return bonusAfterTax;
+    }
+
+    public void setBonusAfterTax(Integer bonusAfterTax) {
+        this.bonusAfterTax = bonusAfterTax;
+    }
+
+    public Integer getRebatesAmount() {
+        return rebatesAmount;
+    }
+
+    public void setRebatesAmount(Integer rebatesAmount) {
+        this.rebatesAmount = rebatesAmount;
+    }
+
+    public Byte getStatus() {
+        return status;
+    }
+
+    public void setStatus(Byte status) {
+        this.status = status;
+    }
+
+    /**
      * 获取销售名称
      * @return
      */

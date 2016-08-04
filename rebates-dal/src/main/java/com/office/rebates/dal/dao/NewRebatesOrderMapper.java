@@ -26,7 +26,7 @@ public interface NewRebatesOrderMapper {
      * @param map 条件
      * @return
      */
-    public List<RebatesOrderModel> selectOrderModel(Map<String,Object> map);
+    public List<RebatesOrderModel> selectOrderList(Map<String,Object> map);
 
     /**
      * 查询一笔订单

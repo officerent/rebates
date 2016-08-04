@@ -27,6 +27,8 @@ public class RouteKey {
 
     public static final String SEE_ONE_ORDER = "/see_one_order.html";
 
+    public static final String UPDATE_ORDER = "/update_order.html";
+
     public static final String QUESTION = "/admin/question";
 
     public static final String QUESTION_LIST = "/question_list.html";
