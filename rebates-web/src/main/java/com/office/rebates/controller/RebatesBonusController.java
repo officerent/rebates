@@ -37,7 +37,7 @@ public class RebatesBonusController {
     
     static Logger logger = LoggerFactory.getLogger(RebatesBonusController.class);
 	
-    //获取返利率
+    //获取返利排行榜
     @ResponseBody
 	@RequestMapping(value = RouteKey.BONUS_RECENT10, method = RequestMethod.GET)
 	public ResultCode<List<BonusModel>> getRebatesRatio() {
