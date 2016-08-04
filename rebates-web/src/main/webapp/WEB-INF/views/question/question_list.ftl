@@ -77,10 +77,10 @@
                   </div><!-- /#getStarted4 -->
                 </div><!-- /.panel -->
                                 <div class="panel fade in panel-default panel-fill" data-fill-color="true" data-init-panel="true">
-                  <div class="panel-heading p-2x" role="button" data-toggle="collapse" data-parent="#getStarted" data-target="#getStarted4" aria-expanded="true" aria-controls="collapseOne">
+                  <div class="panel-heading p-2x" role="button" data-toggle="collapse" data-parent="#getStarted" data-target="#getStarted5" aria-expanded="true" aria-controls="collapseOne">
                     <h3 class="panel-title"><strong>soho3q官网所说的专享会员和漫游会员是什么意思？</strong></h3>
                   </div>
-                  <div id="getStarted4" class="panel-collapse collapse" role="tabpanel">
+                  <div id="getStarted5" class="panel-collapse collapse" role="tabpanel">
                     <div class="panel-body">
                       <p>专享会员指的是那些长期租住在某个SOHO 3Q项目的租户；漫游会员是指那些按天使用工位，或者按小时使用会议室的短租户。简单地说，就是如果通过本站“固定长租”下单租户都是专享会员，购买其他灵活短租产品的都是漫游会员。SOHO3Q的会员能享有各种的权益。</p>
                     </div><!-- /.panel-body -->
