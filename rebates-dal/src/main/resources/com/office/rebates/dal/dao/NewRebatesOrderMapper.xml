@@ -98,7 +98,7 @@
     on ro.user_id = ru.user_id
     join rebates.sales_people sp
     on ro.sales_id = sp.sales_id
-    where or.order_id = #{orderId}
+    where ro.order_id = #{orderId}
   </select>
   
   <select id="getMyOrderList" parameterType="java.util.Map" resultType="com.office.rebates.model.OrderModel">
