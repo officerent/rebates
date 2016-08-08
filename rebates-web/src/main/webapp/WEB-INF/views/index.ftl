@@ -135,13 +135,13 @@
                             <!-- 轮播（Carousel）项目 -->
                             <div class="carousel-inner">
                                 <div class="item active">
-                                    <img src="${path}/wrap/images/rebate/1.jpg" alt="First slide">
+                                    <img src="${path}/wrap/images/rebate/1.jpg?" width="950" alt="First slide">
                                 </div>
                                 <div class="item">
-                                    <img src="${path}/wrap/images/rebate/2.jpg" alt="Second slide">
+                                    <img src="${path}/wrap/images/rebate/2.jpg" width="950" alt="Second slide">
                                 </div>
                                 <div class="item">
-                                    <img src="${path}/wrap/images/rebate/3.jpg" alt="Third slide">
+                                    <img src="${path}/wrap/images/rebate/3.jpg" width="950" alt="Third slide">
                                 </div>
                             </div>
                             <!-- 轮播（Carousel）导航 -->
