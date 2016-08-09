@@ -506,7 +506,7 @@
             data: JSON.stringify(createCouponOrder),
             success: function (data) {
                 if(data.errCode == 0){
-                    window.location.href="${path}/question/tip.html?url=sales/coupon_order.html&manager=";
+                    window.location.href="${path}/question/coupon_tip.html";
                 }else{
                     alertMessage(data.errCode);
                 }

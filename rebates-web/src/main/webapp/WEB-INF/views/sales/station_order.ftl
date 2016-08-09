@@ -522,7 +522,7 @@
             data:JSON.stringify(createOrder),
             success:function(data){
                 if(data.errCode == 0){
-                    window.location.href="${path}/question/tip.html?url=sales/station_order.html&manager=";
+                    window.location.href="${path}/question/station_tip.html";
                 }
             },
             error:function(xhr, type, exception){
