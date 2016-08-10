@@ -95,6 +95,8 @@ public class RouteKey {
     // 提示问题
     public static final String WEB_QUESTION = "/question";
     public static final String TIP = "/tip.html";
+    public static final String COUPON_TIP = "coupon_tip.html";
+    public static final String STATION_TIP = "station_tip.html";
 
     public static final String REBATES_MEMBER = "/member";
     public static final String REBATES_MEMBER_INFO = "/is_member";

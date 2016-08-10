@@ -1,7 +1,9 @@
 package com.office.rebates.controller.admin;
 
 import com.office.rebates.controller.RouteKey;
+import com.office.rebates.model.common.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -12,5 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(RouteKey.QUESTION)
 public class AdminQuestionController {
 
+    public void questionList(Page page,Model model){
 
+    }
 }

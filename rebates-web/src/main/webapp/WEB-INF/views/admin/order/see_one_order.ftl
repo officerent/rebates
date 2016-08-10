@@ -72,7 +72,7 @@
                                 入驻时间
                             </label>
                             <div class="col-md-5">
-                                <input type="text" class="form-control validate[required]" value='<fmt:formatDate pattern="yyyy-MM-dd" type="date" value="${order.checkinDate?date}" />' disabled="disabled"/>
+                                <input type="text" class="form-control validate[required]" value="${order.checkinDate?date}" disabled="disabled"/>
                                 </br>
                             </div>
                         </div>
@@ -81,7 +81,7 @@
                                 离场时间
                             </label>
                             <div class="col-md-5">
-                                <input type="text" class="form-control validate[required]" value='<fmt:formatDate pattern="yyyy-MM-dd" type="date" value="${order.checkoutDate?date}" />' disabled="disabled"/>
+                                <input type="text" class="form-control validate[required]" value="${order.checkoutDate?date}" disabled="disabled"/>
                                 </br>
                             </div>
                         </div>
@@ -100,14 +100,51 @@
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">
-                                项目名称
+                                租金金额
                             </label>
                             <div class="col-md-5">
-                                <input type="text" class="form-control validate[required]" value="${order.porjectName!''}" disabled="disabled"/>
+                                <input type="text" class="form-control validate[required]" value="${order.leaseAmount/100!''}" disabled="disabled"/>
+                                </br>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">
+                                押金金额
+                            </label>
+                            <div class="col-md-5">
+                                <input type="text" class="form-control validate[required]" value="${order.depositAmount/100!''}" disabled="disabled"/>
                                 </br>
                             </div>
                         </div>
                         <br/>
+                        <div class="table-responsive">
+
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>产品名称</th>
+                                    <th>产品数量</th>
+                                    <th>产品总价</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <#list orderItemList as d >
+                                    <tr class="odd" role="row">
+                                        <td>
+                                            ${d.productSubType!''}人
+                                            <#if d.productType =="ROOM">
+                                                办公室
+                                            <#else>
+                                                办公桌
+                                            </#if>
+                                        </td>
+                                        <td>${d.bookNum!''}</td>
+                                        <td>${d.totalPrice/100!''}</td>
+                                    </tr>
+                                    </#list>
+                                </tbody>
+                            </table>
+                        </div>
                         <div class="col-md-offset-3 col-md-9">
                             <button class="btn" type="reset" onclick="javascript:history.go(-1)">
                                 返回

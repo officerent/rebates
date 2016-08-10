@@ -29,7 +29,22 @@ public class WebQuestionController {
         model.addAttribute("url",url);
         model.addAttribute("manager",manager);
     }
-    
+
+    /**
+     * 灵活工位券提示
+     */
+    @RequestMapping(RouteKey.COUPON_TIP)
+    public void couponTip(){
+
+    }
+
+    /**
+     * 传统工位提示
+     */
+    @RequestMapping(RouteKey.STATION_TIP)
+    public void stationTip(){
+
+    }
 
     /**
      * 帮助中心页

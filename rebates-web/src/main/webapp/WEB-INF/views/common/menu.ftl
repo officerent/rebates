@@ -24,6 +24,13 @@
           	</a>
           </li>
           <li class="divider"></li>
+            <li class="nav-item" role="presentation" id="feedback">
+          	<a href="${path}/admin/order/order_list.html">
+          		<span class="nav-icon"><i class="fa fa-dashcube"></i></span>
+              	<span class="nav-text">订单管理</span>
+          	</a>
+          </li>
+          <li class="divider"></li>
 
           <!--
           <li class="divider"></li>

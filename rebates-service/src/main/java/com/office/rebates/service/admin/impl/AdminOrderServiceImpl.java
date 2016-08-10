@@ -90,6 +90,7 @@ public class AdminOrderServiceImpl implements AdminOrderService {
         RebatesOrderModel rebatesOrderModel = new RebatesOrderModel();
         Map<String, Object> map = new HashMap<String, Object>();
         try {
+            map.put("orderId",orderId);
             rebatesOrderModel = newRebatesOrderMapper.selectOrderOne(map);
         } catch (Exception e) {
             logger.error("查询订单详情selectRebatesOrderOne", e);

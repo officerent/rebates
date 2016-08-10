@@ -36,6 +36,8 @@
     <context:annotation-config></context:annotation-config>
 
 	<view-controller path="/" view-name="index" />
+	<view-controller path="/admin/" view-name="admin/index" />
+	<view-controller path="/admin" view-name="admin/index" />
 
 	<!-- freemarker 相关 -->
 	<beans:bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
