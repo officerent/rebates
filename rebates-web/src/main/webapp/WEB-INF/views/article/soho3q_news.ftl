@@ -1,6 +1,6 @@
 <#include "../web_common/_layout.ftl" />
 
-<@layoutHead title="3Q动态" meta_keywords="SOHO3Q 新闻动态"
+<@layoutHead title="3Q动态" meta_keywords="SOHO3Q,新闻动态"
    meta_description="SOHO3Q最新动态">
     <style>
         .btn-soho-danger {
