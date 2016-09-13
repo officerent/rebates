@@ -367,7 +367,7 @@
             success:function(data){
                 if(data.errCode==0){
                     var member = data.data;
-                    isMember = member.memberStatus;
+                    isMember = member.isMember;
                     if(!isMember){
                         displayPrice = replaceStr(getTextValueById("displayPrice"),"￥","");
                         var memberPrice = getValueById("memberPrice");

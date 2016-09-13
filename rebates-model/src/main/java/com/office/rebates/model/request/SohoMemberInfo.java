@@ -81,10 +81,10 @@ public class SohoMemberInfo {
 	private Boolean isFixMember;
 	private String userId;
 	private String projectName;
-	
+
 	private String floatMemberStartDate;
 	private String floatMemberEndDate;
-	
+
 	private String fixMemberStartDate;
 	private String fixMemberEndDate;
 }
