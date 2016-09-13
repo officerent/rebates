@@ -46,7 +46,7 @@ public class Soho3qMemberApi {
     public SohoMemberInfo getMemberInfo(String mobile) {
         SohoMemberInfo member = new SohoMemberInfo();
         HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
-        HttpPost request = new HttpPost(url);
+        HttpGet request = new HttpGet(url+"?mobile="+mobile);
         RequestConfig config = RequestConfig.custom().setSocketTimeout(timeOut).setConnectTimeout(timeOut).build();
         CloseableHttpClient closeableHttpClient = httpClientBuilder.build();
         //HttpPost httpPost = new HttpPost(props.get("sms.url"));
@@ -54,16 +54,19 @@ public class Soho3qMemberApi {
         CloseableHttpResponse response = null;
         try {
             request.addHeader("content-type", "application/x-www-form-urlencoded");
-            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-            nameValuePairs.add(new BasicNameValuePair("mobile", mobile));
-            request.setEntity(new UrlEncodedFormEntity(nameValuePairs,"UTF-8"));
+            //List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+            //nameValuePairs.add(new BasicNameValuePair("mobile", mobile));
+            //request.setEntity(new UrlEncodedFormEntity(nameValuePairs,"UTF-8"));
             response = closeableHttpClient.execute(request);
             if (response.getStatusLine().getStatusCode() == 200) {
                 String httpResult = EntityUtils.toString(response.getEntity());
                 if (httpResult != null) {
                     JSONObject json = JSON.parseObject(httpResult);
 //                    logger.info("http response for getting member info is" + json);
-                    member = JSONObject.parseObject(json.getString("result"), SohoMemberInfo.class);
+                    if("0".equals(json.getString("code"))){
+                    	member = JSONObject.parseObject(json.getString("result"), SohoMemberInfo.class);
+                    }
+                    
                 } else {
                     logger.error("http response body is null!");
                 }
