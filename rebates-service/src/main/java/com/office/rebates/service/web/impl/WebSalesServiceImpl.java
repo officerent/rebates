@@ -108,7 +108,7 @@ public class WebSalesServiceImpl implements WebSalesService {
         try{
             List<CouponModel> couponModelList = soho3qCouponService.getCouponList();
             for (CouponModel couponModel : couponModelList) {
-                if(couponModel.getProductType() == null){
+                if(couponModel.getProductType().equals(Constants.COMMON_NOT_REFUNDABLE) && couponModel.getCouponType().equals(Constants.CONPON_TYPE_MEMBERSHIP)){
                     //member
                     member = couponModel;
                 }

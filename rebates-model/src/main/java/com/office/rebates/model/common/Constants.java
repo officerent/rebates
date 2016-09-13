@@ -46,6 +46,7 @@ public class Constants {
     
     public static String PRODUCT_TYPE_ROOM = "ROOM";
     public static String PRODUCT_TYPE_OPEN_STATION = "OPEN_STATION";
+	public static String COMMON_NOT_REFUNDABLE = "COMMON_NOT_REFUNDABLE";
     
     public static String DESCRIPTION_MEMBERSHIP = "99元的漫游会员身份是您购买和使用所有漫游权益的先决条件。第一次购买SOHO3Q的漫游产品，必须首先支付99元成为SOHO3Q的会员。成为会员的同时，还能赠送一天开放工位或者1小时会议室使用权";
     public static String DESCRIPTION_OPEN_STATION = "全国所有SOHO3Q都提供以天为单位漫游开放工位服务；您购买权益以后，可以随时预约任意的SOHO3Q的工位，实现真正的全国漫游办公，非常适合需要移动办公的上班族和创业者。";
@@ -59,5 +60,8 @@ public class Constants {
     public static String ARTICLE_TYPE_SOHO3Q = "SOHO3Q";//3q动态
     public static String ARTICLE_TYPE_OFFICE = "OFFICE";//联合办公
     public static String ARTICLE_TYPE_OTHER = "OTHER";//其他
+
+
+
 
 }
