@@ -64,7 +64,9 @@ public class Soho3qMemberApi {
                     JSONObject json = JSON.parseObject(httpResult);
 //                    logger.info("http response for getting member info is" + json);
                     if("0".equals(json.getString("code"))){
-                    	member = JSONObject.parseObject(json.getString("result"), SohoMemberInfo.class);
+                    	Boolean isMember=json.getBoolean("result");
+                    	member.setIsMember(isMember);
+                    	//member = JSONObject.parseObject(json.getString("result"), SohoMemberInfo.class);
                     }
                     
                 } else {
