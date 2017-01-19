@@ -5,6 +5,7 @@
 <html class="no-js">
 <head>
     <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="b9gGgkQW2H" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="Keywords" content="${meta_keywords!""}">
     <meta name="Description" content="${meta_description!""}">

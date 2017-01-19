@@ -46,7 +46,7 @@
                                 是否是管理员<span class="text-danger">*</span>
                             </label>
                             <div class="col-md-5">
-                                <input type="checkbox" class="js-switch" data-class-name="switchery switchery-alt" <#if data.isAdmin==1> checked="checked"</#if> >
+                                <input name="isNotAdmin" type="checkbox" class="js-switch" data-class-name="switchery switchery-alt" <#if data.isAdmin==1> checked="checked"</#if> >
                                 </br>
                             </div>
                         </div>
