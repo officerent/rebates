@@ -27,9 +27,9 @@
             <li class="nav-item ${order !''}" role="presentation">
                 <a href="${path}/sales/order_list.html?size=20&number=0"><h2><i class="fa fa-fw"></i>我的返利</h2></a>
             </li>
-            <li class="nav-item ${question !''}" role="presentation">
-                <a href="${path}/question/question_list.html"><h2><i class="fa fa-fw"></i>常见问题</h2></a>
-            </li>
+            <#--<li class="nav-item ${question !''}" role="presentation">-->
+                <#--<a href="${path}/question/question_list.html"><h2><i class="fa fa-fw"></i>常见问题</h2></a>-->
+            <#--</li>-->
             <li class="nav-item ${soho3q_news !''}" role="presentation">
                 <a href="${path}/article/soho3q_news.html"><h2><i class="fa fa-fw"></i>3Q动态</h2></a>
             </li>

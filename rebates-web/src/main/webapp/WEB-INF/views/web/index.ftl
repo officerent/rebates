@@ -61,37 +61,37 @@
 
                     <div class="events-content"  style="margin:0px">
                         <ol>
-                            <li class="selected" data-date="16/01/2014">
+                            <li class="selected" data-date="16/01/2017">
                                 <p>
                                     注册成为soho3q返利网用户。
                                 </p>
                             </li>
 
-                            <li data-date="28/02/2014">
+                            <li data-date="28/02/2017">
                                 <p>
                                     可以根据自身需要，选择soho3q的固定长租或者灵活短租的办公空间产品。
                                 </p>
                             </li>
 
-                            <li data-date="20/04/2014">
+                            <li data-date="20/04/2017">
                                 <p>
                                     向本站提交购买意向，我们会分派专门的官方注册经纪人即时代您向soho3q下单，并且登记此订单的返利信息。
                                 </p>
                             </li>
 
-                            <li data-date="20/05/2014">
+                            <li data-date="20/05/2017">
                                 <p>
                                     用下单手机号登陆soho3q官方app或者手机版官网m.soho3q.com，确认刚才提交的订单。
                                 </p>
                             </li>
 
-                            <li data-date="09/07/2014">
+                            <li data-date="09/07/2017">
                                 <p>
                                     在soho3q官网完成订单支付；全官网完成操作，100%安全可靠。
                                 </p>
                             </li>
 
-                            <li data-date="30/08/2014">
+                            <li data-date="30/08/2017">
                                 <p>
                                     48小时返利自动转到您的支付宝帐户，返利状态全程可查。
                                 </p>
@@ -106,27 +106,21 @@
 
                 <div class="row">
                     <div class="col-md-3">
-                        <h3>返利排行榜</h3>
-                        <table class="table table-condensed">
-                            <thead>
-                                <tr>
-                                    <th>手机号</th>
-                                    <th>返利</th>
-                                    <th>日期</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <#if data ??>
-                                    <#list data as d>
-                                        <tr>
-                                            <td>${d.customerMobile !""}</td>
-                                            <td>${d.rebatesAmount !""}元</td>
-                                            <td>${d.lastUpdateTime !""}</td>
-                                        </tr>
-                                    </#list>
-                                </#if>
-                            </tbody>
-                        </table>
+                        <div class="row">
+                            <h2>固定长租 <strong class="font-color">返利<span><i class="font-size">${ratio.ratio}</i></span></strong></h2>
+                            <p>一周起租,选择心仪的3Q中心,直接拎包入驻吧!</p>
+                            <a class="btn btn-soho-danger" href="${path}/sales/station_order.html" role="button">立即购买，拿返利</a>
+                        </div>
+                        <div class="row">
+                            <br>
+                            <hr>
+                            <br>
+                        </div>
+                        <div class="row">
+                            <h2>灵活短租 <strong class="font-color">返利<span><i class="font-size">${ratio.ratio}</i></span></strong></h2>
+                            <p>按天使用工位,按小时使用会议室,任意3Q中心,随到随用哦!</p>
+                            <a class="btn btn-soho-danger" href="${path}/sales/coupon_order.html" role="button">立即购买，拿返利</a>
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <div id="myCarousel" class="carousel slide">
@@ -165,21 +159,27 @@
 
                     </div>
                     <div class="col-md-3">
-                        <div class="row">
-                            <h2>固定长租 <strong class="font-color">返利<span><i class="font-size">${ratio.ratio}</i></span></strong></h2>
-                            <p>一周起租,选择心仪的3Q中心,直接拎包入驻吧!</p>
-                            <a class="btn btn-soho-danger" href="${path}/sales/station_order.html" role="button">去购买，拿返利</a>
-                        </div>
-                        <div class="row">
-                            <br>
-                            <hr>
-                            <br>
-                        </div>
-                        <div class="row">
-                            <h2>灵活短租 <strong class="font-color">返利<span><i class="font-size">${ratio.ratio}</i></span></strong></h2>
-                            <p>按天使用工位,按小时使用会议室,任意3Q中心,随到随用哦!</p>
-                            <a class="btn btn-soho-danger" href="${path}/sales/coupon_order.html" role="button">去购买，拿返利</a>
-                        </div>
+                        <h3>返利排行榜</h3>
+                        <table class="table table-condensed">
+                            <thead>
+                            <tr>
+                                <th>手机号</th>
+                                <th>返利金额</th>
+                                <th>日期</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <#if data ??>
+                                    <#list data as d>
+                                    <tr>
+                                        <td>${d.customerMobile !""}</td>
+                                        <td>${d.rebatesAmount !""}元</td>
+                                        <td>${d.lastUpdateTime !""}</td>
+                                    </tr>
+                                    </#list>
+                                </#if>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 
